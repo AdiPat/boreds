@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { LoginPage } from "./login/LoginPage";
+import { firebaseApp } from "./firebase/firebase";
 import "./App.css";
 
 function App() {
