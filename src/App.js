@@ -1,11 +1,17 @@
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { LoginPage } from "./login/LoginPage";
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1>Welcome to boreds.</h1>
-      <p>Boreds is a project management application like Trello.</p>
-    </div>
+    <Router>
+      <h1>Welcome to Boreds</h1>
+      <Switch>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
