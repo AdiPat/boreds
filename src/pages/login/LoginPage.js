@@ -34,7 +34,7 @@ function LoginPage() {
 
   return (
     <Grid
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container
       direction="column"
       justify="center"
