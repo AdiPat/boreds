@@ -9,12 +9,6 @@ function DashPage() {
   const user = useContext(UserContext);
   const history = useHistory();
 
-  useEffect(() => {
-    if (user == null) {
-      history.push("/login");
-    }
-  });
-
   return user ? (
     <Container>
       <h1>Welcome {user.email}</h1>
