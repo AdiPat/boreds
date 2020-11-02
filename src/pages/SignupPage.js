@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -18,6 +19,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
@@ -25,11 +27,14 @@ function SignupPage() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        console.log("SignupPage: Created user - ", userAuth);
+      })
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        setErrorMessage(error.message);
+        console.log(errorCode, error.message);
       });
   };
 
@@ -88,6 +93,11 @@ function SignupPage() {
                   ),
                 }}
               ></TextField>
+            </Grid>
+            <Grid item xs={12}>
+              {errorMessage !== "" ? (
+                <Alert severity="error">{errorMessage}</Alert>
+              ) : null}
             </Grid>
             <Grid item xs={12}>
               <Button
