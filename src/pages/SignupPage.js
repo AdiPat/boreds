@@ -33,7 +33,7 @@ function SignupPage() {
       });
   };
 
-  return user ? (
+  return user == null ? (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container
