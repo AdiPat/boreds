@@ -11,7 +11,6 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
-import { auth } from "../firebase/firebase";
 import UserContext from "../providers/UserContext";
 
 function LoginPage() {
@@ -30,6 +29,7 @@ function LoginPage() {
   });
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(email, password);
     firebase
       .auth()
@@ -50,75 +50,77 @@ function LoginPage() {
       alignItems="center"
     >
       <Grid item xs={12} md={4}>
-        <Card style={{ padding: "20px" }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography align="center" variant="h6">
-                Log in to Boreds
-              </Typography>
+        <form onSubmit={handleSubmit}>
+          <Card style={{ padding: "20px" }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography align="center" variant="h6">
+                  Log in to Boreds
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Email"
+                  type="text"
+                  size="medium"
+                  onChange={(e) => setEmail(e.target.value)}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  size="medium"
+                  onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          onMouseDown={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  style={{ width: "100%" }}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Log in
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                {errorMessage !== "" ? (
+                  <Alert severity="error">{errorMessage}</Alert>
+                ) : null}
+              </Grid>
+              <Grid item xs={4}>
+                <Button color="primary">
+                  <a href="/forgot" style={{ textDecoration: "none" }}>
+                    Can't Log in?
+                  </a>
+                </Button>
+              </Grid>
+              <Grid item xs={8}>
+                <Button color="primary">
+                  <a href="/signup" style={{ textDecoration: "none" }}>
+                    Sign up for an account
+                  </a>
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                style={{ width: "100%" }}
-                label="Email"
-                type="text"
-                size="medium"
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                style={{ width: "100%" }}
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                size="medium"
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                style={{ width: "100%" }}
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Log in
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              {errorMessage !== "" ? (
-                <Alert severity="error">{errorMessage}</Alert>
-              ) : null}
-            </Grid>
-            <Grid item xs={4}>
-              <Button color="primary">
-                <a href="/forgot" style={{ textDecoration: "none" }}>
-                  Can't Log in?
-                </a>
-              </Button>
-            </Grid>
-            <Grid item xs={8}>
-              <Button color="primary">
-                <a href="/signup" style={{ textDecoration: "none" }}>
-                  Sign up for an account
-                </a>
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
+        </form>
       </Grid>
     </Grid>
   );
