@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -9,21 +10,22 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase/app";
-import "firebase/auth";
+import { auth } from "../firebase/firebase";
+import UserContext from "../providers/UserContext";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const user = useContext(UserContext);
+  const history = useHistory();
 
   useEffect(() => {
-    const user = firebase.auth().currentUser;
+    // redirect to dashboard
     if (user) {
-      console.log(user.email);
-    } else {
-      console.log("User not signed in.");
+      history.push("/dashboard");
     }
-  }, []);
+  });
 
   const handleSubmit = (e) => {
     console.log(email, password);
