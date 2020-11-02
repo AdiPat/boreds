@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
+import UserContext from "../providers/UserContext";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -16,6 +18,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
     console.log(email, password);
@@ -30,7 +33,7 @@ function SignupPage() {
       });
   };
 
-  return (
+  return user ? (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container
@@ -107,6 +110,8 @@ function SignupPage() {
         </Card>
       </Grid>
     </Grid>
+  ) : (
+    <Redirect to="/dashboard" />
   );
 }
 
