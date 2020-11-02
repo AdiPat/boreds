@@ -4,11 +4,13 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [linkSent, setLinkSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleOnClick = () => {
     // TODO: Send email
@@ -20,8 +22,9 @@ function ForgotPasswordPage() {
         setLinkSent(true);
       })
       .catch((error) => {
-        console.log(error);
         setLinkSent(false);
+        setErrorMessage(error.message);
+        console.log(error.code, error.message);
       });
 
     setLinkSent(true);
@@ -44,18 +47,12 @@ function ForgotPasswordPage() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography>
-                {linkSent
-                  ? "We sent a recovery link to your email address"
-                  : "We'll send a recovery link to"}
-              </Typography>
-              {linkSent ? (
-                <Typography align="center" variant="h5">
-                  <br />
-                  {email}
-                </Typography>
+              {linkSent && errorMessage === "" ? (
+                <Alert severity="success">
+                  We sent a recovery link to {email}
+                </Alert>
               ) : (
-                ""
+                <Typography>We'll send a recovery link to</Typography>
               )}
               {!linkSent ? (
                 <TextField
@@ -83,6 +80,13 @@ function ForgotPasswordPage() {
             ) : (
               ""
             )}
+
+            {errorMessage !== "" ? (
+              <Grid item xs={12}>
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            ) : null}
+
             <Grid item xs={12}>
               <Button color="primary">
                 <a href="/login" style={{ textDecoration: "none" }}>
