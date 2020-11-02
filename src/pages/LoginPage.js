@@ -3,11 +3,16 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
 
 function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -61,9 +66,22 @@ function LoginPage() {
               <TextField
                 style={{ width: "100%" }}
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 size="medium"
                 onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        onMouseDown={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               ></TextField>
             </Grid>
             <Grid item xs={12}>
@@ -74,6 +92,20 @@ function LoginPage() {
                 onClick={handleSubmit}
               >
                 Log in
+              </Button>
+            </Grid>
+            <Grid item xs={4}>
+              <Button color="primary">
+                <a href="/forgot" style={{ textDecoration: "none" }}>
+                  Can't Log in?
+                </a>
+              </Button>
+            </Grid>
+            <Grid item xs={8}>
+              <Button color="primary">
+                <a href="/signup" style={{ textDecoration: "none" }}>
+                  Sign up for an account
+                </a>
               </Button>
             </Grid>
           </Grid>
