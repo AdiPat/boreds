@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -6,11 +7,20 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
+import UserContext from "../providers/UserContext";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [linkSent, setLinkSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      history.push("/dashboard");
+    }
+  });
 
   const handleOnClick = () => {
     // TODO: Send email
