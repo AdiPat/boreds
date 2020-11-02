@@ -9,6 +9,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 import { auth } from "../firebase/firebase";
 import UserContext from "../providers/UserContext";
@@ -17,6 +18,7 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const user = useContext(UserContext);
   const history = useHistory();
 
@@ -34,7 +36,7 @@ function LoginPage() {
       .signInWithEmailAndPassword(email, password)
       .catch(function (error) {
         let errorCode = error.code;
-        let errorMessage = error.message;
+        setErrorMessage(error.message);
         console.log(errorCode, errorMessage);
       });
   };
@@ -95,6 +97,11 @@ function LoginPage() {
               >
                 Log in
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              {errorMessage !== "" ? (
+                <Alert severity="error">{errorMessage}</Alert>
+              ) : null}
             </Grid>
             <Grid item xs={4}>
               <Button color="primary">
