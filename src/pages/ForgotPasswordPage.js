@@ -4,6 +4,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import firebase from "firebase/app";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,17 @@ function ForgotPasswordPage() {
   const handleOnClick = () => {
     // TODO: Send email
     console.log("Sending email to ", email);
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setLinkSent(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLinkSent(false);
+      });
+
     setLinkSent(true);
   };
 
