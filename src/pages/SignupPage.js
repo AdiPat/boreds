@@ -23,6 +23,7 @@ function SignupPage() {
   const user = useContext(UserContext);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(email, password);
     firebase
       .auth()
@@ -47,77 +48,79 @@ function SignupPage() {
       alignItems="center"
     >
       <Grid item xs={12} md={4}>
-        <Card style={{ padding: "20px" }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography align="center" variant="h6">
-                Sign Up for Boreds
-              </Typography>
+        <form onSubmit={handleSubmit}>
+          <Card style={{ padding: "20px" }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography align="center" variant="h6">
+                  Sign Up for Boreds
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Enter full name"
+                  type="text"
+                  size="medium"
+                  onChange={(e) => setFullName(e.target.value)}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Enter email address"
+                  type="text"
+                  size="medium"
+                  onChange={(e) => setEmail(e.target.value)}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Create password"
+                  type={showPassword ? "text" : "password"}
+                  size="medium"
+                  onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          onMouseDown={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                {errorMessage !== "" ? (
+                  <Alert severity="error">{errorMessage}</Alert>
+                ) : null}
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  style={{ width: "100%" }}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Sign Up
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button color="primary">
+                  <a href="/login" style={{ textDecoration: "none" }}>
+                    Already have an account? Log in
+                  </a>
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                style={{ width: "100%" }}
-                label="Enter full name"
-                type="text"
-                size="medium"
-                onChange={(e) => setFullName(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                style={{ width: "100%" }}
-                label="Enter email address"
-                type="text"
-                size="medium"
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                style={{ width: "100%" }}
-                label="Create password"
-                type={showPassword ? "text" : "password"}
-                size="medium"
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              {errorMessage !== "" ? (
-                <Alert severity="error">{errorMessage}</Alert>
-              ) : null}
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                style={{ width: "100%" }}
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Sign Up
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Button color="primary">
-                <a href="/login" style={{ textDecoration: "none" }}>
-                  Already have an account? Log in
-                </a>
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
+        </form>
       </Grid>
     </Grid>
   ) : (
