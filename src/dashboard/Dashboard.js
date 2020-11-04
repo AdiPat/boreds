@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase/app";
-import DashDrawer from "./DashDrawer";
+import { DashDrawer } from "./DashDrawer";
 
 function Dashboard(props) {
   const history = useHistory();
