@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -149,6 +150,12 @@ function DashDrawer(props) {
               <LibraryBooksIcon />
             </ListItemIcon>
             <ListItemText primary="Boards" />
+          </ListItem>
+          <ListItem button key="Profile">
+            <ListItemIcon>
+              <AccountBoxRounded />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
           </ListItem>
           <ListItem button key="Logout" onClick={handleLogout}>
             <ListItemIcon>
