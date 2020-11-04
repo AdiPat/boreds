@@ -10,6 +10,13 @@ import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import Typography from "@material-ui/core/Typography";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "firebase/app";
 
 const drawerWidth = 240;
@@ -108,6 +115,9 @@ function DashDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
+          <Typography variant="h6" noWrap>
+            Boreds
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -133,6 +143,20 @@ function DashDrawer(props) {
           </IconButton>
         </div>
         <Divider />
+        <List>
+          <ListItem button key="Boards">
+            <ListItemIcon>
+              <LibraryBooksIcon />
+            </ListItemIcon>
+            <ListItemText primary="Boards" />
+          </ListItem>
+          <ListItem button key="Logout" onClick={handleLogout}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
       </Drawer>
     </div>
   );
