@@ -12,6 +12,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
 import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import List from "@material-ui/core/List";
@@ -145,6 +146,12 @@ function DashDrawer(props) {
         </div>
         <Divider />
         <List>
+          <ListItem button key="CreateBoard">
+            <ListItemIcon>
+              <AddCircleRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Create Board" />
+          </ListItem>
           <ListItem button key="Boards">
             <ListItemIcon>
               <LibraryBooksIcon />
