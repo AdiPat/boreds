@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -19,6 +20,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "firebase/app";
+import { CreateBoardModal } from "./CreateBoardModal";
 
 const drawerWidth = 240;
 
@@ -81,6 +83,15 @@ function DashDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const handleLogout = () => {
     firebase.auth().signOut();
@@ -136,7 +147,7 @@ function DashDrawer(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button key="CreateBoard">
+          <ListItem button key="CreateBoard" onClick={handleOpenModal}>
             <ListItemIcon>
               <AddCircleRoundedIcon />
             </ListItemIcon>
@@ -162,6 +173,11 @@ function DashDrawer(props) {
           </ListItem>
         </List>
       </Drawer>
+      <CreateBoardModal
+        handleOpenModal={handleOpenModal}
+        handleCloseModal={handleCloseModal}
+        openModal={openModal}
+      ></CreateBoardModal>
     </div>
   );
 }
