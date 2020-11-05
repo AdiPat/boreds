@@ -11,6 +11,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import firebase from "firebase/app";
 import { boardsData } from "./boardsData";
 import { DashDrawer } from "./DashDrawer";
+import { BoardList } from "./BoardList";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -71,17 +72,10 @@ function Dashboard(props) {
           alignItems="center"
           style={{ marginLeft: "10px", padding: "20px" }}
         >
-          {boardsData.map((boardItem) => (
-            <Grid item xs={2}>
-              <Card style={{ margin: "10px", width: "200px", height: "100px" }}>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography variant="h5">{boardItem.title}</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
+          <Grid xs={12}>
+            <Typography variant="h4">Your Boards</Typography>
+          </Grid>
+          <BoardList boardsList={boardsData}></BoardList>
         </Grid>
       </main>
     </div>
