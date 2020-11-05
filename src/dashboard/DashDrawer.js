@@ -1,4 +1,3 @@
-import { useState } from "react";
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -82,15 +81,6 @@ function DashDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpenDrawer(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpenDrawer(false);
-  };
 
   const handleLogout = () => {
     firebase.auth().signOut();

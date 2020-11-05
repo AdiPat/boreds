@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import firebase from "firebase/app";
 import { boardsData } from "./boardsData";
 import { DashDrawer } from "./DashDrawer";
@@ -32,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard(props) {
   const history = useHistory();
   const classes = useStyles();
-  const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleDrawerOpen = () => {

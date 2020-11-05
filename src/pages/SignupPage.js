@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import UserContext from "../providers/UserContext";
 import Grid from "@material-ui/core/Grid";
