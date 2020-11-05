@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +6,7 @@ import Fade from "@material-ui/core/Fade";
 import Backdrop from "@material-ui/core/Backdrop";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -23,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateBoardModal(props) {
   const classes = useStyles();
-  const [newBoardName, setNewBoardName] = useState(props.newBoardName);
+  const [newBoardName, setNewBoardName] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleChange = (e) => {
     setNewBoardName(e.target.value);
@@ -32,46 +35,68 @@ function CreateBoardModal(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     let newBoardsList = Array.from(props.boardsList);
+    if (newBoardName === "") {
+      setSnackbarMessage("Board title empty");
+      setOpenSnackbar(true);
+      return;
+    }
     console.log("Add board", newBoardsList, newBoardName);
     newBoardsList.push({ title: newBoardName });
     props.setBoardsList(newBoardsList);
+    setSnackbarMessage(`Board ${newBoardName} created`);
+    setOpenSnackbar(true);
+    setNewBoardName("");
     props.handleCloseModal();
   };
 
   return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      className={classes.modal}
-      open={props.openModal}
-      onClose={props.handleCloseModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
-    >
-      <Fade in={props.openModal}>
-        <div className={classes.paper}>
-          <form onSubmit={handleSubmit}>
-            <Grid container direction="column" justify="center">
-              <Grid item xs={12}>
-                <TextField
-                  label="Add board title"
-                  variant="outlined"
-                  onChange={handleChange}
-                />
+    <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={props.openModal}
+        onClose={props.handleCloseModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={props.openModal}>
+          <div className={classes.paper}>
+            <form onSubmit={handleSubmit}>
+              <Grid container direction="column" justify="center">
+                <Grid item xs={12}>
+                  <TextField
+                    label="Add board title"
+                    variant="outlined"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "10px" }}>
+                  <Button type="submit" variant="contained" color="primary">
+                    Create board
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12} style={{ marginTop: "10px" }}>
-                <Button type="submit" variant="contained" color="primary">
-                  Create board
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Fade>
-    </Modal>
+            </form>
+          </div>
+        </Fade>
+      </Modal>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={openSnackbar}
+        onClose={(event, reason) => {
+          setOpenSnackbar(false);
+        }}
+        autoHideDuration={3000}
+        message={snackbarMessage}
+      />
+    </div>
   );
 }
 
