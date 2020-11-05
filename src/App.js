@@ -5,6 +5,7 @@ import { SignupPage } from "./pages/SignupPage";
 import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import UserProvider from "./providers/UserProvider";
+import { firebaseApp } from "./firebase/firebase";
 import "./App.css";
 
 function App() {
