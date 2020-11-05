@@ -3,7 +3,13 @@ import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import firebase from "firebase/app";
+import { boardsData } from "./boardsData";
 import { DashDrawer } from "./DashDrawer";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(8),
+    paddingRight: 0,
   },
 }));
 
@@ -49,15 +56,32 @@ function Dashboard(props) {
         handleLogout={handleLogout}
       ></DashDrawer>
       <main className={classes.content}>
-        <Grid container style={{ marginLeft: "10px" }}>
-          <Grid item xs={12} className={classes.toolbar}>
-            <h1>Welcome {props.user.email}</h1>
+        <Grid container style={{ marginLeft: "10px", padding: "20px" }}>
+          <Grid item xs={12} spacing={2}>
+            <Typography variant="subtitle1">
+              Welcome {props.user.email}
+            </Typography>
           </Grid>
-          <Grid item xs={12} className={classes.toolbar}>
-            <Button type="contained" color="primary" onClick={handleLogout}>
-              Logout
-            </Button>
+          <Grid item xs={12}>
+            <Divider />
           </Grid>
+        </Grid>
+        <Grid
+          container
+          alignItems="center"
+          style={{ marginLeft: "10px", padding: "20px" }}
+        >
+          {boardsData.map((boardItem) => (
+            <Grid item xs={2}>
+              <Card style={{ margin: "10px", width: "200px", height: "100px" }}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography variant="h5">{boardItem.title}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
       </main>
     </div>
