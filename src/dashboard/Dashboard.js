@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -29,6 +29,11 @@ function Dashboard(props) {
   const history = useHistory();
   const classes = useStyles();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [boardsList, setBoardsList] = useState([]);
+
+  useEffect(() => {
+    setBoardsList(boardsData);
+  });
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -70,7 +75,7 @@ function Dashboard(props) {
           <Grid xs={12}>
             <Typography variant="h4">Your Boards</Typography>
           </Grid>
-          <BoardList boardsList={boardsData}></BoardList>
+          <BoardList boardsList={boardsList}></BoardList>
         </Grid>
       </main>
     </div>
