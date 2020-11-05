@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Grid from "@material-ui/core/Grid";
@@ -22,6 +23,20 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateBoardModal(props) {
   const classes = useStyles();
+  const [newBoardName, setNewBoardName] = useState(props.newBoardName);
+
+  const handleChange = (e) => {
+    setNewBoardName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let newBoardsList = Array.from(props.boardsList);
+    console.log("Add board", newBoardsList, newBoardName);
+    newBoardsList.push({ title: newBoardName });
+    props.setBoardsList(newBoardsList);
+    props.handleCloseModal();
+  };
 
   return (
     <Modal
@@ -38,16 +53,22 @@ function CreateBoardModal(props) {
     >
       <Fade in={props.openModal}>
         <div className={classes.paper}>
-          <Grid container direction="column" justify="center">
-            <Grid item xs={12}>
-              <TextField label="Add board title" variant="outlined" />
+          <form onSubmit={handleSubmit}>
+            <Grid container direction="column" justify="center">
+              <Grid item xs={12}>
+                <TextField
+                  label="Add board title"
+                  variant="outlined"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} style={{ marginTop: "10px" }}>
+                <Button type="submit" variant="contained" color="primary">
+                  Create board
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} style={{ marginTop: "10px" }}>
-              <Button variant="contained" color="primary">
-                Create board
-              </Button>
-            </Grid>
-          </Grid>
+          </form>
         </div>
       </Fade>
     </Modal>

@@ -29,11 +29,7 @@ function Dashboard(props) {
   const history = useHistory();
   const classes = useStyles();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [boardsList, setBoardsList] = useState([]);
-
-  useEffect(() => {
-    setBoardsList(boardsData);
-  });
+  const [boardsList, setBoardsList] = useState(boardsData);
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -55,6 +51,8 @@ function Dashboard(props) {
         handleDrawerOpen={handleDrawerOpen}
         handleDrawerClose={handleDrawerClose}
         handleLogout={handleLogout}
+        boardsList={boardsList}
+        setBoardsList={setBoardsList}
       ></DashDrawer>
       <main className={classes.content}>
         <Grid container style={{ marginLeft: "10px", padding: "20px" }}>
