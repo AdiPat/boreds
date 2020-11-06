@@ -34,10 +34,7 @@ function Dashboard(props) {
         boardsList={boardsList}
         setBoardsList={setBoardsList}
       ></DashDrawer>
-      <DashContent
-        user={props.user}
-        boardsList={props.boardsList}
-      ></DashContent>
+      <DashContent user={props.user} boardsList={boardsList}></DashContent>
     </div>
   );
 }
