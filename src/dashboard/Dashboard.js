@@ -8,16 +8,7 @@ import { DashContent } from "./DashContent";
 
 function Dashboard(props) {
   const history = useHistory();
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [boardsList, setBoardsList] = useState(boardsData);
-
-  const handleDrawerOpen = () => {
-    setOpenDrawer(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpenDrawer(false);
-  };
 
   const handleLogout = () => {
     firebase.auth().signOut();
@@ -27,10 +18,6 @@ function Dashboard(props) {
   return (
     <div>
       <DashDrawer
-        openDrawer={openDrawer}
-        handleDrawerOpen={handleDrawerOpen}
-        handleDrawerClose={handleDrawerClose}
-        handleLogout={handleLogout}
         boardsList={boardsList}
         setBoardsList={setBoardsList}
       ></DashDrawer>

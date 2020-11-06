@@ -84,9 +84,18 @@ function DashDrawer(props) {
   const theme = useTheme();
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleShowBoards = () => {
     history.push("/dashboard");
+  };
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
   };
 
   const handleOpenModal = () => {
@@ -107,17 +116,17 @@ function DashDrawer(props) {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: props.openDrawer,
+          [classes.appBarShift]: openDrawer,
         })}
       >
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={props.handleDrawerOpen}
+            onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, {
-              [classes.hide]: props.openDrawer,
+              [classes.hide]: openDrawer,
             })}
           >
             <MenuIcon />
@@ -130,18 +139,18 @@ function DashDrawer(props) {
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
-          [classes.drawerOpen]: props.openDrawer,
-          [classes.drawerClose]: !props.openDrawer,
+          [classes.drawerOpen]: openDrawer,
+          [classes.drawerClose]: !openDrawer,
         })}
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: props.openDrawer,
-            [classes.drawerClose]: !props.openDrawer,
+            [classes.drawerOpen]: openDrawer,
+            [classes.drawerClose]: !openDrawer,
           }),
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={props.handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
