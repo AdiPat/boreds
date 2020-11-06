@@ -85,6 +85,10 @@ function DashDrawer(props) {
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
 
+  const handleShowBoards = () => {
+    history.push("/dashboard");
+  };
+
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -153,7 +157,7 @@ function DashDrawer(props) {
             </ListItemIcon>
             <ListItemText primary="Create Board" />
           </ListItem>
-          <ListItem button key="Boards">
+          <ListItem button key="Boards" onClick={handleShowBoards}>
             <ListItemIcon>
               <LibraryBooksIcon />
             </ListItemIcon>
