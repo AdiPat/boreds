@@ -32,8 +32,7 @@ function CreateBoardModal(props) {
     setNewBoardName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const addBoardToDashboard = () => {
     let newBoardsList = Array.from(props.boardsList);
     if (newBoardName === "") {
       setSnackbarMessage("Board title empty");
@@ -43,6 +42,11 @@ function CreateBoardModal(props) {
     console.log("Add board", newBoardsList, newBoardName);
     newBoardsList.push({ title: newBoardName });
     props.setBoardsList(newBoardsList);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addBoardToDashboard();
     setSnackbarMessage(`Board ${newBoardName} created`);
     setOpenSnackbar(true);
     setNewBoardName("");
