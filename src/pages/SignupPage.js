@@ -20,7 +20,7 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const user = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();

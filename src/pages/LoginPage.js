@@ -18,7 +18,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const user = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {

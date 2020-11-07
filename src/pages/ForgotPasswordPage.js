@@ -14,7 +14,7 @@ function ForgotPasswordPage() {
   const [linkSent, setLinkSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
-  const user = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     if (user) {
