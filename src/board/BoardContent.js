@@ -5,6 +5,8 @@ import { BoardList } from "./BoardList";
 
 const useStyles = makeStyles((theme) => ({
   content: {
+    display: "flex",
+    flexDirection: "row",
     flexGrow: 1,
     paddingRight: 0,
     paddingLeft: 0,
