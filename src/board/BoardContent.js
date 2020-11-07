@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
     marginLeft: theme.spacing(10),
     marginTop: theme.spacing(10),
+    alignItems: "flex-start",
   },
 }));
 
