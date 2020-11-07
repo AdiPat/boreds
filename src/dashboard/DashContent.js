@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import { BoardList } from "./BoardList";
+import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -14,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
 function DashContent(props) {
   const classes = useStyles();
+  const { state, setBoardsList } = useContext(AppContext);
+  const boardsList = state.boardsList;
 
   return (
     <main className={classes.content}>
@@ -35,7 +39,7 @@ function DashContent(props) {
         <Grid xs={12}>
           <Typography variant="h4">Your Boards</Typography>
         </Grid>
-        <BoardList boardsList={props.boardsList}></BoardList>
+        <BoardList boardsList={boardsList}></BoardList>
       </Grid>
     </main>
   );

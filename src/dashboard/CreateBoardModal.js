@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
+import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -27,13 +28,15 @@ function CreateBoardModal(props) {
   const [newBoardName, setNewBoardName] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const { state, setBoardsList } = useContext(AppContext);
+  const boardsList = state.boardsList;
 
   const handleChange = (e) => {
     setNewBoardName(e.target.value);
   };
 
   const addBoardToDashboard = () => {
-    let newBoardsList = Array.from(props.boardsList);
+    let newBoardsList = Array.from(boardsList);
     if (newBoardName === "") {
       setSnackbarMessage("Board title empty");
       setOpenSnackbar(true);
@@ -41,7 +44,7 @@ function CreateBoardModal(props) {
     }
     console.log("Add board", newBoardsList, newBoardName);
     newBoardsList.push({ title: newBoardName });
-    props.setBoardsList(newBoardsList);
+    setBoardsList(newBoardsList);
   };
 
   const handleSubmit = (e) => {

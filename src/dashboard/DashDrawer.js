@@ -190,8 +190,6 @@ function DashDrawer(props) {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        setBoardsList={props.setBoardsList}
-        boardsList={props.boardsList}
       ></CreateBoardModal>
     </div>
   );
