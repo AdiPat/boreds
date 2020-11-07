@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { BoardList } from "./BoardList";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,7 +18,7 @@ function BoardContent(props) {
 
   return (
     <main className={classes.content}>
-      <h1>Sample Text</h1>
+      <BoardList title={"First Board"} />
     </main>
   );
 }
