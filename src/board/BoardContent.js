@@ -28,6 +28,8 @@ function BoardContent(props) {
         style={{ backgroundColor: "white" }}
         editable
         canAddLanes
+        draggable
+        onDataChange={(newData) => console.log(newData)}
       ></Board>
     </main>
   );
