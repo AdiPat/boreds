@@ -7,14 +7,14 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
-import UserContext from "../providers/UserContext";
+import AppContext from "../providers/AppContext";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [linkSent, setLinkSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
-  const user = useContext(UserContext);
+  const user = useContext(AppContext);
 
   useEffect(() => {
     if (user) {

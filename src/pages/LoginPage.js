@@ -11,14 +11,14 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
-import UserContext from "../providers/UserContext";
+import AppContext from "../providers/AppContext";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const user = useContext(UserContext);
+  const user = useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {

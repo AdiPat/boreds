@@ -4,13 +4,13 @@ import { HomePage } from "./pages/HomePage";
 import { SignupPage } from "./pages/SignupPage";
 import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
-import UserProvider from "./providers/UserProvider";
+import AppProvider from "./providers/AppProvider";
 import { firebaseApp } from "./firebase/firebase";
 import "./App.css";
 
 function App() {
   return (
-    <UserProvider>
+    <AppProvider>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -30,7 +30,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </UserProvider>
+    </AppProvider>
   );
 }
 

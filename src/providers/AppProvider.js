@@ -1,8 +1,8 @@
 import React from "react";
 import firebase from "firebase/app";
-import UserContext from "./UserContext";
+import AppContext from "./AppContext";
 
-class UserProvider extends React.Component {
+class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,12 +19,11 @@ class UserProvider extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={this.state.user}>
+      <AppContext.Provider value={this.state.user}>
         {this.props.children}
-      </UserContext.Provider>
+      </AppContext.Provider>
     );
   }
 }
 
-export { UserContext };
-export default UserProvider;
+export default AppProvider;

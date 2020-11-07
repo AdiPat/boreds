@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import UserContext from "../providers/UserContext";
+import AppContext from "../providers/AppContext";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -20,7 +20,7 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const user = useContext(UserContext);
+  const user = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
