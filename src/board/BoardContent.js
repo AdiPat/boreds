@@ -1,7 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { BoardList } from "./BoardList";
+import Board from "react-trello";
+import { sampleLanes } from "./sampleBoardLists";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -19,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
 function BoardContent(props) {
   const classes = useStyles();
 
-  const renderBoardLists = (lists) => {
-    return lists.map((list) => (
-      <BoardList title={list.title} cards={list.cards} />
-    ));
-  };
-
   return (
     <main className={classes.content}>
-      {renderBoardLists(props.boardLists)}
+      {/* {renderBoardLists(props.boardLists)} */}
+      <Board
+        data={sampleLanes}
+        style={{ backgroundColor: "white" }}
+        editable
+        canAddLanes
+      ></Board>
     </main>
   );
 }
