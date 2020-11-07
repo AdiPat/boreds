@@ -12,6 +12,9 @@ const sampleBoardLists = [
       "Work on ABC",
       "Test data",
       "This is another card",
+      "This is a longer list",
+      "One more card",
+      "Adding 1",
     ],
   },
   {
