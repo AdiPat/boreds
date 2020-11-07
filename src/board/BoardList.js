@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 1),
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#ececec",
+    backgroundColor: "#ebecf0",
     borderRadius: 5,
   },
   boardListTitle: {
