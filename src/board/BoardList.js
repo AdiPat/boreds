@@ -26,13 +26,18 @@ const useStyles = makeStyles((theme) => ({
 function BoardList(props) {
   const classes = useStyles();
 
+  const renderBoardListCards = (listCards) => {
+    return listCards.map((listCard) => <BoardListCard cardText={listCard} />);
+  };
+
   return (
     <div className={classes.boardList}>
       <div className={classes.boardListTitle}>
         <Typography variant="h6">{props.title}</Typography>
       </div>
+
       <div className={classes.boardListContainer}>
-        <BoardListCard cardText="First Card" />
+        {renderBoardListCards(props.cards)}
       </div>
     </div>
   );

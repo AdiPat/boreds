@@ -19,9 +19,15 @@ const useStyles = makeStyles((theme) => ({
 function BoardContent(props) {
   const classes = useStyles();
 
+  const renderBoardLists = (lists) => {
+    return lists.map((list) => (
+      <BoardList title={list.title} cards={list.cards} />
+    ));
+  };
+
   return (
     <main className={classes.content}>
-      <BoardList title={"First Board"} />
+      {renderBoardLists(props.boardLists)}
     </main>
   );
 }
