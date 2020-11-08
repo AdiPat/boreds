@@ -8,6 +8,7 @@ import { BoardPage } from "./pages/BoardPage";
 import AppProvider from "./providers/AppProvider";
 import { firebaseApp } from "./firebase/firebase";
 import "./App.css";
+import Profile from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             <DashPage />
           </Route>
           <Route path="/board/:boardId" component={BoardPage} />
+          <Route exact path="/profile">
+            <Profile />
+          </Route>
         </Switch>
       </Router>
     </AppProvider>

@@ -111,6 +111,10 @@ function DashDrawer(props) {
     history.push("/login");
   };
 
+  const handleProfileClick = () => {
+    history.push("/profile");
+  };
+
   return (
     <div>
       <AppBar
@@ -172,7 +176,7 @@ function DashDrawer(props) {
             </ListItemIcon>
             <ListItemText primary="Boards" />
           </ListItem>
-          <ListItem button key="Profile">
+          <ListItem button key="Profile" onClick={handleProfileClick}>
             <ListItemIcon>
               <AccountBoxRounded />
             </ListItemIcon>
