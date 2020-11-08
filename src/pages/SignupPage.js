@@ -31,11 +31,22 @@ function SignupPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(email, password);
+
+    if (fullName === "") {
+      setErrorMessage("Name is required.");
+      return;
+    }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
         console.log("SignupPage: Created user - ", userAuth);
+        userAuth.user
+          .updateProfile({
+            displayName: fullName,
+          })
+          .catch((err) => console.log("Failed to update display name", err));
       })
       .catch(function (error) {
         // Handle Errors here.
