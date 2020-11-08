@@ -12,16 +12,19 @@ import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 import AppContext from "../providers/AppContext";
+import { CircularLoader } from "../components/CircularLoader";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1000);
     // redirect to dashboard
     if (user) {
       history.push("/dashboard");
@@ -41,7 +44,9 @@ function LoginPage() {
       });
   };
 
-  return (
+  return isLoading ? (
+    <CircularLoader color="secondary" />
+  ) : (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container

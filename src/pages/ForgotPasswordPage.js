@@ -8,15 +8,21 @@ import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 import AppContext from "../providers/AppContext";
+import { CircularLoader } from "../components/CircularLoader";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [linkSent, setLinkSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const { user } = useContext(AppContext);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
     if (user) {
       history.push("/dashboard");
     }
@@ -40,7 +46,9 @@ function ForgotPasswordPage() {
     setLinkSent(true);
   };
 
-  return (
+  return isLoading ? (
+    <CircularLoader color="secondary" />
+  ) : (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container

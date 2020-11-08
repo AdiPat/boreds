@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import AppContext from "../providers/AppContext";
 import Grid from "@material-ui/core/Grid";
@@ -11,6 +11,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Alert from "@material-ui/lab/Alert";
+import { CircularLoader } from "../components/CircularLoader";
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -20,7 +21,12 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AppContext);
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1000);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +45,9 @@ function SignupPage() {
       });
   };
 
-  return user == null ? (
+  return isLoading ? (
+    <CircularLoader color="secondary" />
+  ) : user == null ? (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container
