@@ -14,6 +14,7 @@ import Alert from "@material-ui/lab/Alert";
 import { CircularLoader } from "../components/CircularLoader";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 
 function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -45,6 +46,15 @@ function SignupPage() {
         userAuth.user
           .updateProfile({
             displayName: fullName,
+          })
+          .then(() => {
+            const user = firebase.auth().currentUser;
+            firebase.database().ref(`users/${user.uid}`).set({
+              userId: user.uid,
+              displayName: user.displayName,
+              email: user.email,
+              boards: [],
+            });
           })
           .catch((err) => console.log("Failed to update display name", err));
       })

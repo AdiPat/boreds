@@ -33,10 +33,29 @@ function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        firebase
+          .database()
+          .ref(`users/${user.uid}`)
+          .once("value")
+          .then((snapshot) => {
+            console.log("Login: Snapshot - ", snapshot.val());
+            if (snapshot.val() === null) {
+              console.log("There is no data for this user. Addding.");
+              const user = firebase.auth().currentUser;
+              firebase.database().ref(`users/${user.uid}`).set({
+                userId: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                boards: [],
+              });
+            }
+          });
+      })
       .catch(function (error) {
         let errorCode = error.code;
         setErrorMessage(error.message);
