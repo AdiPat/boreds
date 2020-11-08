@@ -8,7 +8,8 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import AppContext from "../providers/AppContext";
-import { addNewBoard, getCurrentUser, getBoards } from "../services/user";
+import { getCurrentUser } from "../services/user";
+import { addNewBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
