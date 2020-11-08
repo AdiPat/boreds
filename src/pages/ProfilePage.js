@@ -8,6 +8,8 @@ import { DashDrawer } from "../components/DashDrawer";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import firebase from "firebase/app";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -19,12 +21,48 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile(props) {
   const [isLoading, setIsLoading] = useState(true);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const { user } = useContext(AppContext);
   const classes = useStyles();
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000);
   });
+
+  const handleClick = () => {
+    let user = firebase.auth().currentUser;
+    let credential = firebase.auth.EmailAuthProvider.credential(
+      firebase.auth().currentUser.email,
+      oldPassword
+    );
+    user
+      .reauthenticateWithCredential(credential)
+      .then(() => {
+        console.log("Password verified.");
+        user
+          .updatePassword(newPassword)
+          .then(() => {
+            console.log("Password changed!");
+            setErrorMessage("");
+            setSuccessMessage("Password changed successfully.");
+          })
+          .catch((error) => {
+            console.log("Unable to change password.");
+            console.log(error);
+            setErrorMessage(error.message);
+            setSuccessMessage("");
+          });
+      })
+      .catch((error) => {
+        console.log("Password not verified.");
+        console.log(error);
+        setErrorMessage(error.message);
+        setSuccessMessage("");
+      });
+  };
 
   return isLoading ? (
     <CircularLoader color="secondary" />
@@ -39,26 +77,38 @@ function Profile(props) {
           <Grid item xs={12}>
             <Typography variant="h6">Password Reset</Typography>
           </Grid>
-          <Grid item xs={12} style={{ marginBottom: "5px" }}>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
             <TextField
               variant="outlined"
               placeholder="Enter old password"
-              type="text"
+              type="password"
               size="medium"
               label="Old Password"
+              onChange={(e) => setOldPassword(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12} style={{ marginBottom: "5px" }}>
+          <Grid item xs={12} style={{ marginBottom: "8px" }}>
             <TextField
               variant="outlined"
               placeholder="Enter new password"
-              type="text"
+              type="password"
               size="medium"
               label="New Password"
+              onChange={(e) => setNewPassword(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12}>
-            <Button color="secondary" variant="contained">
+          {errorMessage !== "" ? (
+            <Grid item xs={4}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid>
+          ) : null}
+          {successMessage !== "" ? (
+            <Grid item xs={4}>
+              <Alert severity="success">{successMessage}</Alert>
+            </Grid>
+          ) : null}
+          <Grid item xs={12} style={{ marginTop: "8px" }}>
+            <Button color="secondary" variant="contained" onClick={handleClick}>
               Change Password
             </Button>
           </Grid>
