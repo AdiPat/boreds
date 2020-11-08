@@ -15,6 +15,7 @@ import { CircularLoader } from "../components/CircularLoader";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import { updateUserOnSignup } from "../services/user";
 
 function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -49,12 +50,7 @@ function SignupPage() {
           })
           .then(() => {
             const user = firebase.auth().currentUser;
-            firebase.database().ref(`users/${user.uid}`).set({
-              userId: user.uid,
-              displayName: user.displayName,
-              email: user.email,
-              boards: [],
-            });
+            updateUserOnSignup(user.uid, user);
           })
           .catch((err) => console.log("Failed to update display name", err));
       })

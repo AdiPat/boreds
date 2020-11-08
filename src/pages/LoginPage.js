@@ -13,6 +13,7 @@ import Alert from "@material-ui/lab/Alert";
 import firebase from "firebase/app";
 import AppContext from "../providers/AppContext";
 import { CircularLoader } from "../components/CircularLoader";
+import { updateUserIfNotFound } from "../services/user";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,23 +39,7 @@ function LoginPage() {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         const user = firebase.auth().currentUser;
-        firebase
-          .database()
-          .ref(`users/${user.uid}`)
-          .once("value")
-          .then((snapshot) => {
-            console.log("Login: Snapshot - ", snapshot.val());
-            if (snapshot.val() === null) {
-              console.log("There is no data for this user. Addding.");
-              const user = firebase.auth().currentUser;
-              firebase.database().ref(`users/${user.uid}`).set({
-                userId: user.uid,
-                displayName: user.displayName,
-                email: user.email,
-                boards: [],
-              });
-            }
-          });
+        updateUserIfNotFound(user);
       })
       .catch(function (error) {
         let errorCode = error.code;
