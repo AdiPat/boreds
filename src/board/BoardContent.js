@@ -1,8 +1,9 @@
+import { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Board from "react-trello";
-import { sampleLanes } from "./sampleBoardLists";
+import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -19,12 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 function BoardContent(props) {
   const classes = useStyles();
+  const { state } = useContext(AppContext);
+
+  const [curBoardData, setCurBoardData] = useState(
+    state.boardsList[props.boardId]
+  );
 
   return (
     <main className={classes.content}>
       {/* {renderBoardLists(props.boardLists)} */}
       <Board
-        data={sampleLanes}
+        data={curBoardData}
         style={{ backgroundColor: "white" }}
         editable
         canAddLanes
