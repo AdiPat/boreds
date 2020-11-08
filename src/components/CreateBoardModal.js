@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import AppContext from "../providers/AppContext";
+import { addNewBoard, getCurrentUser, getBoards } from "../services/user";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -35,25 +36,20 @@ function CreateBoardModal(props) {
     setNewBoardName(e.target.value);
   };
 
-  const addBoardToDashboard = () => {
-    let newBoardsList = Array.from(boardsList);
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (newBoardName === "") {
       setSnackbarMessage("Board title empty");
       setOpenSnackbar(true);
       return;
     }
-    console.log("Add board", newBoardsList, newBoardName);
-    newBoardsList.push({ title: newBoardName });
-    setBoardsList(newBoardsList);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addBoardToDashboard();
+    const user = getCurrentUser();
+    addNewBoard(user.uid, newBoardName);
     setSnackbarMessage(`Board ${newBoardName} created`);
     setOpenSnackbar(true);
     setNewBoardName("");
     props.handleCloseModal();
+    //window.location.reload(false);
   };
 
   return (
