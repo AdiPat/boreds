@@ -6,10 +6,17 @@ import Typography from "@material-ui/core/Typography";
 
 function BoardListItem(props) {
   return (
-    <Grid item xs={2}>
+    <Grid item xs={12} sm={4} md={2}>
       <Card
         onClick={props.clickHandler}
-        style={{ margin: "10px", width: "200px", height: "100px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "10px",
+          width: "150px",
+          height: "100px",
+        }}
       >
         <CardActionArea>
           <CardContent>
