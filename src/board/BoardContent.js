@@ -7,6 +7,7 @@ import AppContext from "../providers/AppContext";
 import firebase from "firebase/app";
 import { CircularLoader } from "../components/CircularLoader";
 import "firebase/database";
+import { padEmptyLanes } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -30,9 +31,13 @@ function BoardContent(props) {
 
   useEffect(() => {
     let data = state.boardsList[props.boardId];
-    console.log(`Board Data: boardId=${props.boardId}`, data);
     if (data) {
-      setCurBoardData(data);
+      console.log("BoardContent.useEffect: ", data);
+      let paddedData = padEmptyLanes(data);
+      console.log(`Board Data: boardId=${props.boardId}`, paddedData);
+      if (paddedData) {
+        setCurBoardData(paddedData);
+      }
     }
   });
 

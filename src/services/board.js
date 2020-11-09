@@ -68,4 +68,20 @@ const getBoards = async (userId) => {
   return boards;
 };
 
-export { getBoards, addNewBoard };
+const padEmptyLanes = (boardData) => {
+  let updatedData = boardData;
+  if (updatedData.lanes) {
+    updatedData.lanes = updatedData.lanes.map((lane) => {
+      let newLane = lane;
+      if (!newLane.cards) {
+        newLane.cards = [];
+      }
+      return newLane;
+    });
+  } else {
+    updatedData.lanes = [];
+  }
+  return updatedData;
+};
+
+export { getBoards, addNewBoard, padEmptyLanes };
