@@ -14,7 +14,9 @@ class AppProvider extends React.Component {
   }
 
   setBoardsList(newBoardsList) {
-    this.setState({ boardsList: newBoardsList });
+    if (newBoardsList) {
+      this.setState({ boardsList: newBoardsList });
+    }
   }
 
   componentDidMount() {

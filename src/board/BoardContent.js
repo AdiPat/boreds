@@ -1,9 +1,12 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Board from "react-trello";
 import AppContext from "../providers/AppContext";
+import firebase from "firebase/app";
+import { CircularLoader } from "../components/CircularLoader";
+import "firebase/database";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -21,12 +24,40 @@ const useStyles = makeStyles((theme) => ({
 function BoardContent(props) {
   const classes = useStyles();
   const { state } = useContext(AppContext);
+  const user = state.user;
 
-  const [curBoardData, setCurBoardData] = useState(
-    state.boardsList[props.boardId]
-  );
+  const [curBoardData, setCurBoardData] = useState(null);
 
-  return (
+  useEffect(() => {
+    let data = state.boardsList[props.boardId];
+    console.log(`Board Data: boardId=${props.boardId}`, data);
+    if (data) {
+      setCurBoardData(data);
+    }
+  });
+
+  const handleCardAdd = (card, laneId) => {
+    console.log("Added ", card, " to ", laneId);
+  };
+
+  console.log("BoardContent: ", curBoardData);
+
+  const handleDataChange = (newData) => {
+    console.log("handleDataChange: ", newData);
+    const lanesRef = firebase
+      .database()
+      .ref(`/users/${user.uid}/boards/${props.boardId}/lanes`);
+    lanesRef
+      .set(newData.lanes)
+      .then((d) => {
+        console.log("Updated new data");
+      })
+      .catch((err) => console.log("Failed to update lanes", err));
+  };
+
+  return curBoardData == null ? (
+    <CircularLoader color="secondary" />
+  ) : (
     <main className={classes.content}>
       {/* {renderBoardLists(props.boardLists)} */}
       <Board
@@ -35,7 +66,8 @@ function BoardContent(props) {
         editable
         canAddLanes
         draggable
-        onDataChange={(newData) => console.log(newData)}
+        onDataChange={handleDataChange}
+        onCardAdd={handleCardAdd}
       ></Board>
     </main>
   );
