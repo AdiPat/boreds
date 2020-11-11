@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -9,6 +9,7 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import { BoardList } from "./BoardList";
 import { DashPane } from "./DashPane";
 import AppContext from "../providers/AppContext";
+import { getStarredBoards, getRecentBoards } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   dashItem: {
@@ -33,18 +34,11 @@ const useStyles = makeStyles((theme) => ({
 function DashContent(props) {
   const classes = useStyles();
   const { state, setBoardsList } = useContext(AppContext);
-  const [maxRecentBoards, setMaxRecentBoards] = useState(4);
   const boardsList = state.boardsList;
-  const starredBoards = Object.keys(boardsList)
-    .filter((boardKey) => boardsList[boardKey].starred)
-    .map((boardKey) => boardsList[boardKey]);
-  let recentBoards = Object.keys(boardsList)
-    .filter((boardKey) => boardsList[boardKey].lastOpened != null)
-    .map((boardKey) => boardsList[boardKey]);
-  recentBoards.sort(
-    (b1, b2) => new Date(b2.lastOpened) - new Date(b1.lastOpened)
+  const [starredBoards, setStarredBoards] = useState(
+    getStarredBoards(boardsList)
   );
-  recentBoards = recentBoards.slice(0, maxRecentBoards);
+  const [recentBoards, setRecentBoards] = useState(getRecentBoards(boardsList));
 
   return (
     <main className={classes.content}>

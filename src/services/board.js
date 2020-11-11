@@ -106,6 +106,27 @@ const updateBoardLastOpened = (userId, boardId, lastOpened) => {
   boardRef.child("lastOpened").set(lastOpened.toString());
 };
 
+const getStarredBoards = (boards) => {
+  const starredBoardKeys = Object.keys(boards).filter(
+    (boardKey) => boards[boardKey].starred
+  );
+  const starredBoards = starredBoardKeys.map((boardKey) => boards[boardKey]);
+  return starredBoards;
+};
+
+const getRecentBoards = (boards) => {
+  const maxRecentBoards = 4;
+  const recentBoardKeys = Object.keys(boards).filter(
+    (boardKey) => boards[boardKey].lastOpened != null
+  );
+  let recentBoards = recentBoardKeys.map((boardKey) => boards[boardKey]);
+  recentBoards.sort(
+    (b1, b2) => new Date(b2.lastOpened) - new Date(b1.lastOpened)
+  );
+  recentBoards = recentBoards.slice(0, maxRecentBoards);
+  return recentBoards;
+};
+
 export {
   getBoards,
   addNewBoard,
@@ -113,4 +134,6 @@ export {
   starBoard,
   unstarBoard,
   updateBoardLastOpened,
+  getStarredBoards,
+  getRecentBoards,
 };
