@@ -3,10 +3,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { BoardList } from "./BoardList";
 import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
+  dashItem: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dashItemIcon: {
+    color: "#616161",
+  },
+  dashItemTitle: {
+    marginLeft: theme.spacing(1),
+    //textTransform: "uppercase",
+    color: "#616161",
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(8),
@@ -37,7 +50,12 @@ function DashContent(props) {
         style={{ marginLeft: "10px", padding: "20px" }}
       >
         <Grid xs={12}>
-          <Typography variant="h4">Your Boards</Typography>
+          <div className={classes.dashItem}>
+            <LibraryBooksIcon className={classes.dashItemIcon} />
+            <Typography className={classes.dashItemTitle} variant="h5">
+              Your Boards
+            </Typography>
+          </div>
         </Grid>
         <BoardList boardsList={boardsList}></BoardList>
       </Grid>
