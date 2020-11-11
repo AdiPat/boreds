@@ -136,7 +136,7 @@ function DashDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Boreds
+            Boreds {props.dashTitle}
           </Typography>
         </Toolbar>
       </AppBar>

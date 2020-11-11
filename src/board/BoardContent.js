@@ -32,6 +32,7 @@ function BoardContent(props) {
   useEffect(() => {
     let data = state.boardsList[props.boardId];
     if (data) {
+      props.setBoardTitle(" - " + data.title);
       console.log("BoardContent.useEffect: ", data);
       let paddedData = padEmptyLanes(data);
       console.log(`Board Data: boardId=${props.boardId}`, paddedData);

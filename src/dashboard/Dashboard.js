@@ -15,7 +15,7 @@ function Dashboard(props) {
 
   return (
     <div>
-      <DashDrawer></DashDrawer>
+      <DashDrawer dashTitle="Dashboard"></DashDrawer>
       <DashContent user={props.user}></DashContent>
     </div>
   );
