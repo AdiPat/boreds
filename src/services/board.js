@@ -98,4 +98,19 @@ const unstarBoard = (userId, boardId) => {
   boardRef.set(false);
 };
 
-export { getBoards, addNewBoard, padEmptyLanes, starBoard, unstarBoard };
+const updateBoardLastOpened = (userId, boardId, lastOpened) => {
+  console.log("updateBoardLastOpened");
+  const boardRef = firebase
+    .database()
+    .ref(`/users/${userId}/boards/${boardId}`);
+  boardRef.child("lastOpened").set(lastOpened.toString());
+};
+
+export {
+  getBoards,
+  addNewBoard,
+  padEmptyLanes,
+  starBoard,
+  unstarBoard,
+  updateBoardLastOpened,
+};
