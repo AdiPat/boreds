@@ -35,10 +35,8 @@ function DashContent(props) {
   const classes = useStyles();
   const { state, setBoardsList } = useContext(AppContext);
   const boardsList = state.boardsList;
-  const [starredBoards, setStarredBoards] = useState(
-    getStarredBoards(boardsList)
-  );
-  const [recentBoards, setRecentBoards] = useState(getRecentBoards(boardsList));
+  const starredBoards = getStarredBoards(boardsList);
+  const recentBoards = getRecentBoards(boardsList);
 
   return (
     <main className={classes.content}>
