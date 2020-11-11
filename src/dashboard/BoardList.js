@@ -9,8 +9,9 @@ function BoardList(props) {
   console.log("BoardList: ", boardsList);
 
   const history = useHistory();
-  const boardListComponent = Object.keys(boardsList).map((boardId) => {
-    const boardItem = boardsList[boardId];
+  const boardListComponent = Object.keys(boardsList).map((objId) => {
+    const boardItem = boardsList[objId];
+    const boardId = boardItem.id;
     return (
       <BoardListItem
         clickHandler={() => history.push(`/board/${boardId}`)}

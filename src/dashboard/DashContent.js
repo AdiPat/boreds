@@ -31,6 +31,9 @@ function DashContent(props) {
   const classes = useStyles();
   const { state, setBoardsList } = useContext(AppContext);
   const boardsList = state.boardsList;
+  const starredBoards = Object.keys(boardsList)
+    .filter((boardKey) => boardsList[boardKey].starred)
+    .map((boardKey) => boardsList[boardKey]);
 
   return (
     <main className={classes.content}>
@@ -43,6 +46,21 @@ function DashContent(props) {
         <Grid item xs={12}>
           <Divider />
         </Grid>
+      </Grid>
+      <Grid
+        container
+        alignItems="center"
+        style={{ marginLeft: "10px", padding: "20px" }}
+      >
+        <Grid xs={12}>
+          <div className={classes.dashItem}>
+            <LibraryBooksIcon className={classes.dashItemIcon} />
+            <Typography className={classes.dashItemTitle} variant="h5">
+              Starred Boards
+            </Typography>
+          </div>
+        </Grid>
+        <BoardList boardsList={starredBoards}></BoardList>
       </Grid>
       <Grid
         container
