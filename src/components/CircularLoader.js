@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
 function CircularLoader(props) {
   const classes = useStyles();
   return (
-    <div className={classes.loaderContainer}>
+    <div
+      className={classes.loaderContainer}
+      style={props.loaderHeight ? { height: props.loaderHeight } : null}
+    >
       <CircularProgress color={props.color} />
     </div>
   );

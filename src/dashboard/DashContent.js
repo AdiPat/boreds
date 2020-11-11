@@ -4,7 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import StarIcon from "@material-ui/icons/Star";
 import { BoardList } from "./BoardList";
+import { DashPane } from "./DashPane";
 import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,36 +49,16 @@ function DashContent(props) {
           <Divider />
         </Grid>
       </Grid>
-      <Grid
-        container
-        alignItems="center"
-        style={{ marginLeft: "10px", padding: "20px" }}
-      >
-        <Grid xs={12}>
-          <div className={classes.dashItem}>
-            <LibraryBooksIcon className={classes.dashItemIcon} />
-            <Typography className={classes.dashItemTitle} variant="h5">
-              Starred Boards
-            </Typography>
-          </div>
-        </Grid>
-        <BoardList boardsList={starredBoards}></BoardList>
-      </Grid>
-      <Grid
-        container
-        alignItems="center"
-        style={{ marginLeft: "10px", padding: "20px" }}
-      >
-        <Grid xs={12}>
-          <div className={classes.dashItem}>
-            <LibraryBooksIcon className={classes.dashItemIcon} />
-            <Typography className={classes.dashItemTitle} variant="h5">
-              Your Boards
-            </Typography>
-          </div>
-        </Grid>
-        <BoardList boardsList={boardsList}></BoardList>
-      </Grid>
+      <DashPane
+        paneTitle="Starred Boards"
+        icon={<StarIcon />}
+        paneBoards={starredBoards}
+      />
+      <DashPane
+        paneTitle="All Boards"
+        icon={<LibraryBooksIcon />}
+        paneBoards={boardsList}
+      />
     </main>
   );
 }
