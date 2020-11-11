@@ -14,7 +14,9 @@ function BoardList(props) {
     return (
       <BoardListItem
         clickHandler={() => history.push(`/board/${boardId}`)}
+        boardId={boardId}
         title={boardItem.title}
+        isStarred={boardItem.starred}
       ></BoardListItem>
     );
   });

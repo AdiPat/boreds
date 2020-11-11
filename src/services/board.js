@@ -84,4 +84,18 @@ const padEmptyLanes = (boardData) => {
   return updatedData;
 };
 
-export { getBoards, addNewBoard, padEmptyLanes };
+const starBoard = (userId, boardId) => {
+  const boardRef = firebase
+    .database()
+    .ref(`/users/${userId}/boards/${boardId}/starred`);
+  boardRef.set(true);
+};
+
+const unstarBoard = (userId, boardId) => {
+  const boardRef = firebase
+    .database()
+    .ref(`/users/${userId}/boards/${boardId}/starred`);
+  boardRef.set(false);
+};
+
+export { getBoards, addNewBoard, padEmptyLanes, starBoard, unstarBoard };
