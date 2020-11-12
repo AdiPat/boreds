@@ -67,7 +67,7 @@ function PasswordReset(props) {
           onChange={(e) => setOldPassword(e.target.value)}
         ></TextField>
       </Grid>
-      <Grid item xs={12} style={{ marginBottom: "16px" }}>
+      <Grid item xs={12} style={{ marginBottom: "8px" }}>
         <TextField
           variant="outlined"
           placeholder="Enter new password"

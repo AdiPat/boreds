@@ -53,7 +53,7 @@ function DisplayNameReset(props) {
   });
 
   return (
-    <Grid item container style={{ marginBottom: "16px" }}>
+    <Grid item container style={{ marginBottom: "24px" }}>
       <Grid item xs={12}>
         <Typography
           variant="body1"
@@ -67,7 +67,7 @@ function DisplayNameReset(props) {
           <strong>Display Name</strong>
         </Typography>
       </Grid>
-      <Grid item xs={12} style={{ marginBottom: "16px" }}>
+      <Grid item xs={12} style={{ marginBottom: "8px" }}>
         <TextField
           variant="outlined"
           placeholder={displayName}
@@ -88,7 +88,7 @@ function DisplayNameReset(props) {
           <Alert severity="success">{successMessage}</Alert>
         </Grid>
       ) : null}
-      <Grid item xs={12} style={{ marginTop: "16px" }}>
+      <Grid item xs={12} style={{ marginTop: "8px" }}>
         <Button color="secondary" variant="outlined" onClick={handleClick}>
           Change Display Name
         </Button>
