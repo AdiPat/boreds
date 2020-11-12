@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Toolbar, Typography, Button, useMediaQuery } from "@material-ui/core";
-import { grey, red } from "@material-ui/core/colors";
+import {
+  Toolbar,
+  Typography,
+  Button,
+  useMediaQuery,
+  IconButton,
+} from "@material-ui/core";
+import { grey, red, yellow } from "@material-ui/core/colors";
 import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
 import { VisibilityMenu } from "./VisibilityMenu";
+import { starBoard, unstarBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -28,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: red[600],
     borderColor: red[600],
+  },
+  starIcon: {
+    color: yellow[700],
   },
 }));
 
@@ -49,6 +61,14 @@ function BoardToolbar(props) {
 
   const closeVisibilitMenu = () => {
     setVisibilitMenuAnchorEl(null);
+  };
+
+  const handleStarFlip = () => {
+    if (props.starred) {
+      unstarBoard(props.userId, props.boardId);
+    } else {
+      starBoard(props.userId, props.boardId);
+    }
   };
 
   return (
@@ -95,6 +115,14 @@ function BoardToolbar(props) {
           <Typography variant="body1">Delete</Typography>
         ) : null}
       </Button>
+      <IconButton onClick={handleStarFlip}>
+        {props.starred ? (
+          <StarIcon className={classes.starIcon} />
+        ) : (
+          <StarBorderIcon />
+        )}
+      </IconButton>
+
       <DeleteBoardModal
         handleOpenModal={() => setOpenDeleteModal(true)}
         handleCloseModal={() => setOpenDeleteModal(false)}

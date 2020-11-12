@@ -9,6 +9,8 @@ function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
   const [isBoardPublic, setIsBoardPublic] = useState(false);
+  const [isBoardStarred, setIsBoardStarred] = useState(false);
+
   const { state } = useContext(AppContext);
   const boardId = props.boardId;
   const userId = state.user.uid;
@@ -30,11 +32,13 @@ function BoardHome(props) {
         boardId={props.boardId}
         boardTitle={boardTitle}
         public={isBoardPublic}
+        starred={isBoardStarred}
       />
       <BoardContent
         boardId={props.boardId}
         setBoardTitle={setBoardTitle}
         setIsBoardPublic={setIsBoardPublic}
+        setIsBoardStarred={setIsBoardStarred}
       />
     </div>
   );
