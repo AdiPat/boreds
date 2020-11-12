@@ -135,6 +135,21 @@ const deleteBoard = (userId, boardId) => {
     .catch((err) => console.log("Remove failed: ", err));
 };
 
+const setBoardVisibility = (userId, boardId, visibility) => {
+  console.log("setBoardVisibility: ", `users/${userId}/boards/${boardId}`);
+  const boardRef = firebase.database().ref(`users/${userId}/boards/${boardId}`);
+  const isBoardPublic = visibility === "public";
+  boardRef
+    .child("public")
+    .set(isBoardPublic)
+    .then(() => {
+      console.log("Set board visibility public=", isBoardPublic);
+    })
+    .catch((err) => {
+      console.log("Failed to set board visibility: ", err);
+    });
+};
+
 export {
   getBoards,
   addNewBoard,
@@ -145,4 +160,5 @@ export {
   getStarredBoards,
   getRecentBoards,
   deleteBoard,
+  setBoardVisibility,
 };
