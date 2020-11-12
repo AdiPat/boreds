@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import { Typography } from "@material-ui/core";
+import { setBoardVisibility } from "../services/board";
 
 const StyledMenu = withStyles({
   paper: {
@@ -53,14 +54,24 @@ function VisibilityMenu(props) {
           </Typography>
         </div>
         <Divider />
-        <MenuItem>
+        <MenuItem
+          button
+          onClick={() =>
+            setBoardVisibility(props.userId, props.boardId, "public")
+          }
+        >
           <ListItemIcon>
             <PublicIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Public" />
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem
+          button
+          onClick={() =>
+            setBoardVisibility(props.userId, props.boardId, "private")
+          }
+        >
           <ListItemIcon>
             <LockIcon fontSize="small" />
           </ListItemIcon>

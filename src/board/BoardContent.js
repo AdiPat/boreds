@@ -42,6 +42,7 @@ function BoardContent(props) {
       console.log(`Board Data: boardId=${props.boardId}`, paddedData);
       if (paddedData) {
         setCurBoardData(paddedData);
+        props.setIsBoardPublic(paddedData.public);
       }
     }
   });

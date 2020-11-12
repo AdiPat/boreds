@@ -64,14 +64,14 @@ function BoardToolbar(props) {
         style={{ marginRight: "16px" }}
         onClick={openVisbilityMenu}
       >
-        {props.private ? (
-          <LockIcon style={{ marginRight: theme.spacing(1) }} />
-        ) : (
+        {props.public ? (
           <PublicIcon style={{ marginRight: theme.spacing(1) }} />
+        ) : (
+          <LockIcon style={{ marginRight: theme.spacing(1) }} />
         )}
         {!mediaQueryBelowXs ? (
           <Typography variant="body1">
-            {props.private ? "Private" : "Public"}
+            {props.public ? "Public" : "Private"}
           </Typography>
         ) : null}
       </Button>
@@ -107,6 +107,8 @@ function BoardToolbar(props) {
       <VisibilityMenu
         handleClose={closeVisibilitMenu}
         anchorEl={visibilityMenuAnchorEl}
+        userId={props.userId}
+        boardId={props.boardId}
       />
     </Toolbar>
   );

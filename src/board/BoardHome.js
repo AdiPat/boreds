@@ -8,6 +8,7 @@ import { updateBoardLastOpened } from "../services/board";
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
+  const [isBoardPublic, setIsBoardPublic] = useState(false);
   const { state } = useContext(AppContext);
   const boardId = props.boardId;
   const userId = state.user.uid;
@@ -28,9 +29,13 @@ function BoardHome(props) {
         userId={props.userId}
         boardId={props.boardId}
         boardTitle={boardTitle}
-        private={true}
+        public={isBoardPublic}
       />
-      <BoardContent boardId={props.boardId} setBoardTitle={setBoardTitle} />
+      <BoardContent
+        boardId={props.boardId}
+        setBoardTitle={setBoardTitle}
+        setIsBoardPublic={setIsBoardPublic}
+      />
     </div>
   );
 }
