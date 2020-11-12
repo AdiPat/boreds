@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
   boardListCardHeader: {
     textTransform: "uppercase",
-    fontSize: "100px",
   },
 
   starIcon: {
