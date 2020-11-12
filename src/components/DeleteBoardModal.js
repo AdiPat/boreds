@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Modal,
@@ -6,6 +7,7 @@ import {
   Typography,
   Fade,
   Button,
+  Snackbar,
 } from "@material-ui/core";
 import { deleteBoard } from "../services/board";
 
@@ -29,9 +31,13 @@ const useStyles = makeStyles((theme) => ({
 
 function DeleteBoardModal(props) {
   const classes = useStyles();
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleDeleteBoard = () => {
     deleteBoard(props.userId, props.boardId);
+    setSnackbarMessage(`Deleted board ${props.boardTitle}`);
+    setOpenSnackbar(true);
     props.handleCloseModal();
   };
 
@@ -80,18 +86,18 @@ function DeleteBoardModal(props) {
           </div>
         </Fade>
       </Modal>
-      {/* <Snackbar
+      <Snackbar
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
         }}
         open={openSnackbar}
         onClose={(event, reason) => {
-          setOpenSnackbar(false);
+          setTimeout(() => setOpenSnackbar(false), 3000);
         }}
         autoHideDuration={3000}
         message={snackbarMessage}
-      /> */}
+      />
     </div>
   );
 }
