@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import { PasswordReset } from "./PasswordReset";
+import { DisplayNameReset } from "./DisplayNameReset";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -15,6 +16,7 @@ function ProfileContent() {
 
   return (
     <Grid container className={classes.content}>
+      <DisplayNameReset style={{ marginBottom: "16px" }} />
       <PasswordReset />
     </Grid>
   );

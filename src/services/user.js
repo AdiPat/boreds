@@ -43,4 +43,37 @@ const getCurrentUser = () => {
   return firebase.auth().currentUser;
 };
 
-export { updateUserOnSignup, updateUserIfNotFound, getCurrentUser };
+const getCurrentUserDisplayName = async () => {
+  const user = getCurrentUser();
+  const userId = user.uid;
+  const userRef = firebase.database().ref(`/users/${userId}/displayName`);
+  let displayName = "";
+  await userRef.once("value").then((snapshot) => {
+    displayName = snapshot.val();
+  });
+  return displayName;
+};
+
+const updateDisplayName = async (userId, newDisplayName) => {
+  const userRef = firebase.database().ref(`/users/${userId}/displayName`);
+  let status = false;
+  await userRef
+    .set(newDisplayName)
+    .then(() => {
+      console.log("Updated display name.");
+      status = true;
+    })
+    .catch((err) => {
+      console.error("Failed to update display name");
+      status = false;
+    });
+  return status;
+};
+
+export {
+  updateUserOnSignup,
+  updateUserIfNotFound,
+  getCurrentUser,
+  getCurrentUserDisplayName,
+  updateDisplayName,
+};

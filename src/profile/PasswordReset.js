@@ -88,7 +88,7 @@ function PasswordReset(props) {
         </Grid>
       ) : null}
       <Grid item xs={12} style={{ marginTop: "8px" }}>
-        <Button color="secondary" variant="contained" onClick={handleClick}>
+        <Button color="secondary" variant="outlined" onClick={handleClick}>
           Change Password
         </Button>
       </Grid>
