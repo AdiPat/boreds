@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   dashItemIcon: {
-    color: "#616161",
+    color: "#000000",
   },
   dashItemTitle: {
     marginLeft: theme.spacing(1),
     //textTransform: "uppercase",
-    color: "#616161",
+    color: "#000000",
+    fontWeight: 600,
   },
 }));
 
@@ -37,7 +38,7 @@ function DashPane(props) {
       <Grid xs={12}>
         <div className={classes.dashItem}>
           {React.cloneElement(props.icon, { className: classes.dashItemIcon })}
-          <Typography className={classes.dashItemTitle} variant="h5">
+          <Typography className={classes.dashItemTitle} variant="h6">
             {props.paneTitle}
           </Typography>
         </div>
