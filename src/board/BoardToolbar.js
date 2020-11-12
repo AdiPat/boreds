@@ -30,7 +30,7 @@ function BoardToolbar(props) {
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
       {!mediaQueryBelowXs ? (
-        <Typography type="h6" style={{ marginRight: "16px" }}>
+        <Typography type="h6" style={{ marginRight: theme.spacing(2) }}>
           <strong>{props.boardTitle}</strong>
         </Typography>
       ) : null}
@@ -40,9 +40,9 @@ function BoardToolbar(props) {
         style={{ marginRight: "16px" }}
       >
         {props.private ? (
-          <LockIcon style={{ marginRight: "8px" }} />
+          <LockIcon style={{ marginRight: theme.spacing(1) }} />
         ) : (
-          <PublicIcon style={{ marginRight: "8px" }} />
+          <PublicIcon style={{ marginRight: theme.spacing(1) }} />
         )}
         {!mediaQueryBelowXs ? (
           <Typography variant="body1">
@@ -53,9 +53,9 @@ function BoardToolbar(props) {
       <Button
         variant="outlined"
         color="primary"
-        style={{ marginRight: "16px" }}
+        style={{ marginRight: theme.spacing(2) }}
       >
-        <GroupAddIcon style={{ marginRight: "8px" }} />
+        <GroupAddIcon style={{ marginRight: theme.spacing(1) }} />
         {!mediaQueryBelowXs ? (
           <Typography variant="body1">Invite</Typography>
         ) : null}
@@ -63,9 +63,9 @@ function BoardToolbar(props) {
       <Button
         variant="outlined"
         color="primary"
-        style={{ marginRight: "16px" }}
+        style={{ marginRight: theme.spacing(2) }}
       >
-        <DeleteIcon style={{ marginRight: "8px" }} />
+        <DeleteIcon style={{ marginRight: theme.spacing(1) }} />
         {!mediaQueryBelowXs ? (
           <Typography variant="body1">Delete</Typography>
         ) : null}
