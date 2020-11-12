@@ -6,6 +6,7 @@ import { CircularLoader } from "../components/CircularLoader";
 
 function BoardPage(props) {
   const { user } = useContext(AppContext);
+  const userId = user.uid;
   const [isLoading, setIsLoading] = useState(true);
   const boardId = props.match.params.boardId;
 
@@ -18,7 +19,7 @@ function BoardPage(props) {
   return isLoading ? (
     <CircularLoader color="secondary" />
   ) : user ? (
-    <BoardHome boardId={boardId} />
+    <BoardHome boardId={boardId} userId={userId} />
   ) : (
     <Redirect to="/login" />
   );

@@ -24,7 +24,12 @@ function BoardHome(props) {
   return (
     <div>
       <DashDrawer dashTitle={" - " + boardTitle} />
-      <BoardToolbar boardTitle={boardTitle} private={true} />
+      <BoardToolbar
+        userId={props.userId}
+        boardId={props.boardId}
+        boardTitle={boardTitle}
+        private={true}
+      />
       <BoardContent boardId={props.boardId} setBoardTitle={setBoardTitle} />
     </div>
   );

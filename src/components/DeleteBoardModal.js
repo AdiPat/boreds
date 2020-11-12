@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Modal,
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DeleteBoardModal(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -39,6 +41,9 @@ function DeleteBoardModal(props) {
     setSnackbarMessage(`Deleted board ${props.boardTitle}`);
     setOpenSnackbar(true);
     props.handleCloseModal();
+    if (props.redirectUrl) {
+      setTimeout(() => history.push(props.redirectUrl), 500);
+    }
   };
 
   return (

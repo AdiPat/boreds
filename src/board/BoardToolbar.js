@@ -1,10 +1,13 @@
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Toolbar, Typography, Button, useMediaQuery } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { DeleteBoardModal } from "../components/DeleteBoardModal";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -20,12 +23,23 @@ const useStyles = makeStyles((theme) => ({
       left: theme.spacing(8),
     },
   },
+  deleteButton: {
+    marginRight: theme.spacing(2),
+    color: red[600],
+    borderColor: red[600],
+  },
 }));
 
 function BoardToolbar(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const handleDelete = () => {
+    setOpenDeleteModal(true);
+  };
 
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
@@ -52,7 +66,7 @@ function BoardToolbar(props) {
       </Button>
       <Button
         variant="outlined"
-        color="primary"
+        color={"primary"}
         style={{ marginRight: theme.spacing(2) }}
       >
         <GroupAddIcon style={{ marginRight: theme.spacing(1) }} />
@@ -62,14 +76,23 @@ function BoardToolbar(props) {
       </Button>
       <Button
         variant="outlined"
-        color="primary"
-        style={{ marginRight: theme.spacing(2) }}
+        className={classes.deleteButton}
+        onClick={handleDelete}
       >
         <DeleteIcon style={{ marginRight: theme.spacing(1) }} />
         {!mediaQueryBelowXs ? (
           <Typography variant="body1">Delete</Typography>
         ) : null}
       </Button>
+      <DeleteBoardModal
+        handleOpenModal={() => setOpenDeleteModal(true)}
+        handleCloseModal={() => setOpenDeleteModal(false)}
+        openModal={openDeleteModal}
+        boardTitle={props.boardTitle}
+        userId={props.userId}
+        boardId={props.boardId}
+        redirectUrl="/dashboard"
+      />
     </Toolbar>
   );
 }
