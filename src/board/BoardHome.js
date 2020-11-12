@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { DashDrawer } from "../components/DashDrawer";
 import { BoardContent } from "./BoardContent";
+import { BoardToolbar } from "./BoardToolbar";
 import AppContext from "../providers/AppContext";
 import { updateBoardLastOpened } from "../services/board";
 
@@ -22,7 +23,8 @@ function BoardHome(props) {
 
   return (
     <div>
-      <DashDrawer dashTitle={boardTitle} />
+      <DashDrawer dashTitle={" - " + boardTitle} />
+      <BoardToolbar boardTitle={boardTitle} private={true} />
       <BoardContent boardId={props.boardId} setBoardTitle={setBoardTitle} />
     </div>
   );

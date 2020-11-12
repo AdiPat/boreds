@@ -6,6 +6,7 @@ import Board from "react-trello";
 import AppContext from "../providers/AppContext";
 import firebase from "firebase/app";
 import { CircularLoader } from "../components/CircularLoader";
+import { BoardToolbar } from "./BoardToolbar";
 import "firebase/database";
 import { padEmptyLanes } from "../services/board";
 
@@ -16,9 +17,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     paddingRight: 0,
     paddingLeft: 0,
-    marginLeft: theme.spacing(10),
-    marginTop: theme.spacing(10),
+    marginLeft: theme.spacing(11),
+    marginTop: theme.spacing(21),
     alignItems: "flex-start",
+    ["@media (max-width: 400px)"]: {
+      marginLeft: theme.spacing(7),
+    },
   },
 }));
 
@@ -32,7 +36,7 @@ function BoardContent(props) {
   useEffect(() => {
     let data = state.boardsList[props.boardId];
     if (data) {
-      props.setBoardTitle(" - " + data.title);
+      props.setBoardTitle(data.title);
       console.log("BoardContent.useEffect: ", data);
       let paddedData = padEmptyLanes(data);
       console.log(`Board Data: boardId=${props.boardId}`, paddedData);
@@ -65,7 +69,6 @@ function BoardContent(props) {
     <CircularLoader color="secondary" />
   ) : (
     <main className={classes.content}>
-      {/* {renderBoardLists(props.boardLists)} */}
       <Board
         data={curBoardData}
         style={{ backgroundColor: "white" }}
