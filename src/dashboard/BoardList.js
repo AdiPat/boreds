@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { BoardListItem } from "./BoardListItem";
+import { DeleteBoardModal } from "../components/DeleteBoardModal";
 import { getBoards, getCurrentUser } from "../services/user";
 
 function BoardList(props) {
@@ -18,6 +19,7 @@ function BoardList(props) {
         boardId={boardId}
         title={boardItem.title}
         isStarred={boardItem.starred}
+        loadDeleteModal={props.loadDeleteModal}
       ></BoardListItem>
     );
   });

@@ -127,6 +127,14 @@ const getRecentBoards = (boards) => {
   return recentBoards;
 };
 
+const deleteBoard = (userId, boardId) => {
+  const boardRef = firebase.database().ref(`users/${userId}/boards/${boardId}`);
+  boardRef
+    .remove()
+    .then(() => console.log("Remove succeeded."))
+    .catch((err) => console.log("Remove failed: ", err));
+};
+
 export {
   getBoards,
   addNewBoard,
@@ -136,4 +144,5 @@ export {
   updateBoardLastOpened,
   getStarredBoards,
   getRecentBoards,
+  deleteBoard,
 };

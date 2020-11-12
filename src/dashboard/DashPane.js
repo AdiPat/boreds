@@ -43,7 +43,10 @@ function DashPane(props) {
         </div>
       </Grid>
       {isLoaded ? (
-        <BoardList boardsList={props.paneBoards}></BoardList>
+        <BoardList
+          loadDeleteModal={props.loadDeleteModal}
+          boardsList={props.paneBoards}
+        ></BoardList>
       ) : (
         <CircularLoader loaderHeight="100px" color="primary" />
       )}

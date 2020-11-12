@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Typography from "@material-ui/core/Typography";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +15,7 @@ import { red, purple, blue, green, yellow } from "@material-ui/core/colors";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import { starBoard, unstarBoard } from "../services/board";
+
 import AppContext from "../providers/AppContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -101,6 +103,9 @@ function BoardListItem(props) {
             ) : (
               <StarBorderIcon />
             )}
+          </IconButton>
+          <IconButton onClick={() => props.loadDeleteModal(props.boardId)}>
+            <DeleteOutlineIcon color="primary" />
           </IconButton>
         </CardActions>
       </Card>
