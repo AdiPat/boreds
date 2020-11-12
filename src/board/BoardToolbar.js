@@ -8,6 +8,7 @@ import PublicIcon from "@material-ui/icons/Public";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
+import { VisibilityMenu } from "./VisibilityMenu";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -35,10 +36,19 @@ function BoardToolbar(props) {
   const theme = useTheme();
   const history = useHistory();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleDelete = () => {
     setOpenDeleteModal(true);
+  };
+
+  const openVisbilityMenu = (event) => {
+    setVisibilitMenuAnchorEl(event.target);
+  };
+
+  const closeVisibilitMenu = () => {
+    setVisibilitMenuAnchorEl(null);
   };
 
   return (
@@ -52,6 +62,7 @@ function BoardToolbar(props) {
         variant="outlined"
         color="primary"
         style={{ marginRight: "16px" }}
+        onClick={openVisbilityMenu}
       >
         {props.private ? (
           <LockIcon style={{ marginRight: theme.spacing(1) }} />
@@ -92,6 +103,10 @@ function BoardToolbar(props) {
         userId={props.userId}
         boardId={props.boardId}
         redirectUrl="/dashboard"
+      />
+      <VisibilityMenu
+        handleClose={closeVisibilitMenu}
+        anchorEl={visibilityMenuAnchorEl}
       />
     </Toolbar>
   );
