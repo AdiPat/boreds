@@ -12,7 +12,7 @@ class AppProvider extends React.Component {
       boardsList: {},
     };
     this.setBoardsList = this.setBoardsList.bind(this);
-    this.setBoardsMigratedFlag = this.setBoardsMigratedFlag(this);
+    this.setBoardsMigratedFlag = this.setBoardsMigratedFlag.bind(this);
   }
 
   setBoardsList(newBoardsList) {
