@@ -4,7 +4,11 @@ import "firebase/database";
 import AppContext from "./AppContext";
 import { getBoardIds } from "../services/board";
 import { isBoardsMigrated, migrateBoards } from "../services/migrate";
-import { attachBoardListener } from "../services/database";
+import {
+  attachBoardAddedListener,
+  attachBoardDeleteListener,
+  attachBoardUpdateListener,
+} from "../services/database";
 
 class AppProvider extends React.Component {
   constructor(props) {
@@ -15,7 +19,8 @@ class AppProvider extends React.Component {
     };
     this.setBoardsList = this.setBoardsList.bind(this);
     this.setBoardsMigratedFlag = this.setBoardsMigratedFlag.bind(this);
-    this.setBoardItem = this.setBoardItem.bind(this);
+    this.updateBoard = this.updateBoard.bind(this);
+    this.deleteBoard = this.deleteBoard.bind(this);
   }
 
   setBoardsList(newBoardsList) {
@@ -25,16 +30,27 @@ class AppProvider extends React.Component {
   }
 
   setBoardsMigratedFlag(isMigrated) {
-    this.setState({ migated: isMigrated });
+    this.setState({ migrated: isMigrated });
   }
 
-  setBoardItem(boardId, boardData) {
+  updateBoard(boardId, boardData) {
     if (boardId && boardData) {
-      let updatedBoardList = {};
-      Object.assign(updatedBoardList, this.state.boardsList);
-      updatedBoardList[boardId] = boardData;
-      this.setBoardsList(updatedBoardList);
+      this.setState((prevState) => {
+        console.log("prevState: ", prevState);
+        let updatedState = Object.assign({}, prevState);
+        updatedState.boardsList[boardId] = boardData;
+        console.log("updatedState: ", updatedState);
+        return updatedState;
+      });
     }
+  }
+
+  deleteBoard(boardId) {
+    this.setState((prevState) => {
+      let updatedState = Object.assign({}, prevState);
+      delete updatedState.boardsList[boardId];
+      return updatedState;
+    });
   }
 
   componentDidMount() {
@@ -45,6 +61,7 @@ class AppProvider extends React.Component {
 
       if (userAuth) {
         const userId = userAuth.uid;
+        console.log("STATE: ", this.state);
 
         // migrate boards if the user is using the old format
         isBoardsMigrated(userId).then((boardMigrateFlag) => {
@@ -55,11 +72,14 @@ class AppProvider extends React.Component {
           }
         });
 
-        getBoardIds(userId).then((boardIds) =>
+        getBoardIds(userId).then((boardIds) => {
+          console.log("boardIdList: ", boardIds);
           boardIds.forEach((boardId) => {
-            attachBoardListener(boardId, thisComponent.setBoardItem);
-          })
-        );
+            attachBoardUpdateListener(boardId, thisComponent.updateBoard);
+          });
+        });
+        attachBoardAddedListener(userId, thisComponent.updateBoard);
+        attachBoardDeleteListener(userId, thisComponent.deleteBoard);
       }
     });
   }
