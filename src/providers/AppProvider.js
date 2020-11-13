@@ -35,9 +35,9 @@ class AppProvider extends React.Component {
       // migrate boards if the user is using the old format
       const boardMigrateFlag = await isBoardsMigrated(userId);
       if (!boardMigrateFlag) {
-        migrateBoards(userId, this.setBoardsMigratedFlag);
+        migrateBoards(userId, thisComponent.setBoardsMigratedFlag);
       } else {
-        this.setBoardsMigratedFlag(true);
+        thisComponent.setBoardsMigratedFlag(true);
       }
 
       const boardsRef = firebase.database().ref(`users/${userAuth.uid}/boards`);
