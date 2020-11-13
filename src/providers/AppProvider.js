@@ -47,12 +47,13 @@ class AppProvider extends React.Component {
         const userId = userAuth.uid;
 
         // migrate boards if the user is using the old format
-        const boardMigrateFlag = await isBoardsMigrated(userId);
-        if (!boardMigrateFlag) {
-          migrateBoards(userId, thisComponent.setBoardsMigratedFlag);
-        } else {
-          thisComponent.setBoardsMigratedFlag(true);
-        }
+        isBoardsMigrated(userId).then((boardMigrateFlag) => {
+          if (!boardMigrateFlag) {
+            migrateBoards(userId, thisComponent.setBoardsMigratedFlag);
+          } else {
+            thisComponent.setBoardsMigratedFlag(true);
+          }
+        });
 
         getBoardIds(userId).then((boardIds) =>
           boardIds.forEach((boardId) => {
