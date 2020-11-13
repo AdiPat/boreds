@@ -16,6 +16,7 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
+import { InviteModal } from "../components/InviteModal";
 import { VisibilityMenu } from "./VisibilityMenu";
 import { starBoard, unstarBoard } from "../services/board";
 
@@ -48,11 +49,16 @@ function BoardToolbar(props) {
   const theme = useTheme();
   const history = useHistory();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openInviteModal, setOpenInviteModal] = useState(false);
   const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleDelete = () => {
     setOpenDeleteModal(true);
+  };
+
+  const handleInvite = () => {
+    setOpenInviteModal(true);
   };
 
   const openVisbilityMenu = (event) => {
@@ -99,6 +105,7 @@ function BoardToolbar(props) {
         variant="outlined"
         color={"primary"}
         style={{ marginRight: theme.spacing(2) }}
+        onClick={handleInvite}
       >
         <GroupAddIcon style={{ marginRight: theme.spacing(1) }} />
         {!mediaQueryBelowXs ? (
@@ -131,6 +138,11 @@ function BoardToolbar(props) {
         userId={props.userId}
         boardId={props.boardId}
         redirectUrl="/dashboard"
+      />
+      <InviteModal
+        handleOpenModal={() => setOpenInviteModal(true)}
+        handleCloseModal={() => setOpenInviteModal(false)}
+        openModal={openInviteModal}
       />
       <VisibilityMenu
         handleClose={closeVisibilitMenu}
