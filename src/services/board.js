@@ -7,9 +7,15 @@ const addNewBoard = async (userId, boardTitle) => {
   const errMsg = "";
   const boardId = uniqid();
   const database = firebase.database();
+  const now = new Date();
   const boardData = {
     id: boardId,
     title: boardTitle,
+    createdAt: now.toString(),
+    starred: false,
+    owner: userId,
+    public: false,
+    lastOpened: now.toString(),
     lanes: [
       {
         id: uniqid(),
@@ -40,8 +46,22 @@ const addNewBoard = async (userId, boardTitle) => {
       },
     ],
   };
+  const userBoardRef = database.ref(`users/${userId}/boards/${boardId}`);
+  userBoardRef
+    .set({
+      id: boardId,
+      title: boardTitle,
+      createdAt: now.toString(),
+    })
+    .then(() => {
+      console.log("Successfully added board to users/board ");
+    })
+    .catch((err) => {
+      console.log("Failed to add board to users/board. ");
+    });
+
   database
-    .ref(`/users/${userId}/boards/${boardId}`)
+    .ref(`boards/${boardId}`)
     .set(boardData)
     .then(() => {
       console.log("Successfully added board: ", boardTitle);
@@ -54,18 +74,32 @@ const addNewBoard = async (userId, boardTitle) => {
 // gets boards for user
 const getBoards = async (userId) => {
   const userRef = firebase.database().ref(`users/${userId}`);
-  let boards = [];
+  let boards = {};
   try {
     const userSnapshot = await userRef.once("value");
     const user = userSnapshot.val();
     boards = user.boards;
     if (boards === undefined) {
-      boards = [];
+      boards = {};
     }
   } catch (err) {
     console.error(`Failed to get boards for ${userId}`, err);
   }
   return boards;
+};
+
+const getBoardIds = async (userId) => {
+  const database = firebase.database();
+  const boardsRef = database.ref(`/users/${userId}/boards`);
+  let boardIds = [];
+  try {
+    const boardsSnapshot = await boardsRef.once("value");
+    const boards = boardsSnapshot.val();
+    boardIds = Object.keys(boards);
+  } catch (err) {
+    console.error(`Failed to get boardIds for ${userId}`, err);
+  }
+  return boardIds;
 };
 
 const padEmptyLanes = (boardData) => {
@@ -85,24 +119,18 @@ const padEmptyLanes = (boardData) => {
 };
 
 const starBoard = (userId, boardId) => {
-  const boardRef = firebase
-    .database()
-    .ref(`/users/${userId}/boards/${boardId}/starred`);
+  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
   boardRef.set(true);
 };
 
 const unstarBoard = (userId, boardId) => {
-  const boardRef = firebase
-    .database()
-    .ref(`/users/${userId}/boards/${boardId}/starred`);
+  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
   boardRef.set(false);
 };
 
 const updateBoardLastOpened = (userId, boardId, lastOpened) => {
   console.log("updateBoardLastOpened");
-  const boardRef = firebase
-    .database()
-    .ref(`/users/${userId}/boards/${boardId}`);
+  const boardRef = firebase.database().ref(`boards/${boardId}`);
   boardRef.child("lastOpened").set(lastOpened.toString());
 };
 
@@ -128,7 +156,7 @@ const getRecentBoards = (boards) => {
 };
 
 const deleteBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`users/${userId}/boards/${boardId}`);
+  const boardRef = firebase.database().ref(`boards/${boardId}`);
   boardRef
     .remove()
     .then(() => console.log("Remove succeeded."))
@@ -136,8 +164,7 @@ const deleteBoard = (userId, boardId) => {
 };
 
 const setBoardVisibility = (userId, boardId, visibility) => {
-  console.log("setBoardVisibility: ", `users/${userId}/boards/${boardId}`);
-  const boardRef = firebase.database().ref(`users/${userId}/boards/${boardId}`);
+  const boardRef = firebase.database().ref(`boards/${boardId}`);
   const isBoardPublic = visibility === "public";
   boardRef
     .child("public")
@@ -151,9 +178,7 @@ const setBoardVisibility = (userId, boardId, visibility) => {
 };
 
 const updateBoardData = (userId, boardId, newData) => {
-  const lanesRef = firebase
-    .database()
-    .ref(`/users/${userId}/boards/${boardId}/lanes`);
+  const lanesRef = firebase.database().ref(`boards/${boardId}/lanes`);
 
   lanesRef
     .set(newData.lanes)
@@ -167,6 +192,7 @@ const updateBoardData = (userId, boardId, newData) => {
 
 export {
   getBoards,
+  getBoardIds,
   addNewBoard,
   padEmptyLanes,
   starBoard,
