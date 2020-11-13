@@ -19,24 +19,26 @@ const migrateBoards = async (userId, setMigratedFlag) => {
     const boardsRef = database.ref(`users/${userId}/boards`);
     const newBoardsRef = database.ref("boards");
     const boards = await (await boardsRef.once("value")).val();
-    let updatedBoards = {};
-    Object.keys(boards).forEach((boardKey) => {
-      let updatedBoardItem = boards[boardKey];
-      updatedBoardItem.owner = userId;
-      updatedBoards[boardKey] = updatedBoardItem;
-    });
-    newBoardsRef
-      .update(updatedBoards)
-      .then(() => {
-        console.log("Migrated boards to new location.");
-        userMigratedRef.set(true);
-        setMigratedFlag(true);
-      })
-      .catch((err) => {
-        console.log("Failed to migrate boards. ", err);
-        userMigratedRef.set(false);
-        setMigratedFlag(false);
+    if (boards) {
+      let updatedBoards = {};
+      Object.keys(boards).forEach((boardKey) => {
+        let updatedBoardItem = boards[boardKey];
+        updatedBoardItem.owner = userId;
+        updatedBoards[boardKey] = updatedBoardItem;
       });
+      newBoardsRef
+        .update(updatedBoards)
+        .then(() => {
+          console.log("Migrated boards to new location.");
+          userMigratedRef.set(true);
+          setMigratedFlag(true);
+        })
+        .catch((err) => {
+          console.log("Failed to migrate boards. ", err);
+          userMigratedRef.set(false);
+          setMigratedFlag(false);
+        });
+    }
   }
 };
 
