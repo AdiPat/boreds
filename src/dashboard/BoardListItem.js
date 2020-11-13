@@ -14,6 +14,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { red, purple, blue, green, yellow } from "@material-ui/core/colors";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
+import Tooltip from "@material-ui/core/Tooltip";
 import { starBoard, unstarBoard } from "../services/board";
 
 import AppContext from "../providers/AppContext";
@@ -97,16 +98,23 @@ function BoardListItem(props) {
           >
             Open
           </Button>
-          <IconButton onClick={handleStarFlip}>
-            {props.isStarred ? (
-              <StarIcon className={classes.starIcon} />
-            ) : (
-              <StarBorderIcon />
-            )}
-          </IconButton>
-          <IconButton onClick={() => props.loadDeleteModal(props.boardId)}>
-            <DeleteOutlineIcon color="primary" />
-          </IconButton>
+          <Tooltip
+            title={props.isStarred ? "Star Board" : "Unstar Board"}
+            placement="top"
+          >
+            <IconButton onClick={handleStarFlip}>
+              {props.isStarred ? (
+                <StarIcon className={classes.starIcon} />
+              ) : (
+                <StarBorderIcon />
+              )}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete Board" placement="top">
+            <IconButton onClick={() => props.loadDeleteModal(props.boardId)}>
+              <DeleteOutlineIcon color="primary" />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Card>
     </Grid>
