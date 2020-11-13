@@ -8,7 +8,7 @@ import firebase from "firebase/app";
 import { CircularLoader } from "../components/CircularLoader";
 import { BoardToolbar } from "./BoardToolbar";
 import "firebase/database";
-import { padEmptyLanes } from "../services/board";
+import { padEmptyLanes, updateBoardData } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -56,15 +56,7 @@ function BoardContent(props) {
 
   const handleDataChange = (newData) => {
     console.log("handleDataChange: ", newData);
-    const lanesRef = firebase
-      .database()
-      .ref(`/users/${user.uid}/boards/${props.boardId}/lanes`);
-    lanesRef
-      .set(newData.lanes)
-      .then((d) => {
-        console.log("Updated new data");
-      })
-      .catch((err) => console.log("Failed to update lanes", err));
+    updateBoardData(user.uid, props.boardId, newData);
   };
 
   return curBoardData == null ? (

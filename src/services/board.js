@@ -150,6 +150,21 @@ const setBoardVisibility = (userId, boardId, visibility) => {
     });
 };
 
+const updateBoardData = (userId, boardId, newData) => {
+  const lanesRef = firebase
+    .database()
+    .ref(`/users/${userId}/boards/${boardId}/lanes`);
+
+  lanesRef
+    .set(newData.lanes)
+    .then((d) => {
+      console.log(`Updated new data for ${boardId} ${userId}`);
+    })
+    .catch((err) =>
+      console.log(`Failed to update lanes for ${boardId} ${userId}`, err)
+    );
+};
+
 export {
   getBoards,
   addNewBoard,
@@ -161,4 +176,5 @@ export {
   getRecentBoards,
   deleteBoard,
   setBoardVisibility,
+  updateBoardData,
 };
