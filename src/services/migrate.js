@@ -10,7 +10,7 @@ const isBoardsMigrated = async (userId) => {
 };
 
 // migrates users/userId/boards to boards/
-const migrateBoards = async (userId) => {
+const migrateBoards = async (userId, setMigratedFlag) => {
   const database = firebase.database();
   const userMigratedRef = database.ref(`users/${userId}/boardsMigrated`);
   let isMigrated = await isBoardsMigrated(userId);
@@ -29,10 +29,14 @@ const migrateBoards = async (userId) => {
       .update(updatedBoards)
       .then(() => {
         console.log("Migrated boards to new location.");
-        isMigrated = true;
-        userMigratedRef.set(isMigrated);
+        userMigratedRef.set(true);
+        setMigratedFlag(true);
       })
-      .catch((err) => console.log("Failed to migrate boards. ", err));
+      .catch((err) => {
+        console.log("Failed to migrate boards. ", err);
+        userMigratedRef.set(false);
+        setMigratedFlag(false);
+      });
   }
 };
 

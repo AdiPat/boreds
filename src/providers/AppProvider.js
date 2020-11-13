@@ -12,12 +12,17 @@ class AppProvider extends React.Component {
       boardsList: {},
     };
     this.setBoardsList = this.setBoardsList.bind(this);
+    this.setBoardsMigratedFlag = this.setBoardsMigratedFlag(this);
   }
 
   setBoardsList(newBoardsList) {
     if (newBoardsList) {
       this.setState({ boardsList: newBoardsList });
     }
+  }
+
+  setBoardsMigratedFlag(isMigrated) {
+    this.setState({ migated: isMigrated });
   }
 
   componentDidMount() {
@@ -30,7 +35,9 @@ class AppProvider extends React.Component {
       // migrate boards if the user is using the old format
       const boardMigrateFlag = await isBoardsMigrated(userId);
       if (!boardMigrateFlag) {
-        migrateBoards(userId);
+        migrateBoards(userId, this.setBoardsMigratedFlag);
+      } else {
+        this.setBoardsMigratedFlag(true);
       }
 
       const boardsRef = firebase.database().ref(`users/${userAuth.uid}/boards`);
@@ -38,8 +45,6 @@ class AppProvider extends React.Component {
         const newBoardsList = snapshot.val();
         thisComponent.setBoardsList(newBoardsList);
       });
-
-      console.log("STATE: ", this.state);
     });
   }
 
