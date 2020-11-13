@@ -62,16 +62,6 @@ function DashContent(props) {
 
   return (
     <main className={classes.content}>
-      <Grid container style={{ marginLeft: "10px", padding: "20px" }}>
-        <Grid item xs={12} spacing={2}>
-          <Typography variant="subtitle1">
-            Welcome {props.user.email}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-      </Grid>
       {starredBoards && starredBoards.length ? (
         <DashPane
           paneTitle="Starred Boards"
