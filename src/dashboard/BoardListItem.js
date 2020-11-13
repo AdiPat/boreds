@@ -18,6 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { starBoard, unstarBoard } from "../services/board";
 
 import AppContext from "../providers/AppContext";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   listGridItem: {
@@ -82,7 +83,7 @@ function BoardListItem(props) {
 
   return (
     <Grid item xs={12} sm={4} md={3} className={classes.listGridItem}>
-      <Card variant="outlined" className={classes.boardListCard}>
+      <Card elevation={3} className={classes.boardListCard}>
         <CardHeader
           avatar={
             <Avatar className={getAvatarClass()}>{props.title[0]}</Avatar>
@@ -90,6 +91,7 @@ function BoardListItem(props) {
           title={trimString(props.title, 20)}
           className={classes.boardListCardHeader}
         ></CardHeader>
+        <Divider />
         <CardActions>
           <Button
             variant="outlined"
