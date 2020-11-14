@@ -23,7 +23,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "firebase/app";
 import { CreateBoardModal } from "./CreateBoardModal";
-import { getAllInvites } from "../services/invite";
+import {
+  getAllInviteNotifications,
+  getAllInvites,
+  getInvitesCount,
+} from "../services/invite";
 import { getCurrentUser } from "../services/user";
 import { NotificationsMenu } from "./NotificationsMenu";
 
@@ -90,7 +94,6 @@ function DashDrawer(props) {
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [invites, setInvites] = useState(null);
   const [notificationsCount, setNotificationsCount] = useState(null);
   const [notificationsMenuAnchorEl, setNotificationsMenuAnchorEl] = useState(
     null
@@ -98,19 +101,12 @@ function DashDrawer(props) {
 
   useEffect(() => {
     const userId = getCurrentUser().uid;
-    getAllInvites(userId)
-      .then((invites) => {
-        if (invites) {
-          // for now inviteCount = notificationCount
-          const inviteCount = Object.keys(invites).length;
-          setNotificationsCount(inviteCount);
-          console.log("useEffect:", invites);
-          setInvites(invites);
-          console.log("Set notifications count.");
-        }
+    getInvitesCount(userId)
+      .then((inviteCount) => {
+        setNotificationsCount(inviteCount);
       })
       .catch((err) => {
-        console.log("Couldn't get all invites.", err);
+        console.log("Failed to set notifications count. ", err);
       });
   }, [notificationsCount]);
 
@@ -243,7 +239,6 @@ function DashDrawer(props) {
       <NotificationsMenu
         anchorEl={notificationsMenuAnchorEl}
         handleClose={closeNotificationsMenu}
-        invites={invites}
       />
     </div>
   );

@@ -9,6 +9,8 @@ import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import { Typography } from "@material-ui/core";
 import { getBoardTitle } from "../services/board";
+import { getAllInviteNotifications, getAllInvites } from "../services/invite";
+import { getCurrentUser } from "../services/user";
 
 const StyledMenu = withStyles({
   paper: {
@@ -32,8 +34,25 @@ const StyledMenu = withStyles({
 
 function NotificationsMenu(props) {
   const theme = useTheme();
+  const [invites, setInvites] = useState([]);
 
-  const renderMenu = (invites) => {
+  const loadInvites = async () => {
+    const userId = await getCurrentUser().uid;
+    const allInvites = await getAllInviteNotifications(userId);
+    console.log("All invites: ", allInvites);
+
+    if (allInvites) {
+      const inviteCount = allInvites.length;
+      console.log("notifications count", inviteCount);
+      setInvites(allInvites);
+    }
+  };
+
+  useEffect(() => {
+    loadInvites();
+  }, []);
+
+  const renderMenu = () => {
     console.log("renderMenu: invites ", invites);
     let menu = [];
     if (invites) {
@@ -48,7 +67,7 @@ function NotificationsMenu(props) {
             >
               <Typography variant="body1">
                 <strong>{inviteObj.from}</strong> has invited you to collaborate
-                on board <strong>{inviteObj.boardId}</strong>
+                on board <strong>{inviteObj.boardTitle}</strong>
               </Typography>
             </MenuItem>
             <Divider />
@@ -81,7 +100,7 @@ function NotificationsMenu(props) {
           </Typography>
         </div>
         <Divider />
-        {renderMenu(props.invites)}
+        {renderMenu()}
       </StyledMenu>
     </div>
   );

@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import "firebase/database";
+import { getBoardTitle } from "./board";
 
 const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
   const database = firebase.database();
@@ -22,9 +23,11 @@ const createInvite = async (fromEmail, toEmail, boardId) => {
   const database = firebase.database();
   const inviteRef = database.ref("/invites");
   const newInviteRef = inviteRef.push();
+  const newInviteId = (await newInviteRef).key;
   let creationSuccessful = false;
   await newInviteRef
     .set({
+      id: newInviteId,
       from: fromEmail,
       to: toEmail,
       boardId: boardId,
@@ -50,9 +53,49 @@ const getAllInvites = async (userId) => {
     .orderByChild("to")
     .equalTo(email)
     .once("value", function (inviteSnapshot) {
-      invites = inviteSnapshot.val();
+      invites = Object.assign({}, inviteSnapshot.val());
     });
   return invites;
 };
 
+const getAllInviteNotifications = async (userId) => {
+  let inviteNotifications = [];
+  try {
+    const invites = await getAllInvites(userId);
+    if (invites) {
+      Object.keys(invites).forEach(async (inviteKey) => {
+        let inviteObj = invites[inviteKey];
+        const boardId = inviteObj.boardId;
+        const boardTitle = await getBoardTitle(boardId);
+        let notificationData = Object.assign({}, inviteObj);
+        notificationData.boardTitle = boardTitle;
+        inviteNotifications.push(notificationData);
+      });
+    }
+  } catch (err) {
+    console.error(
+      "getAllInviteNotifications: Failed to get invite notifications. ",
+      err
+    );
+  }
+  return inviteNotifications;
+};
+
+const getInvitesCount = async (userId) => {
+  const allInvites = await getAllInvites(userId);
+  let inviteCount = 0;
+  if (allInvites) {
+    inviteCount = Object.keys(allInvites).length;
+  }
+  return inviteCount;
+};
+
 export { createInvite, checkDuplicateInvite, getAllInvites };
+
+export {
+  createInvite,
+  checkDuplicateInvite,
+  getAllInvites,
+  getAllInviteNotifications,
+  getInvitesCount,
+};
