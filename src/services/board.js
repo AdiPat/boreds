@@ -88,6 +88,18 @@ const getBoards = async (userId) => {
   return boards;
 };
 
+const getBoardTitle = async (boardId) => {
+  const database = firebase.database();
+  const boardsRef = database.ref(`/boards/${boardId}/title`);
+  let boardTitle = "";
+  try {
+    boardTitle = await (await boardsRef.once("value")).val();
+  } catch (err) {
+    console.log(`Failed to get board title for ${boardId}. `, err);
+  }
+  return boardTitle;
+};
+
 const getBoardIds = async (userId) => {
   const database = firebase.database();
   const boardsRef = database.ref(`/users/${userId}/boards`);
@@ -199,6 +211,7 @@ const updateBoardData = (userId, boardId, newData) => {
 
 export {
   getBoards,
+  getBoardTitle,
   getBoardIds,
   addNewBoard,
   padEmptyLanes,
