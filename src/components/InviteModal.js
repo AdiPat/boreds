@@ -24,12 +24,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
     outline: "none",
     borderRadius: "5px",
   },
   modalTitle: {
-    marginBottom: theme.spacing(2),
+    // marginBottom: theme.spacing(2),
   },
 }));
 
@@ -94,13 +93,13 @@ function InviteModal(props) {
         <Fade in={props.openModal}>
           <div className={classes.paper}>
             <Grid container direction="column" justify="center">
-              <Grid item xs={12} style={{ marginBottom: theme.spacing(1) }}>
+              <Grid item xs={12} style={{ padding: theme.spacing(4, 4) }}>
                 <Typography variant="body1" className={classes.modalTitle}>
                   <strong>Invite User</strong>
                 </Typography>
-                <Divider />
               </Grid>
-              <Grid item xs={12}>
+              <Divider />
+              <Grid item xs={12} style={{ padding: theme.spacing(1, 4, 4, 4) }}>
                 <TextField
                   label="Enter email"
                   placeholder="Enter email"
@@ -109,7 +108,8 @@ function InviteModal(props) {
                   style={{ width: "100%" }}
                 />
               </Grid>
-              <Grid item xs={12} style={{ marginTop: theme.spacing(4) }}>
+              <Divider />
+              <Grid item xs={12} style={{ padding: theme.spacing(4) }}>
                 <Button
                   variant="outlined"
                   color="primary"
