@@ -11,6 +11,9 @@ import {
   Divider,
   TextField,
 } from "@material-ui/core";
+import { getCurrentUser } from "../services/user";
+import { createInvite } from "../services/invite";
+import * as EmailValidator from "email-validator";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -39,8 +42,18 @@ function InviteModal(props) {
 
   const handleInviteUser = () => {
     // inviteUser();
-    setSnackbarMessage(`Invited user ${userInviteEmail}`);
-    setOpenSnackbar(true);
+    const user = getCurrentUser();
+    const userEmail = user.email;
+    if (EmailValidator.validate(userInviteEmail)) {
+      console.log("email validated: ", userInviteEmail);
+      createInvite(userEmail, userInviteEmail, props.boardId);
+      setSnackbarMessage(`Invited user ${userInviteEmail}`);
+      setOpenSnackbar(true);
+    } else {
+      console.log("email not validated: ", userInviteEmail);
+      setSnackbarMessage(`Invalid email ${userInviteEmail}`);
+      setOpenSnackbar(true);
+    }
     props.handleCloseModal();
   };
 

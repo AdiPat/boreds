@@ -143,6 +143,7 @@ function BoardToolbar(props) {
         handleOpenModal={() => setOpenInviteModal(true)}
         handleCloseModal={() => setOpenInviteModal(false)}
         openModal={openInviteModal}
+        boardId={props.boardId}
       />
       <VisibilityMenu
         handleClose={closeVisibilitMenu}
