@@ -6,7 +6,7 @@ const attachBoardUpdateListener = (boardId, updateBoardInState) => {
   const boardRef = database.ref(`boards/${boardId}`);
   boardRef.on("value", function (snapshot) {
     const boardData = snapshot.val();
-    console.log("updateBoard: ", boardData);
+    //console.log("updateBoard: ", boardData);
     updateBoardInState(boardId, boardData);
   });
 };

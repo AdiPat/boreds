@@ -36,10 +36,10 @@ class AppProvider extends React.Component {
   updateBoard(boardId, boardData) {
     if (boardId && boardData) {
       this.setState((prevState) => {
-        console.log("prevState: ", prevState);
+        //console.log("prevState: ", prevState);
         let updatedState = Object.assign({}, prevState);
         updatedState.boardsList[boardId] = boardData;
-        console.log("updatedState: ", updatedState);
+        // console.log("updatedState: ", updatedState);
         return updatedState;
       });
     }
@@ -61,7 +61,6 @@ class AppProvider extends React.Component {
 
       if (userAuth) {
         const userId = userAuth.uid;
-        console.log("STATE: ", this.state);
 
         // migrate boards if the user is using the old format
         isBoardsMigrated(userId).then((boardMigrateFlag) => {
@@ -73,7 +72,7 @@ class AppProvider extends React.Component {
         });
 
         getBoardIds(userId).then((boardIds) => {
-          console.log("boardIdList: ", boardIds);
+          //console.log("boardIdList: ", boardIds);
           boardIds.forEach((boardId) => {
             attachBoardUpdateListener(boardId, thisComponent.updateBoard);
           });
