@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { getCurrentUser } from "../services/user";
-import { createInvite } from "../services/invite";
+import { checkDuplicateInvite, createInvite } from "../services/invite";
 import * as EmailValidator from "email-validator";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,19 +40,39 @@ function InviteModal(props) {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const _resetSnackbar = (msg) => {
+    setSnackbarMessage(msg);
+    setOpenSnackbar(true);
+    setUserInviteEmail("");
+  };
+
   const handleInviteUser = () => {
     // inviteUser();
     const user = getCurrentUser();
     const userEmail = user.email;
-    if (EmailValidator.validate(userInviteEmail)) {
-      console.log("email validated: ", userInviteEmail);
-      createInvite(userEmail, userInviteEmail, props.boardId);
-      setSnackbarMessage(`Invited user ${userInviteEmail}`);
-      setOpenSnackbar(true);
+    const isEmailValid = EmailValidator.validate(userInviteEmail);
+    if (isEmailValid) {
+      checkDuplicateInvite(userEmail, userInviteEmail, props.boardId).then(
+        (foundDuplicates) => {
+          if (foundDuplicates) {
+            console.log("found duplicate invites: ", foundDuplicates);
+            _resetSnackbar(`You have already invited ${userInviteEmail}`);
+          } else {
+            createInvite(userEmail, userInviteEmail, props.boardId)
+              .then((creationSuccessful) => {
+                console.log(`Successfully invited user ${userInviteEmail}`);
+                _resetSnackbar(`Invited user ${userInviteEmail}`);
+              })
+              .catch((err) => {
+                console.log(`Failed to invite user ${userInviteEmail}`);
+                _resetSnackbar(`Failed to invite user ${userInviteEmail}`);
+              });
+          }
+        }
+      );
     } else {
       console.log("email not validated: ", userInviteEmail);
-      setSnackbarMessage(`Invalid email ${userInviteEmail}`);
-      setOpenSnackbar(true);
+      _resetSnackbar(`Invalid email ${userInviteEmail}`);
     }
     props.handleCloseModal();
   };

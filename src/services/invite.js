@@ -1,32 +1,43 @@
 import firebase from "firebase";
 import "firebase/database";
 
-const createInvite = (fromEmail, toEmail, boardId) => {
+const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
   const database = firebase.database();
   const inviteRef = database.ref("/invites");
   let foundDuplicate = false;
-  inviteRef
-    .orderByChild("to")
-    .equalTo(toEmail)
+  const queryStr = `${fromEmail}_${toEmail}_${boardId}`;
+  await inviteRef
+    .orderByChild("from_to_boardId")
+    .equalTo(queryStr)
     .once("value", function (snapshot) {
       const foundInvites = snapshot.val();
       if (foundInvites) {
-        Object.keys(foundInvites).forEach((inviteKey) => {
-          const curInvite = foundInvites[inviteKey];
-          if (curInvite.boardId == boardId) {
-            foundDuplicate = true;
-          }
-        });
-      }
-      if (!foundDuplicate) {
-        const newInviteRef = inviteRef.push();
-        newInviteRef.set({
-          from: fromEmail,
-          to: toEmail,
-          boardId: boardId,
-        });
+        foundDuplicate = true;
       }
     });
+  return foundDuplicate;
 };
 
-export { createInvite };
+const createInvite = async (fromEmail, toEmail, boardId) => {
+  const database = firebase.database();
+  const inviteRef = database.ref("/invites");
+  const newInviteRef = inviteRef.push();
+  let creationSuccessful = false;
+  await newInviteRef
+    .set({
+      from: fromEmail,
+      to: toEmail,
+      boardId: boardId,
+      from_to_boardId: fromEmail + "_" + toEmail + "_" + boardId, // for duplicate query
+    })
+    .then(() => {
+      creationSuccessful = true;
+    })
+    .catch((err) => {
+      console.log("Failed to create invite: ", err);
+      creationSuccessful = false;
+    });
+  return creationSuccessful;
+};
+
+export { createInvite, checkDuplicateInvite };
