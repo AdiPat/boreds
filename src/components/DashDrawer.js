@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Drawer from "@material-ui/core/Drawer";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
 import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -13,6 +14,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
 import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import List from "@material-ui/core/List";
@@ -21,6 +23,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "firebase/app";
 import { CreateBoardModal } from "./CreateBoardModal";
+import { getAllInvites } from "../services/invite";
+import { getCurrentUser } from "../services/user";
 
 const drawerWidth = 240;
 
@@ -85,6 +89,22 @@ function DashDrawer(props) {
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [notificationsCount, setNotificationsCount] = useState(null);
+
+  useEffect(() => {
+    const userId = getCurrentUser().uid;
+    getAllInvites(userId)
+      .then((invites) => {
+        if (invites) {
+          // for now inviteCount = notificationCount
+          const inviteCount = Object.keys(invites).length;
+          setNotificationsCount(inviteCount);
+        }
+      })
+      .catch((err) => {
+        console.log("Couldn't get all invites.", err);
+      });
+  }, [notificationsCount]);
 
   const handleShowBoards = () => {
     history.push("/dashboard");
@@ -138,6 +158,11 @@ function DashDrawer(props) {
           <Typography variant="h6" noWrap>
             Boreds {props.dashTitle}
           </Typography>
+          <IconButton color="inherit" style={{ marginLeft: "auto" }}>
+            <Badge badgeContent={notificationsCount} color="secondary">
+              <NotificationsRoundedIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
