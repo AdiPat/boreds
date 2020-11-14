@@ -40,4 +40,19 @@ const createInvite = async (fromEmail, toEmail, boardId) => {
   return creationSuccessful;
 };
 
-export { createInvite, checkDuplicateInvite };
+const getAllInvites = async (userId) => {
+  const database = firebase.database();
+  const userEmailRef = database.ref(`/users/${userId}/email`);
+  let invites = {};
+  const email = await (await userEmailRef.once("value")).val();
+  const invitesRef = database.ref("/invites");
+  await invitesRef
+    .orderByChild("to")
+    .equalTo(email)
+    .once("value", function (inviteSnapshot) {
+      invites = inviteSnapshot.val();
+    });
+  return invites;
+};
+
+export { createInvite, checkDuplicateInvite, getAllInvites };
