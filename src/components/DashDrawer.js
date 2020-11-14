@@ -25,6 +25,7 @@ import firebase from "firebase/app";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { getAllInvites } from "../services/invite";
 import { getCurrentUser } from "../services/user";
+import { NotificationsMenu } from "./NotificationsMenu";
 
 const drawerWidth = 240;
 
@@ -89,7 +90,11 @@ function DashDrawer(props) {
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [invites, setInvites] = useState(null);
   const [notificationsCount, setNotificationsCount] = useState(null);
+  const [notificationsMenuAnchorEl, setNotificationsMenuAnchorEl] = useState(
+    null
+  );
 
   useEffect(() => {
     const userId = getCurrentUser().uid;
@@ -99,12 +104,23 @@ function DashDrawer(props) {
           // for now inviteCount = notificationCount
           const inviteCount = Object.keys(invites).length;
           setNotificationsCount(inviteCount);
+          console.log("useEffect:", invites);
+          setInvites(invites);
+          console.log("Set notifications count.");
         }
       })
       .catch((err) => {
         console.log("Couldn't get all invites.", err);
       });
   }, [notificationsCount]);
+
+  const openNotificationsMenu = (e) => {
+    setNotificationsMenuAnchorEl(e.target);
+  };
+
+  const closeNotificationsMenu = () => {
+    setNotificationsMenuAnchorEl(null);
+  };
 
   const handleShowBoards = () => {
     history.push("/dashboard");
@@ -158,7 +174,11 @@ function DashDrawer(props) {
           <Typography variant="h6" noWrap>
             Boreds {props.dashTitle}
           </Typography>
-          <IconButton color="inherit" style={{ marginLeft: "auto" }}>
+          <IconButton
+            color="inherit"
+            style={{ marginLeft: "auto" }}
+            onClick={openNotificationsMenu}
+          >
             <Badge badgeContent={notificationsCount} color="secondary">
               <NotificationsRoundedIcon />
             </Badge>
@@ -220,6 +240,11 @@ function DashDrawer(props) {
         handleCloseModal={handleCloseModal}
         openModal={openModal}
       ></CreateBoardModal>
+      <NotificationsMenu
+        anchorEl={notificationsMenuAnchorEl}
+        handleClose={closeNotificationsMenu}
+        invites={invites}
+      />
     </div>
   );
 }
