@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Modal,
   Backdrop,
@@ -9,6 +9,7 @@ import {
   Fade,
   Button,
   Snackbar,
+  Divider,
 } from "@material-ui/core";
 import { deleteBoard } from "../services/board";
 
@@ -21,18 +22,16 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
+    //padding: theme.spacing(4),
     outline: "none",
     borderRadius: "5px",
-  },
-  modalTitle: {
-    marginBottom: theme.spacing(2),
   },
 }));
 
 function DeleteBoardModal(props) {
   const classes = useStyles();
   const history = useHistory();
+  const theme = useTheme();
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -63,17 +62,26 @@ function DeleteBoardModal(props) {
         <Fade in={props.openModal}>
           <div className={classes.paper}>
             <Grid container direction="column" justify="center">
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{ padding: theme.spacing(4) }}>
                 <Typography variant="body1" className={classes.modalTitle}>
                   Are you sure you want to delete "{props.boardTitle}" ?
                 </Typography>
               </Grid>
-              <Grid item xs={12} style={{ marginTop: "10px" }}>
+
+              <Divider />
+              <Grid
+                item
+                xs={12}
+                style={{
+                  // marginTop: theme.spacing(3),
+                  padding: theme.spacing(3, 4),
+                }}
+              >
                 <Button
                   variant="outlined"
                   color="primary"
                   size="large"
-                  style={{ marginRight: "10px" }}
+                  style={{ marginRight: theme.spacing(2) }}
                   onClick={handleDeleteBoard}
                 >
                   Yes
