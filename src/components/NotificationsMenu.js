@@ -62,7 +62,7 @@ function NotificationsMenu(props) {
   const renderMenu = () => {
     console.log("renderMenu: invites ", invites);
     let menu = [];
-    if (invites) {
+    if (invites && invites.length) {
       menu = Object.keys(invites).map((inviteKey) => {
         const inviteObj = invites[inviteKey];
         //const boardTitle = await getBoardTitle(inviteObj.boardId);
@@ -96,6 +96,25 @@ function NotificationsMenu(props) {
           </div>
         );
       });
+    } else {
+      menu.push(
+        <div>
+          <MenuItem
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: theme.spacing(2),
+              whiteSpace: "normal",
+              alignItems: "flex-start",
+              transitionDuration: "0s",
+            }}
+            disableTouchRipple={true}
+          >
+            <Typography variant="body1">You have no notifications.</Typography>
+          </MenuItem>
+          <Divider />
+        </div>
+      );
     }
     return menu;
   };
