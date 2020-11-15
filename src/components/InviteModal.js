@@ -93,7 +93,7 @@ function InviteModal(props) {
         <Fade in={props.openModal}>
           <div className={classes.paper}>
             <Grid container direction="column" justify="center">
-              <Grid item xs={12} style={{ padding: theme.spacing(4, 4) }}>
+              <Grid item xs={12} style={{ padding: theme.spacing(2, 4) }}>
                 <Typography variant="body1" className={classes.modalTitle}>
                   <strong>Invite User</strong>
                 </Typography>
@@ -109,7 +109,7 @@ function InviteModal(props) {
                 />
               </Grid>
               <Divider />
-              <Grid item xs={12} style={{ padding: theme.spacing(4) }}>
+              <Grid item xs={12} style={{ padding: theme.spacing(2) }}>
                 <Button
                   variant="outlined"
                   color="primary"
