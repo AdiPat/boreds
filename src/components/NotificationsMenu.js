@@ -11,6 +11,7 @@ import { Typography, IconButton } from "@material-ui/core";
 import { getAllInviteNotifications, getAllInvites } from "../services/invite";
 import { attachInvitesListener } from "../services/database";
 import { getCurrentUser } from "../services/user";
+import { NotificationsMenuItem } from "./NotificationsMenuItem";
 
 const StyledMenu = withStyles({
   paper: {
@@ -67,54 +68,15 @@ function NotificationsMenu(props) {
         const inviteObj = invites[inviteKey];
         //const boardTitle = await getBoardTitle(inviteObj.boardId);
         return (
-          <div>
-            <MenuItem
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: theme.spacing(2),
-                whiteSpace: "normal",
-                alignItems: "flex-start",
-                transitionDuration: "0s",
-              }}
-              disableTouchRipple={true}
-            >
-              <Typography variant="body1">
-                <strong>{inviteObj.from}</strong> has invited you to collaborate
-                on board <strong>{inviteObj.boardTitle}</strong>.
-              </Typography>
-              <div>
-                <IconButton style={{ color: green[500] }}>
-                  <CheckCircleOutlineRoundedIcon color="inherit" />
-                </IconButton>
-                <IconButton style={{ color: red[500] }}>
-                  <CancelOutlinedIcon color="inherit" />
-                </IconButton>
-              </div>
-            </MenuItem>
-            <Divider />
-          </div>
+          <NotificationsMenuItem
+            emptyMessage={false}
+            fromEmail={inviteObj.from}
+            boardTitle={inviteObj.boardTitle}
+          />
         );
       });
     } else {
-      menu.push(
-        <div>
-          <MenuItem
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: theme.spacing(2),
-              whiteSpace: "normal",
-              alignItems: "flex-start",
-              transitionDuration: "0s",
-            }}
-            disableTouchRipple={true}
-          >
-            <Typography variant="body1">You have no notifications.</Typography>
-          </MenuItem>
-          <Divider />
-        </div>
-      );
+      menu.push(<NotificationsMenuItem emptyMessage={true} />);
     }
     return menu;
   };
