@@ -45,7 +45,11 @@ function CreateBoardModal(props) {
       return;
     }
     const user = getCurrentUser();
-    addNewBoard(user.uid, newBoardName);
+    addNewBoard(user.uid, newBoardName).then(() => {
+      setTimeout(() => {
+        window.location.reload(false);
+      }, 2000); // reload page so that board listener is added
+    });
     setSnackbarMessage(`Board ${newBoardName} created`);
     setOpenSnackbar(true);
     setNewBoardName("");
