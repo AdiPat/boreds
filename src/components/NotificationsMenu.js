@@ -31,18 +31,6 @@ function NotificationsMenu(props) {
   const theme = useTheme();
   const [invites, setInvites] = useState([]);
 
-  const loadInvites = async () => {
-    const userId = await getCurrentUser().uid;
-    const allInvites = await getAllInviteNotifications(userId);
-    console.log("All invites: ", allInvites);
-
-    if (allInvites) {
-      const inviteCount = allInvites.length;
-      console.log("notifications count", inviteCount);
-      setInvites(allInvites);
-    }
-  };
-
   const updateInvitesInState = (invites) => {
     setInvites(invites);
     props.setNotificationsCount(Object.keys(invites).length);
