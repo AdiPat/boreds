@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import LockIcon from "@material-ui/icons/Lock";
-import PublicIcon from "@material-ui/icons/Public";
-import { Typography } from "@material-ui/core";
-import { getBoardTitle } from "../services/board";
+import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
+import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import { green, red } from "@material-ui/core/colors";
+import { Typography, IconButton } from "@material-ui/core";
 import { getAllInviteNotifications, getAllInvites } from "../services/invite";
 import { getCurrentUser } from "../services/user";
 
@@ -62,13 +61,28 @@ function NotificationsMenu(props) {
         return (
           <div>
             <MenuItem
-              button
-              style={{ padding: theme.spacing(2), whiteSpace: "normal" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: theme.spacing(2),
+                whiteSpace: "normal",
+                alignItems: "flex-start",
+                transitionDuration: "0s",
+              }}
+              disableTouchRipple={true}
             >
               <Typography variant="body1">
                 <strong>{inviteObj.from}</strong> has invited you to collaborate
-                on board <strong>{inviteObj.boardTitle}</strong>
+                on board <strong>{inviteObj.boardTitle}</strong>.
               </Typography>
+              <div>
+                <IconButton style={{ color: green[500] }}>
+                  <CheckCircleOutlineRoundedIcon color="inherit" />
+                </IconButton>
+                <IconButton style={{ color: red[500] }}>
+                  <CancelOutlinedIcon color="inherit" />
+                </IconButton>
+              </div>
             </MenuItem>
             <Divider />
           </div>
@@ -95,6 +109,7 @@ function NotificationsMenu(props) {
             padding: theme.spacing(1),
           }}
         >
+          <PersonAddRoundedIcon style={{ marginRight: theme.spacing(1) }} />
           <Typography variant="h6">
             <strong>Invites</strong>
           </Typography>
