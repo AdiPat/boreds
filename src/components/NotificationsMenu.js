@@ -9,6 +9,7 @@ import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import { green, red } from "@material-ui/core/colors";
 import { Typography, IconButton } from "@material-ui/core";
 import { getAllInviteNotifications, getAllInvites } from "../services/invite";
+import { attachInvitesListener } from "../services/database";
 import { getCurrentUser } from "../services/user";
 
 const StyledMenu = withStyles({
@@ -47,8 +48,15 @@ function NotificationsMenu(props) {
     }
   };
 
+  const updateInvitesInState = (invites) => {
+    setInvites(invites);
+    props.setNotificationsCount(Object.keys(invites).length);
+  };
+
   useEffect(() => {
-    loadInvites();
+    // loadInvites();
+    const userId = getCurrentUser().uid;
+    attachInvitesListener(userId, updateInvitesInState);
   }, []);
 
   const renderMenu = () => {

@@ -99,17 +99,6 @@ function DashDrawer(props) {
     null
   );
 
-  useEffect(() => {
-    const userId = getCurrentUser().uid;
-    getInvitesCount(userId)
-      .then((inviteCount) => {
-        setNotificationsCount(inviteCount);
-      })
-      .catch((err) => {
-        console.log("Failed to set notifications count. ", err);
-      });
-  }, [notificationsCount]);
-
   const openNotificationsMenu = (e) => {
     setNotificationsMenuAnchorEl(e.target);
   };
@@ -239,6 +228,7 @@ function DashDrawer(props) {
       <NotificationsMenu
         anchorEl={notificationsMenuAnchorEl}
         handleClose={closeNotificationsMenu}
+        setNotificationsCount={setNotificationsCount}
       />
     </div>
   );
