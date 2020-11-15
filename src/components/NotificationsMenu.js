@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withStyles, useTheme } from "@material-ui/core/styles";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Divider from "@material-ui/core/Divider";
 import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
-import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
-import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { green, red } from "@material-ui/core/colors";
-import { Typography, IconButton } from "@material-ui/core";
+import { Typography, Divider, Menu } from "@material-ui/core";
 import { getAllInviteNotifications, getAllInvites } from "../services/invite";
 import { attachInvitesListener } from "../services/database";
 import { getCurrentUser } from "../services/user";
