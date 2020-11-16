@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import AppContext from "../providers/AppContext";
 import { getCurrentUser } from "../services/user";
-import { addNewBoard } from "../services/board";
+import { addNewBoard, checkDuplicateBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -37,6 +37,33 @@ function CreateBoardModal(props) {
     setNewBoardName(e.target.value);
   };
 
+  const resetParams = (snackbarMsg) => {
+    setSnackbarMessage(snackbarMsg);
+    setOpenSnackbar(true);
+    setNewBoardName("");
+    props.handleCloseModal();
+  };
+
+  const createBoard = async (userId, boardTitle) => {
+    const foundDuplicateBoard = await checkDuplicateBoard(userId, boardTitle);
+    const user = getCurrentUser();
+    if (foundDuplicateBoard === false) {
+      addNewBoard(user.uid, newBoardName)
+        .then(() => {
+          resetParams(`Board ${newBoardName} created`);
+          console.log("Created new board.");
+        })
+        .catch((err) => {
+          resetParams(`Couldn't create ${newBoardName}. Try again later.`);
+          console.error("Failed to create new board. ", err);
+        });
+    } else if (foundDuplicateBoard === null) {
+      resetParams(`Couldn't create ${newBoardName}. Try again later.`);
+    } else if (foundDuplicateBoard === true) {
+      resetParams(`${newBoardName} already exists.`);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newBoardName === "") {
@@ -45,18 +72,7 @@ function CreateBoardModal(props) {
       return;
     }
     const user = getCurrentUser();
-    addNewBoard(user.uid, newBoardName)
-      .then(() => {
-        console.log("Created new board.");
-      })
-      .catch((err) => {
-        console.error("Failed to create new board. ", err);
-      });
-    setSnackbarMessage(`Board ${newBoardName} created`);
-    setOpenSnackbar(true);
-    setNewBoardName("");
-    props.handleCloseModal();
-    //window.location.reload(false);
+    createBoard(user.uid, newBoardName);
   };
 
   return (

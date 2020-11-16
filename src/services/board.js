@@ -71,6 +71,29 @@ const addNewBoard = async (userId, boardTitle) => {
     });
 };
 
+// check duplicate board
+const checkDuplicateBoard = async (userId, title) => {
+  const database = firebase.database();
+  const boardsRef = database.ref(`users/${userId}/boards/`);
+  let foundDuplicate = null;
+  try {
+    const boardSnapshot = await boardsRef
+      .orderByChild("title")
+      .equalTo(title)
+      .once("value");
+    const boardData = await boardSnapshot.val();
+    console.log("Duplicate board data: ", boardData);
+    if (boardData) {
+      foundDuplicate = true;
+    } else {
+      foundDuplicate = false;
+    }
+  } catch (err) {
+    console.log("Failed to get duplicate board data.");
+  }
+  return foundDuplicate;
+};
+
 // gets boards for user
 const getBoards = async (userId) => {
   const userRef = firebase.database().ref(`users/${userId}`);
@@ -214,6 +237,7 @@ export {
   getBoardTitle,
   getBoardIds,
   addNewBoard,
+  checkDuplicateBoard,
   padEmptyLanes,
   starBoard,
   unstarBoard,
