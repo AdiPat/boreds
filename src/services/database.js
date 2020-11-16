@@ -41,15 +41,10 @@ const attachBoardAddedListener = (userId, updateBoardInState) => {
     const board = snapshot.val();
     const boardId = board.id;
     const boardRef = database.ref(`/boards/${boardId}`);
-    boardRef
-      .once("value")
-      .then((snapshot) => {
-        const boardData = snapshot.val();
-        updateBoardInState(boardId, boardData);
-      })
-      .catch((err) => {
-        console.log(`Failed to add ${userId} ${boardId}`);
-      });
+    boardRef.on("value", function (newSnapshot) {
+      const boardData = newSnapshot.val();
+      updateBoardInState(boardId, boardData);
+    });
   });
 };
 
