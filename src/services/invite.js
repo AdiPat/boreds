@@ -25,6 +25,7 @@ const createInvite = async (fromEmail, toEmail, boardId) => {
   const newInviteRef = inviteRef.push();
   const newInviteId = (await newInviteRef).key;
   let creationSuccessful = false;
+  const now = new Date();
   await newInviteRef
     .set({
       id: newInviteId,
@@ -32,6 +33,7 @@ const createInvite = async (fromEmail, toEmail, boardId) => {
       to: toEmail,
       boardId: boardId,
       from_to_boardId: fromEmail + "_" + toEmail + "_" + boardId, // for duplicate query
+      createdAt: now.toString(),
     })
     .then(() => {
       creationSuccessful = true;
@@ -90,7 +92,21 @@ const getInvitesCount = async (userId) => {
   return inviteCount;
 };
 
-export { createInvite, checkDuplicateInvite, getAllInvites };
+// todo
+const acceptInvite = async (invite) => {
+  const database = firebase.database();
+  if (invite) {
+    const inviteRef = database.ref(`/invites/${invite.id}`);
+    inviteRef
+      .remove()
+      .then(async () => {
+        // extract invite data
+      })
+      .catch((err) => {
+        console.log("Failed to accept invite. ", err);
+      });
+  }
+};
 
 export {
   createInvite,
