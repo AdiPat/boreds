@@ -11,6 +11,8 @@ import AppContext from "../providers/AppContext";
 import { getCurrentUser } from "../services/user";
 import { addNewBoard, checkDuplicateBoard } from "../services/board";
 
+const BOARD_TITLE_MAX_LENGTH = 100;
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -70,6 +72,13 @@ function CreateBoardModal(props) {
       setSnackbarMessage("Board title empty");
       setOpenSnackbar(true);
       return;
+    } else if (newBoardName.length > BOARD_TITLE_MAX_LENGTH) {
+      setSnackbarMessage(
+        `Board title should be less than ${BOARD_TITLE_MAX_LENGTH} characters.`
+      );
+      setNewBoardName("");
+      setOpenSnackbar(true);
+      return;
     }
     const user = getCurrentUser();
     createBoard(user.uid, newBoardName);
@@ -97,6 +106,7 @@ function CreateBoardModal(props) {
                   <TextField
                     label="Add board title"
                     variant="outlined"
+                    value={newBoardName}
                     onChange={handleChange}
                   />
                 </Grid>
