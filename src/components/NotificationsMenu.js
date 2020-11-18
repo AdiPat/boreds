@@ -38,8 +38,11 @@ function NotificationsMenu(props) {
 
   useEffect(() => {
     // loadInvites();
-    const userId = getCurrentUser().uid;
-    attachInvitesListener(userId, updateInvitesInState);
+    const user = getCurrentUser();
+    if (user) {
+      const userId = getCurrentUser().uid;
+      attachInvitesListener(userId, updateInvitesInState);
+    }
   }, []);
 
   const renderMenu = () => {

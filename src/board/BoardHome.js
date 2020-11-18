@@ -13,7 +13,7 @@ function BoardHome(props) {
 
   const { state } = useContext(AppContext);
   const boardId = props.boardId;
-  const userId = state.user.uid;
+  const userId = props.userId;
 
   useEffect(() => {
     console.log(lastOpened);
@@ -39,6 +39,7 @@ function BoardHome(props) {
         setBoardTitle={setBoardTitle}
         setIsBoardPublic={setIsBoardPublic}
         setIsBoardStarred={setIsBoardStarred}
+        isBoardPublic={isBoardPublic}
       />
     </div>
   );

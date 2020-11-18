@@ -1,27 +1,17 @@
-import { useState, useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { useContext } from "react";
 import AppContext from "../providers/AppContext";
 import { BoardHome } from "../board/BoardHome";
-import { CircularLoader } from "../components/CircularLoader";
 
 function BoardPage(props) {
   const { user } = useContext(AppContext);
-  const [isLoading, setIsLoading] = useState(true);
   const boardId = props.match.params.boardId;
+  let userId = null;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  });
+  if (user) {
+    userId = user.uid;
+  }
 
-  return isLoading ? (
-    <CircularLoader color="secondary" />
-  ) : user ? (
-    <BoardHome boardId={boardId} userId={user.uid} />
-  ) : (
-    <Redirect to="/login" />
-  );
+  return <BoardHome boardId={boardId} userId={userId} />;
 }
 
 export { BoardPage };
