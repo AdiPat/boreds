@@ -57,3 +57,31 @@ exports.deleteBoardTrigger = functions.database
 
     return Promise.all([boardRemoveStatus, publicReadableRemoveStatus]);
   });
+
+exports.updateBoardUserOnCreation = functions.database
+  .ref("users/{userId}/boards/{boardId}")
+  .onCreate(async (snapshot, context) => {
+    const database = admin.database();
+    const userId = context.params.userId;
+    const boardId = context.params.boardId;
+    const boardRef = database.ref(`boards/${boardId}`);
+    const userEmailRef = database.ref(`users/${userId}/email`);
+    const userEmail = await (await userEmailRef.once("value")).val();
+    return boardRef
+      .update({ users: [userEmail] })
+      .then(() => {
+        console.log(
+          `Successfully added to list of users for `,
+          boardRef.toString()
+        );
+      })
+      .catch((err) => {
+        if (err) {
+          console.error(
+            `Failed to add to list of users in: `,
+            boardRef.toString()
+          );
+        }
+        return false;
+      });
+  });
