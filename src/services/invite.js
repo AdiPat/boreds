@@ -1,22 +1,25 @@
 import firebase from "firebase";
 import "firebase/database";
+import "firebase/functions";
 import { getBoardTitle } from "./board";
 
 const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
-  const database = firebase.database();
-  const inviteRef = database.ref("/invites");
-  let foundDuplicate = false;
-  const queryStr = `${fromEmail}_${toEmail}_${boardId}`;
-  await inviteRef
-    .orderByChild("from_to_boardId")
-    .equalTo(queryStr)
-    .once("value", function (snapshot) {
-      const foundInvites = snapshot.val();
-      if (foundInvites) {
-        foundDuplicate = true;
+  const _checkDuplicateInvite = firebase
+    .functions()
+    .httpsCallable("checkDuplicateInvite");
+
+  return await _checkDuplicateInvite({
+    toEmail: toEmail,
+    boardId: boardId,
+  })
+    .then((result) => {
+      return result.data.foundDuplicates;
+    })
+    .catch((err) => {
+      if (err) {
+        console.error("checkDuplicateInvite callable: ", err);
       }
     });
-  return foundDuplicate;
 };
 
 const createInvite = async (fromEmail, toEmail, boardId) => {
