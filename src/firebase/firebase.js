@@ -10,4 +10,10 @@ if (process.env.NODE_ENV == "development") {
   config = productionConfig;
 }
 
+export const initializeAuthEmulator = () => {
+  if (process.env.REACT_APP_USE_AUTH_EMULATOR == "true") {
+    firebase.auth().useEmulator(process.env.REACT_APP_AUTH_EMULATOR_URL);
+  }
+};
+
 export const firebaseApp = firebase.initializeApp(config);
