@@ -25,18 +25,12 @@ const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
 const createInvite = async (fromEmail, toEmail, boardId) => {
   const database = firebase.database();
   const inviteRef = database.ref("/invites");
-  const newInviteRef = inviteRef.push();
-  const newInviteId = (await newInviteRef).key;
   let creationSuccessful = false;
-  const now = new Date();
-  await newInviteRef
-    .set({
-      id: newInviteId,
+  await inviteRef
+    .push({
       from: fromEmail,
       to: toEmail,
       boardId: boardId,
-      from_to_boardId: fromEmail + "_" + toEmail + "_" + boardId, // for duplicate query
-      createdAt: now.toString(),
     })
     .then(() => {
       creationSuccessful = true;

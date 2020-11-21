@@ -39,3 +39,38 @@ exports.checkDuplicateInvite = functions.https.onCall(async (data, context) => {
     foundDuplicates,
   };
 });
+
+exports.inviteCreateTrigger = functions.database
+  .ref("invites/{inviteId}")
+  .onUpdate((snapshot, context) => {
+    const invite = snapshot.after.val();
+    const now = new Date();
+    if (
+      snapshot.hasChild("from") &&
+      snapshot.hasChild("to") &&
+      snapshot.hasChild("boardId")
+    ) {
+      const queryStr = `${invite.from}_${invite.to}_${invite.boardId}`;
+      return snapshot.ref
+        .update({
+          id: context.params.inviteId,
+          createdAt: now.toString(),
+          from_to_boardId: queryStr,
+        })
+        .then(() => {
+          console.log(`Successfully added invite meta data to ${invite.id}`);
+          return true;
+        })
+        .catch((err) => {
+          if (err) {
+            console.error(`Failed to add meta data to ${invite.id}. `, err);
+            return snapshot.ref.remove();
+          }
+        });
+    } else {
+      console.log(
+        `Invite [${invite.id}] does not have from, to and boardId as children. Deleting.`
+      );
+      return snapshot.ref.remove();
+    }
+  });

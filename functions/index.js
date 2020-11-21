@@ -12,3 +12,4 @@ exports.updateBoardUserOnCreation = boardFunctions.updateBoardUserOnCreation;
 
 // invite functions
 exports.checkDuplicateInvite = inviteFunctions.checkDuplicateInvite;
+exports.inviteCreateTrigger = inviteFunctions.inviteCreateTrigger;
