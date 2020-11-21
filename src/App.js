@@ -8,13 +8,18 @@ import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { BoardPage } from "./pages/BoardPage";
 import AppProvider from "./providers/AppProvider";
-import { firebaseApp, initializeAuthEmulator } from "./firebase/firebase";
+import {
+  firebaseApp,
+  initializeAuthEmulator,
+  initializeFunctionsEmulator,
+} from "./firebase/firebase";
 import "./App.css";
 import Profile from "./pages/ProfilePage";
 
 function App() {
   useEffect(() => {
     initializeAuthEmulator();
+    initializeFunctionsEmulator();
   });
 
   return (
