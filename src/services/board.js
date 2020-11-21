@@ -191,14 +191,10 @@ const getRecentBoards = (boards) => {
 };
 
 const deleteBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}`);
   const userBoardRef = firebase
     .database()
     .ref(`users/${userId}/boards/${boardId}`);
-  boardRef
-    .remove()
-    .then(() => console.log("Remove succeeded."))
-    .catch((err) => console.log("Remove failed: ", err));
+
   userBoardRef
     .remove()
     .then(() => console.log("Remove succeeded from users/."))

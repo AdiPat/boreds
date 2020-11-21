@@ -15,10 +15,45 @@ exports.updatePublicBoards = functions.database
       })
       .then(() => {
         console.log(`Successfully updated publicReadable for ${boardId}.`);
+        return true;
       })
       .catch((err) => {
         if (err) {
-          console.error(`Failed to update publicReadable for ${boardId}`);
+          console.error(`Failed to update publicReadable for ${boardId}`, err);
+        }
+        return false;
+      });
+  });
+
+exports.deleteBoardTrigger = functions.database
+  .ref("users/{userId}/boards/{boardId}")
+  .onDelete((snapshot, context) => {
+    const database = admin.database();
+    const boardId = context.params.boardId;
+    const boardRef = database.ref(`boards/${boardId}`);
+    const publicReadableBoardRef = database.ref(
+      `publicReadable/boards/${boardId}`
+    );
+
+    const removeData = async (ref) => {
+      let successStatus = false;
+      await ref.remove((err) => {
+        const refString = ref
+          .toString()
+          .substring(database.ref().toString().length - 1);
+        if (err) {
+          console.error(`Failed to remove ${refString}`, err);
+          successStatus = false;
+        } else {
+          console.log(`Successfully removed ${refString}`);
+          successStatus = true;
         }
       });
+      return successStatus;
+    };
+
+    const boardRemoveStatus = removeData(boardRef);
+    const publicReadableRemoveStatus = removeData(publicReadableBoardRef);
+
+    return Promise.all([boardRemoveStatus, publicReadableRemoveStatus]);
   });

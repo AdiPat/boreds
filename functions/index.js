@@ -5,3 +5,4 @@ const boardFunctions = require("./board/index");
 admin.initializeApp();
 
 exports.updatePublicBoards = boardFunctions.updatePublicBoards;
+exports.deleteBoardTrigger = boardFunctions.deleteBoardTrigger;
