@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 
 exports.updatePublicBoards = functions.database
   .ref("boards/{boardId}/public")
-  .onWrite((snapshot, context) => {
+  .onUpdate((snapshot, context) => {
     const updatedPublicFlag = snapshot.after.val();
     const boardId = context.params.boardId;
     const database = admin.database();
