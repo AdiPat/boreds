@@ -16,8 +16,7 @@ function BoardHome(props) {
   const userId = props.userId;
 
   useEffect(() => {
-    console.log(lastOpened);
-    if (!lastOpened) {
+    if (!lastOpened && userId) {
       const now = new Date();
       setLastOpened(now);
       updateBoardLastOpened(userId, boardId, now);
