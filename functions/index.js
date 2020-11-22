@@ -9,6 +9,7 @@ admin.initializeApp();
 exports.updatePublicBoards = boardFunctions.updatePublicBoards;
 exports.deleteBoardTrigger = boardFunctions.deleteBoardTrigger;
 exports.updateBoardUserOnCreation = boardFunctions.updateBoardUserOnCreation;
+exports.getPublicBoard = boardFunctions.getPublicBoard;
 
 // invite functions
 exports.checkDuplicateInvite = inviteFunctions.checkDuplicateInvite;
