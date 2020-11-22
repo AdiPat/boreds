@@ -10,7 +10,7 @@
       ".read": "auth != null", 
       ".write": "auth != null",
       "$boardId": {
-        ".read": "auth != null || data.child('public').val()",
+        ".read": "auth != null || data.child('public').val() == true",
         ".write": "auth != null"
       }
     },
