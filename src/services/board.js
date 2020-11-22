@@ -228,6 +228,34 @@ const updateBoardData = (userId, boardId, newData) => {
     );
 };
 
+const isBoardPublic = async (boardId) => {
+  const database = firebase.database();
+  const publicReadableRef = database.ref(
+    `publicReadable/boards/${boardId}/public`
+  );
+  let isBoardPublic = null;
+  try {
+    isBoardPublic = await (await publicReadableRef.once("value")).val();
+  } catch (err) {
+    console.error(`Failed to get public status for board: ${boardId}. `, err);
+  }
+  return isBoardPublic;
+};
+
+const getPublicBoard = async (boardId) => {
+  const _getPublicBoard = firebase.functions().httpsCallable("getPublicBoard");
+  return _getPublicBoard({ boardId })
+    .then((result) => {
+      return result.data.boardData;
+    })
+    .catch((err) => {
+      console.error(
+        `Failed to get public board data for boardId = ${boardId}. `,
+        err
+      );
+    });
+};
+
 export {
   getBoards,
   getBoardTitle,
@@ -243,4 +271,6 @@ export {
   deleteBoard,
   setBoardVisibility,
   updateBoardData,
+  isBoardPublic,
+  getPublicBoard,
 };
