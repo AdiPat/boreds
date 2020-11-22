@@ -8,7 +8,11 @@
     },
     "boards": {
       ".read": "auth != null", 
-      ".write": "auth != null"
+      ".write": "auth != null",
+      "$boardId": {
+        ".read": "auth != null || data.child('public').val()",
+        ".write": "auth != null"
+      }
     },
     "publicReadable": {
         ".read": true, 
