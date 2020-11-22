@@ -58,6 +58,7 @@ function BoardContent(props) {
     let paddedData = padEmptyLanes(boardData);
     if (paddedData) {
       setCurBoardData(paddedData);
+      props.setBoardTitle(paddedData.title);
       props.setIsBoardPublic(true);
       props.setBoardLoaded(true);
     }
