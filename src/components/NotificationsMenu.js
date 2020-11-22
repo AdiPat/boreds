@@ -50,13 +50,15 @@ function NotificationsMenu(props) {
     let menu = [];
     if (invites && invites.length) {
       menu = Object.keys(invites).map((inviteKey) => {
-        const inviteObj = invites[inviteKey];
+        const inviteObj = Object.assign({}, invites[inviteKey]);
         //const boardTitle = await getBoardTitle(inviteObj.boardId);
         return (
           <NotificationsMenuItem
             emptyMessage={false}
             fromEmail={inviteObj.from}
             boardTitle={inviteObj.boardTitle}
+            inviteId={inviteObj.id}
+            inviteObj={inviteObj}
           />
         );
       });
