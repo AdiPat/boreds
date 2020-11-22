@@ -59,11 +59,13 @@ function InviteModal(props) {
           } else {
             createInvite(userEmail, userInviteEmail, props.boardId)
               .then((creationSuccessful) => {
-                console.log(`Successfully invited user ${userInviteEmail}`);
-                _resetSnackbar(`Invited user ${userInviteEmail}`);
+                if (creationSuccessful) {
+                  _resetSnackbar(`Invited user ${userInviteEmail}`);
+                } else {
+                  _resetSnackbar(`Failed to invite user ${userInviteEmail}`);
+                }
               })
               .catch((err) => {
-                console.log(`Failed to invite user ${userInviteEmail}`);
                 _resetSnackbar(`Failed to invite user ${userInviteEmail}`);
               });
           }
