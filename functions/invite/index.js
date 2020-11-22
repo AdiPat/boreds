@@ -151,3 +151,89 @@ exports.getAllReceivedInvites = functions.https.onCall(
     };
   }
 );
+
+exports.acceptInvite = functions.https.onCall(async (data, context) => {
+  const database = admin.database();
+  const invite = data;
+  const inviteId = invite.id;
+  const userEmail = context.auth.token.email;
+  const fromEmail = invite.from;
+  const boardId = invite.boardId;
+  const receiverUserId = context.auth.token.uid;
+
+  if (typeof inviteId != "string") {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "acceptInvite: inviteId should be a string."
+    );
+  }
+
+  const inviteRef = database.ref(`invites/${inviteId}`);
+
+  const addEmailToBoardPermissions = async (
+    inviteBoardRef,
+    email,
+    permType
+  ) => {
+    return inviteBoardRef
+      .child("permissions")
+      .child(permType)
+      .once("value", function (usersSnapshot) {
+        const users = usersSnapshot.val();
+        let foundUser = false;
+        Object.keys(users).forEach((key) => {
+          foundUser = users[key] == email;
+        });
+        if (!foundUser) {
+          usersSnapshot.ref.push(email);
+        }
+      });
+  };
+
+  try {
+    console.log("fromEmail: ", fromEmail);
+    const boardRef = database.ref(`boards/${boardId}`);
+    const inviteReceiverBoardsRef = database.ref(
+      `users/${receiverUserId}/boards/${boardId}`
+    );
+
+    if (invite.to != userEmail) {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "User doesn't have access to this invite"
+      );
+    }
+
+    // update board read permissions
+    addEmailToBoardPermissions(boardRef, userEmail, "read");
+
+    // update board write permissions
+    addEmailToBoardPermissions(boardRef, userEmail, "write");
+
+    // add board to receivers boards
+    inviteReceiverBoardsRef
+      .set({ id: boardId })
+      .then(() => {
+        console.log(
+          `Successfully added board to ${inviteReceiverBoardsRef.toString()}`
+        );
+      })
+      .catch((err) => {
+        if (err) {
+          throw new functions.https.HttpsError(
+            "internal",
+            "Board update to users/ failed."
+          );
+        }
+      });
+
+    // delete invite
+    inviteRef.remove((err) => {
+      if (err) {
+        console.log(`Failed to delete invite. `, err);
+      }
+    });
+  } catch (err) {
+    console.error(`Failed to accept invite. `, err);
+  }
+});

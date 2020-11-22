@@ -95,18 +95,17 @@ const getReceivedInvitesCount = async (userId) => {
 
 // todo
 const acceptInvite = async (invite) => {
-  const database = firebase.database();
-  if (invite) {
-    const inviteRef = database.ref(`/invites/${invite.id}`);
-    inviteRef
-      .remove()
-      .then(async () => {
-        // extract invite data
-      })
-      .catch((err) => {
-        console.log("Failed to accept invite. ", err);
-      });
-  }
+  const _acceptInvite = firebase.functions().httpsCallable("acceptInvite");
+  return _acceptInvite(invite)
+    .then((result) => {
+      return result.data.success;
+    })
+    .catch((err) => {
+      if (err) {
+        console.log(`Failed to accept invite. `, invite, err);
+      }
+      return false;
+    });
 };
 
 export {
@@ -115,4 +114,5 @@ export {
   getAllReceivedInvites,
   getAllInviteNotifications,
   getReceivedInvitesCount,
+  acceptInvite,
 };
