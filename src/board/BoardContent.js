@@ -90,7 +90,7 @@ function BoardContent(props) {
 
   useEffect(() => {
     _loadCurBoard();
-  }, []);
+  });
 
   const handleCardAdd = (card, laneId) => {
     console.log("Added ", card, " to ", laneId);
