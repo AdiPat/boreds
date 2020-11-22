@@ -23,44 +23,48 @@ const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
 };
 
 const createInvite = async (fromEmail, toEmail, boardId) => {
-  const database = firebase.database();
-  const inviteRef = database.ref("/invites");
-  let creationSuccessful = false;
-  await inviteRef
-    .push({
-      from: fromEmail,
-      to: toEmail,
-      boardId: boardId,
-    })
-    .then(() => {
-      creationSuccessful = true;
+  const _createInvite = firebase.functions().httpsCallable("createInvite");
+  return _createInvite({ fromEmail, toEmail, boardId })
+    .then((result) => {
+      const status = result.data;
+      if (status) {
+        console.log(`Successfully sent invite to ${toEmail} for ${boardId}`);
+      } else {
+        console.log(`Failed to send invite to ${toEmail} for ${boardId}`);
+      }
+      return status;
     })
     .catch((err) => {
-      console.log("Failed to create invite: ", err);
-      creationSuccessful = false;
+      if (err) {
+        console.error("Failed to send invite. ", err);
+      }
+      return false;
     });
-  return creationSuccessful;
 };
 
-const getAllInvites = async (userId) => {
-  const database = firebase.database();
-  const userEmailRef = database.ref(`/users/${userId}/email`);
-  let invites = {};
-  const email = await (await userEmailRef.once("value")).val();
-  const invitesRef = database.ref("/invites");
-  await invitesRef
-    .orderByChild("to")
-    .equalTo(email)
-    .once("value", function (inviteSnapshot) {
-      invites = Object.assign({}, inviteSnapshot.val());
+const getAllReceivedInvites = async (userId) => {
+  const _getAllInvites = firebase
+    .functions()
+    .httpsCallable("getAllReceivedInvites");
+
+  return _getAllInvites()
+    .then((result) => {
+      const invites = result.data.invites;
+      if (invites) {
+        return invites;
+      } else {
+        return {};
+      }
+    })
+    .catch((err) => {
+      console.error(`Failed to get invites.`, err);
     });
-  return invites;
 };
 
 const getAllInviteNotifications = async (userId) => {
   let inviteNotifications = [];
   try {
-    const invites = await getAllInvites(userId);
+    const invites = await getAllReceivedInvites(userId);
     if (invites) {
       Object.keys(invites).forEach(async (inviteKey) => {
         let inviteObj = invites[inviteKey];
@@ -80,8 +84,8 @@ const getAllInviteNotifications = async (userId) => {
   return inviteNotifications;
 };
 
-const getInvitesCount = async (userId) => {
-  const allInvites = await getAllInvites(userId);
+const getReceivedInvitesCount = async (userId) => {
+  const allInvites = await getAllReceivedInvites(userId);
   let inviteCount = 0;
   if (allInvites) {
     inviteCount = Object.keys(allInvites).length;
@@ -108,7 +112,7 @@ const acceptInvite = async (invite) => {
 export {
   createInvite,
   checkDuplicateInvite,
-  getAllInvites,
+  getAllReceivedInvites,
   getAllInviteNotifications,
-  getInvitesCount,
+  getReceivedInvitesCount,
 };

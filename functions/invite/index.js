@@ -1,6 +1,48 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
+exports.createInvite = functions.https.onCall(async (data, context) => {
+  const fromEmail = data.fromEmail;
+  const toEmail = data.toEmail;
+  const boardId = data.boardId;
+
+  if (
+    typeof fromEmail != "string" ||
+    typeof toEmail != "string" ||
+    typeof boardId != "string"
+  ) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      `The function must be called with arguments toEmail (string), toEmail (string) and boardId (string).`
+    );
+  }
+
+  if (fromEmail === toEmail) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      `fromEmail [${fromEmail}] and toEmail [${toEmail}] cannot be the same.`
+    );
+  }
+
+  const database = admin.database();
+  const invitesRef = database.ref("invites/");
+  return invitesRef
+    .push({
+      from: fromEmail,
+      to: toEmail,
+      boardId: boardId,
+    })
+    .then(() => {
+      return true;
+    })
+    .catch((err) => {
+      if (err) {
+        console.log("Failed to create invite: ", err);
+      }
+      return false;
+    });
+});
+
 exports.checkDuplicateInvite = functions.https.onCall(async (data, context) => {
   const fromEmail = context.auth.token.email;
   const toEmail = data.toEmail;
@@ -75,3 +117,37 @@ exports.inviteCreateTrigger = functions.database
       return snapshot.ref.remove();
     }
   });
+
+exports.getAllReceivedInvites = functions.https.onCall(
+  async (data, context) => {
+    const userId = context.auth.uid;
+    const toEmail = context.auth.token.email;
+    const database = admin.database();
+    const invitesRef = database.ref("invites/");
+    let invites = null;
+    if (userId == null) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        `Need authentication to call this function.`
+      );
+    }
+
+    try {
+      const invitesSnapshot = await invitesRef
+        .orderByChild("to")
+        .equalTo(toEmail)
+        .once("value");
+      invites = await invitesSnapshot.val();
+    } catch (err) {
+      if (err) {
+        throw new functions.https.HttpsError(
+          "internal",
+          `Failed to get invites for userId=${userId}`
+        );
+      }
+    }
+    return {
+      invites,
+    };
+  }
+);
