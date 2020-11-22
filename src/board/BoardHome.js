@@ -15,6 +15,7 @@ function BoardHome(props) {
   const { state } = useContext(AppContext);
   const boardId = props.boardId;
   const userId = props.userId;
+  const isLoggedIn = Boolean(userId);
 
   useEffect(() => {
     if (!lastOpened && userId) {
@@ -27,7 +28,7 @@ function BoardHome(props) {
   return (
     <div>
       <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
-      {boardLoaded ? (
+      {boardLoaded && isLoggedIn ? (
         <BoardToolbar
           userId={props.userId}
           boardId={props.boardId}
