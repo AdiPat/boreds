@@ -42,8 +42,9 @@ exports.checkDuplicateInvite = functions.https.onCall(async (data, context) => {
 
 exports.inviteCreateTrigger = functions.database
   .ref("invites/{inviteId}")
-  .onUpdate((snapshot, context) => {
-    const invite = snapshot.after.val();
+  .onCreate((snapshot, context) => {
+    const invite = snapshot.val();
+    const inviteId = context.params.inviteId;
     const now = new Date();
     if (
       snapshot.hasChild("from") &&
@@ -53,12 +54,12 @@ exports.inviteCreateTrigger = functions.database
       const queryStr = `${invite.from}_${invite.to}_${invite.boardId}`;
       return snapshot.ref
         .update({
-          id: context.params.inviteId,
+          id: inviteId,
           createdAt: now.toString(),
           from_to_boardId: queryStr,
         })
         .then(() => {
-          console.log(`Successfully added invite meta data to ${invite.id}`);
+          console.log(`Successfully added invite meta data to ${inviteId}`);
           return true;
         })
         .catch((err) => {
