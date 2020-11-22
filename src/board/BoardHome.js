@@ -10,6 +10,7 @@ function BoardHome(props) {
   const [lastOpened, setLastOpened] = useState(null);
   const [isBoardPublic, setIsBoardPublic] = useState(false);
   const [isBoardStarred, setIsBoardStarred] = useState(false);
+  const [boardLoaded, setBoardLoaded] = useState(false);
 
   const { state } = useContext(AppContext);
   const boardId = props.boardId;
@@ -25,20 +26,23 @@ function BoardHome(props) {
 
   return (
     <div>
-      <DashDrawer dashTitle={" - " + boardTitle} />
-      <BoardToolbar
-        userId={props.userId}
-        boardId={props.boardId}
-        boardTitle={boardTitle}
-        public={isBoardPublic}
-        starred={isBoardStarred}
-      />
+      <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
+      {boardLoaded ? (
+        <BoardToolbar
+          userId={props.userId}
+          boardId={props.boardId}
+          boardTitle={boardTitle}
+          public={isBoardPublic}
+          starred={isBoardStarred}
+        />
+      ) : null}
       <BoardContent
         boardId={props.boardId}
         setBoardTitle={setBoardTitle}
         setIsBoardPublic={setIsBoardPublic}
         setIsBoardStarred={setIsBoardStarred}
         isBoardPublic={isBoardPublic}
+        setBoardLoaded={setBoardLoaded}
       />
     </div>
   );
