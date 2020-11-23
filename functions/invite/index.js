@@ -219,6 +219,7 @@ exports.acceptInvite = functions.https.onCall(async (data, context) => {
   }
 
   const inviteRef = database.ref(`invites/${inviteId}`);
+  let acceptSuccess = false;
 
   const addEmailToBoardPermissions = async (
     inviteBoardRef,
@@ -255,13 +256,21 @@ exports.acceptInvite = functions.https.onCall(async (data, context) => {
     }
 
     // update board read permissions
-    addEmailToBoardPermissions(boardRef, userEmail, "read");
+    const promiseAddEmail1 = addEmailToBoardPermissions(
+      boardRef,
+      userEmail,
+      "read"
+    );
 
     // update board write permissions
-    addEmailToBoardPermissions(boardRef, userEmail, "write");
+    const promiseAddEmail2 = addEmailToBoardPermissions(
+      boardRef,
+      userEmail,
+      "write"
+    );
 
     // add board to receivers boards
-    inviteReceiverBoardsRef
+    const promiseReceiveInvite = inviteReceiverBoardsRef
       .set({ id: boardId })
       .then(() => {
         console.log(
@@ -278,14 +287,25 @@ exports.acceptInvite = functions.https.onCall(async (data, context) => {
       });
 
     // delete invite
-    inviteRef.remove((err) => {
+    const promiseRemoveInvite = inviteRef.remove((err) => {
       if (err) {
         console.log(`Failed to delete invite. `, err);
       }
     });
+
+    Promise.all([
+      promiseAddEmail1,
+      promiseAddEmail2,
+      promiseReceiveInvite,
+      promiseRemoveInvite,
+    ]).then((result) => {
+      acceptSuccess = true;
+    });
   } catch (err) {
     console.error(`Failed to accept invite. `, err);
+    acceptSuccess = false;
   }
+  return acceptSuccess;
 });
 
 exports.rejectInvite = functions.https.onCall((data, context) => {
