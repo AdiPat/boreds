@@ -1,19 +1,10 @@
 import { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Board from "react-trello";
 import AppContext from "../providers/AppContext";
-import firebase from "firebase/app";
 import { CircularLoader } from "../components/CircularLoader";
-import { BoardToolbar } from "./BoardToolbar";
 import "firebase/database";
-import {
-  padEmptyLanes,
-  updateBoardData,
-  isBoardPublic,
-} from "../services/board";
-import { attachBoardUpdateListener } from "../services/database";
+import { padEmptyLanes, updateBoardData } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -52,18 +43,6 @@ function BoardContent(props) {
 
   const [curBoardData, setCurBoardData] = useState(null);
 
-  // only for public boards viewed when user is not logged in
-  const _updateCurBoard = (boardId, boardData) => {
-    console.log("_updateCurBoard()");
-    let paddedData = padEmptyLanes(boardData);
-    if (paddedData) {
-      setCurBoardData(paddedData);
-      props.setBoardTitle(paddedData.title);
-      props.setIsBoardPublic(true);
-      props.setBoardLoaded(true);
-    }
-  };
-
   const _loadCurBoard = async () => {
     let data = state.boardsList[props.boardId];
     if (data) {
@@ -74,16 +53,8 @@ function BoardContent(props) {
       console.log(`Board Data: boardId=${props.boardId}`, paddedData);
       if (paddedData) {
         setCurBoardData(paddedData);
-        props.setIsBoardPublic(Boolean(paddedData.public));
         props.setIsBoardStarred(Boolean(paddedData.starred));
         props.setBoardLoaded(true);
-      }
-    } else if (data == null && !isLoggedIn) {
-      // handle public board
-      let publicStatus = await isBoardPublic(props.boardId);
-      console.log("publicStatus: ", publicStatus, props.boardId);
-      if (publicStatus) {
-        attachBoardUpdateListener(props.boardId, _updateCurBoard);
       }
     }
   };

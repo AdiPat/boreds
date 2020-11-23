@@ -1,21 +1,24 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { DashDrawer } from "../components/DashDrawer";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
-import AppContext from "../providers/AppContext";
-import { updateBoardLastOpened } from "../services/board";
+import { PublicBoardContent } from "./PublicBoardContent";
+import { updateBoardLastOpened, isBoardPublic } from "../services/board";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
-  const [isBoardPublic, setIsBoardPublic] = useState(false);
+  const [boardPublicStatus, setBoardPublicStatus] = useState(false);
   const [isBoardStarred, setIsBoardStarred] = useState(false);
   const [boardLoaded, setBoardLoaded] = useState(false);
-
-  const { state } = useContext(AppContext);
   const boardId = props.boardId;
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
+
+  const _updateBoardVisibilityStatus = async (boardId) => {
+    let publicStatus = await isBoardPublic(props.boardId);
+    setBoardPublicStatus(publicStatus);
+  };
 
   useEffect(() => {
     if (!lastOpened && userId) {
@@ -23,6 +26,7 @@ function BoardHome(props) {
       setLastOpened(now);
       updateBoardLastOpened(userId, boardId, now);
     }
+    _updateBoardVisibilityStatus();
   });
 
   return (
@@ -33,18 +37,25 @@ function BoardHome(props) {
           userId={props.userId}
           boardId={props.boardId}
           boardTitle={boardTitle}
-          public={isBoardPublic}
+          public={boardPublicStatus}
           starred={isBoardStarred}
         />
       ) : null}
-      <BoardContent
-        boardId={props.boardId}
-        setBoardTitle={setBoardTitle}
-        setIsBoardPublic={setIsBoardPublic}
-        setIsBoardStarred={setIsBoardStarred}
-        isBoardPublic={isBoardPublic}
-        setBoardLoaded={setBoardLoaded}
-      />
+      {boardLoaded && isLoggedIn ? (
+        <BoardContent
+          boardId={props.boardId}
+          setBoardTitle={setBoardTitle}
+          setIsBoardStarred={setIsBoardStarred}
+          isBoardPublic={boardPublicStatus}
+          setBoardLoaded={setBoardLoaded}
+        />
+      ) : boardPublicStatus ? (
+        <PublicBoardContent
+          boardId={props.boardId}
+          setBoardTitle={setBoardTitle}
+          setBoardLoaded={setBoardLoaded}
+        />
+      ) : null}
     </div>
   );
 }
