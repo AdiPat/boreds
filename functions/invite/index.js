@@ -2,9 +2,12 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 exports.createInvite = functions.https.onCall(async (data, context) => {
+  const database = admin.database();
   const fromEmail = data.fromEmail;
   const toEmail = data.toEmail;
   const boardId = data.boardId;
+  const boardRef = database.ref(`boards/${boardId}`);
+  const invitesRef = database.ref("invites/");
 
   if (
     typeof fromEmail != "string" ||
@@ -24,8 +27,41 @@ exports.createInvite = functions.https.onCall(async (data, context) => {
     );
   }
 
-  const database = admin.database();
-  const invitesRef = database.ref("invites/");
+  // the user who the invite is being sent to must not already be in the list of board users
+  const boardData = (await boardRef.once("value")).val();
+  if (!boardData) {
+    throw new functions.https.HttpsError(
+      "not-found",
+      `Board with ${boardId} not found.`
+    );
+  } else {
+    const permissions = boardData.permissions;
+    const readPermissions = permissions ? permissions.read : null;
+    const writePermissions = permissions ? permissions.write : null;
+    let foundUserRead = false;
+    let foundUserWrite = false;
+
+    if (readPermissions) {
+      foundUserRead =
+        Object.keys(readPermissions).filter(
+          (readKey) => readPermissions[readKey] == toEmail
+        ).length > 0;
+    }
+
+    if (writePermissions) {
+      foundUserWrite =
+        Object.keys(writePermissions).filter(
+          (writeKey) => writePermissions[writeKey] == toEmail
+        ).length > 0;
+    }
+
+    if (foundUserRead || foundUserWrite) {
+      throw new functions.https.HttpsError(
+        "already-exists",
+        `User already has access to the board.`
+      );
+    }
+  }
 
   return invitesRef
     .push({
