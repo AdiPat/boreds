@@ -98,7 +98,8 @@ const acceptInvite = async (invite) => {
   const _acceptInvite = firebase.functions().httpsCallable("acceptInvite");
   return _acceptInvite(invite)
     .then((result) => {
-      return result.data.success;
+      console.log(`acceptInvite: Status = `, result.data);
+      return result.data;
     })
     .catch((err) => {
       if (err) {
