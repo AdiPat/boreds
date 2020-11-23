@@ -3,7 +3,6 @@ import firebase from "firebase/app";
 import "firebase/database";
 import AppContext from "./AppContext";
 import { getBoardIds } from "../services/board";
-import { isBoardsMigrated, migrateBoards } from "../services/migrate";
 import {
   attachBoardAddedListener,
   attachBoardDeleteListener,
@@ -61,15 +60,6 @@ class AppProvider extends React.Component {
 
       if (userAuth) {
         const userId = userAuth.uid;
-
-        // migrate boards if the user is using the old format
-        isBoardsMigrated(userId).then((boardMigrateFlag) => {
-          if (!boardMigrateFlag) {
-            migrateBoards(userId, thisComponent.setBoardsMigratedFlag);
-          } else {
-            thisComponent.setBoardsMigratedFlag(true);
-          }
-        });
 
         getBoardIds(userId).then((boardIds) => {
           //console.log("boardIdList: ", boardIds);
