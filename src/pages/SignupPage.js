@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import AppContext from "../providers/AppContext";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -17,6 +17,8 @@ import "firebase/auth";
 import "firebase/database";
 import { updateUserOnSignup } from "../services/user";
 
+const MAX_LOADER_ITERATIONS = 10;
+
 function SignupPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,10 +26,22 @@ function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [loaderCounter, setLoaderCounter] = useState(0);
   const { user } = useContext(AppContext);
+  const history = useHistory();
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
+    const loaderInterval = setInterval(() => {
+      if (user) {
+        setIsLoading(false);
+        history.push("/dashboard");
+        clearInterval(loaderInterval);
+      } else if (loaderCounter >= MAX_LOADER_ITERATIONS) {
+        setIsLoading(false);
+        clearInterval(loaderInterval);
+      }
+      setLoaderCounter(loaderCounter + 1);
+    }, 100);
   });
 
   const handleSubmit = (e) => {
