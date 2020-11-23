@@ -108,6 +108,13 @@ const acceptInvite = async (invite) => {
     });
 };
 
+const rejectInvite = async (invite) => {
+  const _rejectInvite = firebase.functions().httpsCallable("rejectInvite");
+  return _rejectInvite(invite)
+    .then((result) => result.data)
+    .catch((err) => console.log(`Failed to reject invite. `, err));
+};
+
 export {
   createInvite,
   checkDuplicateInvite,
@@ -115,4 +122,5 @@ export {
   getAllInviteNotifications,
   getReceivedInvitesCount,
   acceptInvite,
+  rejectInvite,
 };

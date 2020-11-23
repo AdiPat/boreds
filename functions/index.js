@@ -17,3 +17,4 @@ exports.inviteCreateTrigger = inviteFunctions.inviteCreateTrigger;
 exports.getAllReceivedInvites = inviteFunctions.getAllReceivedInvites;
 exports.createInvite = inviteFunctions.createInvite;
 exports.acceptInvite = inviteFunctions.acceptInvite;
+exports.rejectInvite = inviteFunctions.rejectInvite;
