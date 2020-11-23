@@ -15,23 +15,12 @@ const attachBoardUpdateListener = (boardId, updateBoardInState) => {
 const attachBoardDeleteListener = (userId, deleteBoardFromState) => {
   const database = firebase.database();
   const userBoardRef = database.ref(`/users/${userId}/boards`);
-  const invitesRef = database.ref("/invites");
+
   userBoardRef.on("child_removed", function (oldSnapshot) {
     const oldBoardItem = oldSnapshot.val();
     const oldBoardId = oldBoardItem.id;
     deleteBoardFromState(oldBoardId);
-
-    invitesRef
-      .orderByChild("boardId")
-      .equalTo(oldBoardId)
-      .once("value", function (invitesSnapshot) {
-        invitesSnapshot.forEach((childSnapshot) => {
-          invitesRef.child(childSnapshot.key).remove();
-        });
-      });
   });
-
-  // delete all invites corresponding to board
 };
 
 const attachBoardAddedListener = (userId, updateBoardInState) => {

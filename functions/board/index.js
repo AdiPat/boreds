@@ -34,6 +34,7 @@ exports.deleteBoardTrigger = functions.database
     const publicReadableBoardRef = database.ref(
       `publicReadable/boards/${boardId}`
     );
+    const invitesRef = database.ref("invites/");
 
     const removeData = async (ref) => {
       let successStatus = false;
@@ -54,8 +55,23 @@ exports.deleteBoardTrigger = functions.database
 
     const boardRemoveStatus = removeData(boardRef);
     const publicReadableRemoveStatus = removeData(publicReadableBoardRef);
+    // delete all invites corresponding to board
+    const invitesRemoveStatus = invitesRef
+      .orderByChild("boardId")
+      .equalTo(boardId)
+      .once("value")
+      .then((snapshot) => {
+        const updates = {};
+        snapshot.forEach((child) => (updates[child.key] = null));
+        invitesRef.update(updates);
+        return true;
+      });
 
-    return Promise.all([boardRemoveStatus, publicReadableRemoveStatus]);
+    return Promise.all([
+      boardRemoveStatus,
+      publicReadableRemoveStatus,
+      invitesRemoveStatus,
+    ]);
   });
 
 exports.updateBoardUserOnCreation = functions.database
