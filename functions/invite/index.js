@@ -211,6 +211,13 @@ exports.acceptInvite = functions.https.onCall(async (data, context) => {
     );
   }
 
+  if (invite.from == invite.to) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      `acceptInvite: fromEmail[${fromEmail}] and toEmail[${toEmail}] can't be the same. `
+    );
+  }
+
   const inviteRef = database.ref(`invites/${inviteId}`);
 
   const addEmailToBoardPermissions = async (
