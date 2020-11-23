@@ -26,6 +26,7 @@ exports.createInvite = functions.https.onCall(async (data, context) => {
 
   const database = admin.database();
   const invitesRef = database.ref("invites/");
+
   return invitesRef
     .push({
       from: fromEmail,
@@ -84,7 +85,8 @@ exports.checkDuplicateInvite = functions.https.onCall(async (data, context) => {
 
 exports.inviteCreateTrigger = functions.database
   .ref("invites/{inviteId}")
-  .onCreate((snapshot, context) => {
+  .onCreate(async (snapshot, context) => {
+    const database = admin.database();
     const invite = snapshot.val();
     const inviteId = context.params.inviteId;
     const now = new Date();
@@ -93,10 +95,15 @@ exports.inviteCreateTrigger = functions.database
       snapshot.hasChild("to") &&
       snapshot.hasChild("boardId")
     ) {
+      const boardTitle = (
+        await database.ref(`boards/${invite.boardId}/title`).once("value")
+      ).val();
+
       const queryStr = `${invite.from}_${invite.to}_${invite.boardId}`;
       return snapshot.ref
         .update({
           id: inviteId,
+          boardTitle: boardTitle,
           createdAt: now.toString(),
           from_to_boardId: queryStr,
         })
