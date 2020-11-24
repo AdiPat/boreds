@@ -10,6 +10,7 @@ function BoardList(props) {
     const boardId = boardItem.id;
     return (
       <BoardListItem
+        key={boardId}
         clickHandler={() => history.push(`/board/${boardId}`)}
         boardId={boardId}
         title={boardItem.title}

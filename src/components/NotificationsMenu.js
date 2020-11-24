@@ -51,6 +51,7 @@ function NotificationsMenu(props) {
         const inviteObj = Object.assign({}, invites[inviteKey]);
         return (
           <NotificationsMenuItem
+            key={inviteObj.id}
             emptyMessage={false}
             fromEmail={inviteObj.from}
             boardTitle={inviteObj.boardTitle}
@@ -60,7 +61,7 @@ function NotificationsMenu(props) {
         );
       });
     } else {
-      menu.push(<NotificationsMenuItem emptyMessage={true} />);
+      menu.push(<NotificationsMenuItem key="empty" emptyMessage={true} />);
     }
     return menu;
   };
