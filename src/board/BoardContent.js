@@ -48,9 +48,9 @@ function BoardContent(props) {
     if (data) {
       // data is loaded in AppProvider
       props.setBoardTitle(data.title);
-      console.log("BoardContent.useEffect: ", data);
+      // console.log("BoardContent.useEffect: ", data);
       let paddedData = padEmptyLanes(data);
-      console.log(`Board Data: boardId=${props.boardId}`, paddedData);
+      // console.log(`Board Data: boardId=${props.boardId}`, paddedData);
       if (paddedData) {
         setCurBoardData(paddedData);
         props.setIsBoardStarred(Boolean(paddedData.starred));
@@ -66,7 +66,7 @@ function BoardContent(props) {
     console.log("Added ", card, " to ", laneId);
   };
 
-  console.log("BoardContent: ", curBoardData);
+  // console.log("BoardContent: ", curBoardData);
 
   const handleDataChange = (newData) => {
     console.log("handleDataChange: ", newData);
