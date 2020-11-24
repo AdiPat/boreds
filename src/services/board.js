@@ -214,10 +214,11 @@ const setBoardVisibility = (userId, boardId, visibility) => {
 };
 
 const updateBoardData = (userId, boardId, newData) => {
-  const lanesRef = firebase.database().ref(`boards/${boardId}/lanes`);
+  const _updateBoardLanes = firebase
+    .functions()
+    .httpsCallable("updateBoardLanes");
 
-  lanesRef
-    .set(newData.lanes)
+  _updateBoardLanes({ boardId: boardId, userId: userId, board: newData })
     .then((d) => {
       console.log(`Updated new data for ${boardId} ${userId}`);
     })
