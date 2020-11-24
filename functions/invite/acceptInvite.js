@@ -110,7 +110,7 @@ exports.func = functions.https.onCall(async (data, context) => {
       }
     });
 
-    Promise.all([
+    await Promise.all([
       promiseAddEmail1,
       promiseAddEmail2,
       promiseReceiveInvite,
