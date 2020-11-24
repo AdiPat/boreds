@@ -61,12 +61,6 @@ class AppProvider extends React.Component {
       if (userAuth) {
         const userId = userAuth.uid;
 
-        getBoardIds(userId).then((boardIds) => {
-          //console.log("boardIdList: ", boardIds);
-          boardIds.forEach((boardId) => {
-            attachBoardUpdateListener(boardId, thisComponent.updateBoard);
-          });
-        });
         attachBoardAddedListener(userId, thisComponent.updateBoard);
         attachBoardDeleteListener(userId, thisComponent.deleteBoard);
       }
