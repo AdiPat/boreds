@@ -44,23 +44,22 @@ function CreateBoardModal(props) {
   };
 
   const createBoard = async (userId, boardTitle) => {
-    const foundDuplicateBoard = await checkDuplicateBoard(userId, boardTitle);
     const user = getCurrentUser();
-    if (foundDuplicateBoard === false) {
-      addNewBoard(user.uid, newBoardName)
-        .then(() => {
-          resetParams(`Board ${newBoardName} created`);
+    addNewBoard(user.uid, newBoardName)
+      .then((result) => {
+        const status = result.data.status;
+        if (status) {
+          resetParams(`Board ${newBoardName} created.`);
           console.log("Created new board.");
-        })
-        .catch((err) => {
+        } else {
           resetParams(`Couldn't create ${newBoardName}. Try again later.`);
-          console.error("Failed to create new board. ", err);
-        });
-    } else if (foundDuplicateBoard === null) {
-      resetParams(`Couldn't create ${newBoardName}. Try again later.`);
-    } else if (foundDuplicateBoard === true) {
-      resetParams(`${newBoardName} already exists.`);
-    }
+          console.log(`Failed to create new board ${boardTitle}`);
+        }
+      })
+      .catch((err) => {
+        resetParams(err.message);
+        console.error("Failed to create new board. ", err);
+      });
   };
 
   const handleSubmit = (e) => {
