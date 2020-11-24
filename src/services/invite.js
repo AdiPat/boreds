@@ -1,69 +1,70 @@
 import firebase from "firebase";
 import "firebase/database";
+import "firebase/functions";
 import { getBoardTitle } from "./board";
 
 const checkDuplicateInvite = async (fromEmail, toEmail, boardId) => {
-  const database = firebase.database();
-  const inviteRef = database.ref("/invites");
-  let foundDuplicate = false;
-  const queryStr = `${fromEmail}_${toEmail}_${boardId}`;
-  await inviteRef
-    .orderByChild("from_to_boardId")
-    .equalTo(queryStr)
-    .once("value", function (snapshot) {
-      const foundInvites = snapshot.val();
-      if (foundInvites) {
-        foundDuplicate = true;
+  const _checkDuplicateInvite = firebase
+    .functions()
+    .httpsCallable("checkDuplicateInvite");
+
+  return await _checkDuplicateInvite({
+    toEmail: toEmail,
+    boardId: boardId,
+  })
+    .then((result) => {
+      return result.data.foundDuplicates;
+    })
+    .catch((err) => {
+      if (err) {
+        console.error("checkDuplicateInvite callable: ", err);
       }
     });
-  return foundDuplicate;
 };
 
 const createInvite = async (fromEmail, toEmail, boardId) => {
-  const database = firebase.database();
-  const inviteRef = database.ref("/invites");
-  const newInviteRef = inviteRef.push();
-  const newInviteId = (await newInviteRef).key;
-  let creationSuccessful = false;
-  const now = new Date();
-  await newInviteRef
-    .set({
-      id: newInviteId,
-      from: fromEmail,
-      to: toEmail,
-      boardId: boardId,
-      from_to_boardId: fromEmail + "_" + toEmail + "_" + boardId, // for duplicate query
-      createdAt: now.toString(),
-    })
-    .then(() => {
-      creationSuccessful = true;
+  const _createInvite = firebase.functions().httpsCallable("createInvite");
+  return _createInvite({ fromEmail, toEmail, boardId })
+    .then((result) => {
+      const status = result.data;
+      if (status) {
+        console.log(`Successfully sent invite to ${toEmail} for ${boardId}`);
+      } else {
+        console.log(`Failed to send invite to ${toEmail} for ${boardId}`);
+      }
+      return status;
     })
     .catch((err) => {
-      console.log("Failed to create invite: ", err);
-      creationSuccessful = false;
+      if (err) {
+        console.error("Failed to send invite. ", err);
+      }
+      return false;
     });
-  return creationSuccessful;
 };
 
-const getAllInvites = async (userId) => {
-  const database = firebase.database();
-  const userEmailRef = database.ref(`/users/${userId}/email`);
-  let invites = {};
-  const email = await (await userEmailRef.once("value")).val();
-  const invitesRef = database.ref("/invites");
-  await invitesRef
-    .orderByChild("to")
-    .equalTo(email)
-    .once("value", function (inviteSnapshot) {
-      invites = Object.assign({}, inviteSnapshot.val());
+const getAllReceivedInvites = async (userId) => {
+  const _getAllInvites = firebase
+    .functions()
+    .httpsCallable("getAllReceivedInvites");
+
+  return _getAllInvites()
+    .then((result) => {
+      const invites = result.data.invites;
+      if (invites) {
+        return invites;
+      } else {
+        return {};
+      }
+    })
+    .catch((err) => {
+      console.error(`Failed to get invites.`, err);
     });
-  return invites;
 };
 
 const getAllInviteNotifications = async (userId) => {
   let inviteNotifications = [];
   try {
-    const invites = await getAllInvites(userId);
+    const invites = await getAllReceivedInvites(userId);
     if (invites) {
       Object.keys(invites).forEach(async (inviteKey) => {
         let inviteObj = invites[inviteKey];
@@ -83,8 +84,8 @@ const getAllInviteNotifications = async (userId) => {
   return inviteNotifications;
 };
 
-const getInvitesCount = async (userId) => {
-  const allInvites = await getAllInvites(userId);
+const getReceivedInvitesCount = async (userId) => {
+  const allInvites = await getAllReceivedInvites(userId);
   let inviteCount = 0;
   if (allInvites) {
     inviteCount = Object.keys(allInvites).length;
@@ -94,24 +95,33 @@ const getInvitesCount = async (userId) => {
 
 // todo
 const acceptInvite = async (invite) => {
-  const database = firebase.database();
-  if (invite) {
-    const inviteRef = database.ref(`/invites/${invite.id}`);
-    inviteRef
-      .remove()
-      .then(async () => {
-        // extract invite data
-      })
-      .catch((err) => {
-        console.log("Failed to accept invite. ", err);
-      });
-  }
+  const _acceptInvite = firebase.functions().httpsCallable("acceptInvite");
+  return _acceptInvite(invite)
+    .then((result) => {
+      console.log(`acceptInvite: Status = `, result.data);
+      return result.data;
+    })
+    .catch((err) => {
+      if (err) {
+        console.log(`Failed to accept invite. `, invite, err);
+      }
+      return false;
+    });
+};
+
+const rejectInvite = async (invite) => {
+  const _rejectInvite = firebase.functions().httpsCallable("rejectInvite");
+  return _rejectInvite(invite)
+    .then((result) => result.data)
+    .catch((err) => console.log(`Failed to reject invite. `, err));
 };
 
 export {
   createInvite,
   checkDuplicateInvite,
-  getAllInvites,
+  getAllReceivedInvites,
   getAllInviteNotifications,
-  getInvitesCount,
+  getReceivedInvitesCount,
+  acceptInvite,
+  rejectInvite,
 };

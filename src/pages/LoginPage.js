@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -15,21 +15,30 @@ import AppContext from "../providers/AppContext";
 import { CircularLoader } from "../components/CircularLoader";
 import { updateUserIfNotFound } from "../services/user";
 
+const MAX_LOADER_ITERATIONS = 10;
+
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [loaderCounter, setLoaderCounter] = useState(0);
   const { user } = useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-    // redirect to dashboard
-    if (user) {
-      history.push("/dashboard");
-    }
+    const loaderInterval = setInterval(() => {
+      if (user) {
+        setIsLoading(false);
+        history.push("/dashboard");
+        clearInterval(loaderInterval);
+      } else if (loaderCounter >= MAX_LOADER_ITERATIONS) {
+        setIsLoading(false);
+        clearInterval(loaderInterval);
+      }
+      setLoaderCounter(loaderCounter + 1);
+    }, 100);
   });
 
   const handleSubmit = (e) => {
@@ -50,7 +59,7 @@ function LoginPage() {
 
   return isLoading ? (
     <CircularLoader color="secondary" />
-  ) : (
+  ) : user == null ? (
     <Grid
       style={{ minHeight: "100vh", backgroundColor: "#ececec" }}
       container
@@ -132,6 +141,8 @@ function LoginPage() {
         </form>
       </Grid>
     </Grid>
+  ) : (
+    <Redirect to="/dashboard" />
   );
 }
 

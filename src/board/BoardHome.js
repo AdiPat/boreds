@@ -1,46 +1,58 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { DashDrawer } from "../components/DashDrawer";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
-import AppContext from "../providers/AppContext";
-import { updateBoardLastOpened } from "../services/board";
+import { PublicBoardContent } from "./PublicBoardContent";
+import { updateBoardLastOpened, isBoardPublic } from "../services/board";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
-  const [isBoardPublic, setIsBoardPublic] = useState(false);
+  const [boardPublicStatus, setBoardPublicStatus] = useState(false);
   const [isBoardStarred, setIsBoardStarred] = useState(false);
-
-  const { state } = useContext(AppContext);
   const boardId = props.boardId;
   const userId = props.userId;
+  const isLoggedIn = Boolean(userId);
+
+  const _updateBoardVisibilityStatus = async (boardId) => {
+    let publicStatus = await isBoardPublic(props.boardId);
+    setBoardPublicStatus(publicStatus);
+  };
 
   useEffect(() => {
-    console.log(lastOpened);
-    if (!lastOpened) {
+    if (!lastOpened && userId) {
       const now = new Date();
       setLastOpened(now);
       updateBoardLastOpened(userId, boardId, now);
     }
+    _updateBoardVisibilityStatus();
   });
 
   return (
     <div>
-      <DashDrawer dashTitle={" - " + boardTitle} />
-      <BoardToolbar
-        userId={props.userId}
-        boardId={props.boardId}
-        boardTitle={boardTitle}
-        public={isBoardPublic}
-        starred={isBoardStarred}
-      />
-      <BoardContent
-        boardId={props.boardId}
-        setBoardTitle={setBoardTitle}
-        setIsBoardPublic={setIsBoardPublic}
-        setIsBoardStarred={setIsBoardStarred}
-        isBoardPublic={isBoardPublic}
-      />
+      <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
+      {isLoggedIn ? (
+        <BoardToolbar
+          userId={props.userId}
+          boardId={props.boardId}
+          boardTitle={boardTitle}
+          public={boardPublicStatus}
+          starred={isBoardStarred}
+        />
+      ) : null}
+      {isLoggedIn ? (
+        <BoardContent
+          boardId={props.boardId}
+          setBoardTitle={setBoardTitle}
+          setIsBoardStarred={setIsBoardStarred}
+          isBoardPublic={boardPublicStatus}
+        />
+      ) : boardPublicStatus ? (
+        <PublicBoardContent
+          boardId={props.boardId}
+          setBoardTitle={setBoardTitle}
+        />
+      ) : null}
     </div>
   );
 }

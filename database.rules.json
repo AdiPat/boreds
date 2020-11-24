@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == data.child('userId').val()",
+        ".write": "auth != null && auth.uid == data.child('userId').val()"
+      }
+    },
+    "boards": {
+      ".read": "auth != null", 
+      ".write": "auth != null",
+      "$boardId": {
+        ".read": "auth != null || data.child('public').val() == true",
+        ".write": "auth != null"
+      }
+    },
+    "publicReadable": {
+        ".read": true, 
+        ".write": false
+      },
+    "invites": {
+      ".read": "auth != null && query.orderByChild == 'to' && query.equalTo == auth.token.email",
+      ".write": false
+    }
+  }
+}

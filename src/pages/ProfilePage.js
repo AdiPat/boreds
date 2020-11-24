@@ -28,7 +28,7 @@ function Profile(props) {
     <CircularLoader color="secondary" />
   ) : user != null ? (
     <div>
-      <DashDrawer />
+      <DashDrawer userId={user.uid} />
       <ProfileContent />
     </div>
   ) : (

@@ -96,13 +96,12 @@ const checkDuplicateBoard = async (userId, title) => {
 
 // gets boards for user
 const getBoards = async (userId) => {
-  const userRef = firebase.database().ref(`users/${userId}`);
+  const userBoardsRef = firebase.database().ref(`users/${userId}/boards`);
   let boards = {};
   try {
-    const userSnapshot = await userRef.once("value");
-    const user = userSnapshot.val();
-    boards = user.boards;
-    if (boards === undefined) {
+    const snapshot = await userBoardsRef.once("value");
+    boards = snapshot.val();
+    if (!boards) {
       boards = {};
     }
   } catch (err) {
@@ -191,14 +190,10 @@ const getRecentBoards = (boards) => {
 };
 
 const deleteBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}`);
   const userBoardRef = firebase
     .database()
     .ref(`users/${userId}/boards/${boardId}`);
-  boardRef
-    .remove()
-    .then(() => console.log("Remove succeeded."))
-    .catch((err) => console.log("Remove failed: ", err));
+
   userBoardRef
     .remove()
     .then(() => console.log("Remove succeeded from users/."))
@@ -232,6 +227,34 @@ const updateBoardData = (userId, boardId, newData) => {
     );
 };
 
+const isBoardPublic = async (boardId) => {
+  const database = firebase.database();
+  const publicReadableRef = database.ref(
+    `publicReadable/boards/${boardId}/public`
+  );
+  let isBoardPublic = null;
+  try {
+    isBoardPublic = await (await publicReadableRef.once("value")).val();
+  } catch (err) {
+    console.error(`Failed to get public status for board: ${boardId}. `, err);
+  }
+  return isBoardPublic;
+};
+
+const getPublicBoard = async (boardId) => {
+  const _getPublicBoard = firebase.functions().httpsCallable("getPublicBoard");
+  return _getPublicBoard({ boardId })
+    .then((result) => {
+      return result.data.boardData;
+    })
+    .catch((err) => {
+      console.error(
+        `Failed to get public board data for boardId = ${boardId}. `,
+        err
+      );
+    });
+};
+
 export {
   getBoards,
   getBoardTitle,
@@ -247,4 +270,6 @@ export {
   deleteBoard,
   setBoardVisibility,
   updateBoardData,
+  isBoardPublic,
+  getPublicBoard,
 };

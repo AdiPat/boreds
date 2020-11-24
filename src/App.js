@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import firebase from "firebase/app";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
@@ -6,11 +8,20 @@ import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { BoardPage } from "./pages/BoardPage";
 import AppProvider from "./providers/AppProvider";
-import { firebaseApp } from "./firebase/firebase";
+import {
+  firebaseApp,
+  initializeAuthEmulator,
+  initializeFunctionsEmulator,
+} from "./firebase/firebase";
 import "./App.css";
 import Profile from "./pages/ProfilePage";
 
 function App() {
+  useEffect(() => {
+    initializeAuthEmulator();
+    initializeFunctionsEmulator();
+  });
+
   return (
     <AppProvider>
       <Router>

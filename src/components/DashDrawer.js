@@ -99,6 +99,8 @@ function DashDrawer(props) {
     null
   );
 
+  const isLoggedIn = props.userId != null;
+
   const openNotificationsMenu = (e) => {
     setNotificationsMenuAnchorEl(e.target);
   };
@@ -145,81 +147,87 @@ function DashDrawer(props) {
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: openDrawer,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
+          {isLoggedIn ? (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: openDrawer,
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : null}
           <Typography variant="h6" noWrap>
             Boreds {props.dashTitle}
           </Typography>
-          <IconButton
-            color="inherit"
-            style={{ marginLeft: "auto" }}
-            onClick={openNotificationsMenu}
-          >
-            <Badge badgeContent={notificationsCount} color="secondary">
-              <NotificationsRoundedIcon />
-            </Badge>
-          </IconButton>
+          {isLoggedIn ? (
+            <IconButton
+              color="inherit"
+              style={{ marginLeft: "auto" }}
+              onClick={openNotificationsMenu}
+            >
+              <Badge badgeContent={notificationsCount} color="secondary">
+                <NotificationsRoundedIcon />
+              </Badge>
+            </IconButton>
+          ) : null}
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: openDrawer,
-          [classes.drawerClose]: !openDrawer,
-        })}
-        classes={{
-          paper: clsx({
+      {isLoggedIn ? (
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: openDrawer,
             [classes.drawerClose]: !openDrawer,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button key="CreateBoard" onClick={handleOpenModal}>
-            <ListItemIcon>
-              <AddCircleRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Create Board" />
-          </ListItem>
-          <ListItem button key="Boards" onClick={handleShowBoards}>
-            <ListItemIcon>
-              <LibraryBooksIcon />
-            </ListItemIcon>
-            <ListItemText primary="Boards" />
-          </ListItem>
-          <ListItem button key="Profile" onClick={handleProfileClick}>
-            <ListItemIcon>
-              <AccountBoxRounded />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItem>
-          <ListItem button key="Logout" onClick={handleLogout}>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: openDrawer,
+              [classes.drawerClose]: !openDrawer,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem button key="CreateBoard" onClick={handleOpenModal}>
+              <ListItemIcon>
+                <AddCircleRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Create Board" />
+            </ListItem>
+            <ListItem button key="Boards" onClick={handleShowBoards}>
+              <ListItemIcon>
+                <LibraryBooksIcon />
+              </ListItemIcon>
+              <ListItemText primary="Boards" />
+            </ListItem>
+            <ListItem button key="Profile" onClick={handleProfileClick}>
+              <ListItemIcon>
+                <AccountBoxRounded />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button key="Logout" onClick={handleLogout}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </List>
+        </Drawer>
+      ) : null}
       <CreateBoardModal
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
