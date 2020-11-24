@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,12 +23,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "firebase/app";
 import { CreateBoardModal } from "./CreateBoardModal";
-import {
-  getAllInviteNotifications,
-  getAllInvites,
-  getInvitesCount,
-} from "../services/invite";
-import { getCurrentUser } from "../services/user";
 import { NotificationsMenu } from "./NotificationsMenu";
 
 const drawerWidth = 240;

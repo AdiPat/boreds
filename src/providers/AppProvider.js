@@ -2,11 +2,9 @@ import React from "react";
 import firebase from "firebase/app";
 import "firebase/database";
 import AppContext from "./AppContext";
-import { getBoardIds } from "../services/board";
 import {
   attachBoardAddedListener,
   attachBoardDeleteListener,
-  attachBoardUpdateListener,
 } from "../services/database";
 
 class AppProvider extends React.Component {

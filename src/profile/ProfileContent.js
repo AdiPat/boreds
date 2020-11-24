@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Grid, Divider } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { PasswordReset } from "./PasswordReset";
 import { DisplayNameReset } from "./DisplayNameReset";
 

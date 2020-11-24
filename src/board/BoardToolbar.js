@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Toolbar,
@@ -47,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 function BoardToolbar(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const history = useHistory();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openInviteModal, setOpenInviteModal] = useState(false);
   const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);

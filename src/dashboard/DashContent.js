@@ -1,26 +1,13 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import StarIcon from "@material-ui/icons/Star";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import Button from "@material-ui/core/Button";
-import { BoardList } from "./BoardList";
 import { DashPane } from "./DashPane";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
 import { NoBoardAction } from "./NoBoardAction";
 import AppContext from "../providers/AppContext";
 import { getStarredBoards, getRecentBoards } from "../services/board";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  CardActionArea,
-} from "@material-ui/core";
-import { deleteBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
   dashItem: {
@@ -32,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dashItemTitle: {
     marginLeft: theme.spacing(1),
-    //textTransform: "uppercase",
     color: "#616161",
   },
   content: {
@@ -44,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DashContent(props) {
   const classes = useStyles();
-  const { state, setBoardsList } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const userId = state.user.uid;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [deleteModalBoardTitle, setDeleteModalBoardTitle] = useState("");

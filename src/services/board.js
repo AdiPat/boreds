@@ -4,7 +4,6 @@ import uniqid from "uniqid";
 
 // adds empty board
 const addNewBoard = async (userId, boardTitle) => {
-  const errMsg = "";
   const boardId = uniqid();
   const database = firebase.database();
   const now = new Date();
