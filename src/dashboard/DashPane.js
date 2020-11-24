@@ -35,7 +35,7 @@ function DashPane(props) {
 
   return (
     <Grid container alignItems="center" className={classes.dashGrid}>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <div className={classes.dashItem}>
           {React.cloneElement(props.icon, { className: classes.dashItemIcon })}
           <Typography className={classes.dashItemTitle} variant="h6">
