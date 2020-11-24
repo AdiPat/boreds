@@ -10,7 +10,6 @@ function BoardHome(props) {
   const [lastOpened, setLastOpened] = useState(null);
   const [boardPublicStatus, setBoardPublicStatus] = useState(false);
   const [isBoardStarred, setIsBoardStarred] = useState(false);
-  const [boardLoaded, setBoardLoaded] = useState(false);
   const boardId = props.boardId;
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
@@ -32,7 +31,7 @@ function BoardHome(props) {
   return (
     <div>
       <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
-      {boardLoaded && isLoggedIn ? (
+      {isLoggedIn ? (
         <BoardToolbar
           userId={props.userId}
           boardId={props.boardId}
@@ -41,19 +40,17 @@ function BoardHome(props) {
           starred={isBoardStarred}
         />
       ) : null}
-      {boardLoaded && isLoggedIn ? (
+      {isLoggedIn ? (
         <BoardContent
           boardId={props.boardId}
           setBoardTitle={setBoardTitle}
           setIsBoardStarred={setIsBoardStarred}
           isBoardPublic={boardPublicStatus}
-          setBoardLoaded={setBoardLoaded}
         />
       ) : boardPublicStatus ? (
         <PublicBoardContent
           boardId={props.boardId}
           setBoardTitle={setBoardTitle}
-          setBoardLoaded={setBoardLoaded}
         />
       ) : null}
     </div>

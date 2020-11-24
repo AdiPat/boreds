@@ -54,7 +54,6 @@ function BoardContent(props) {
       if (paddedData) {
         setCurBoardData(paddedData);
         props.setIsBoardStarred(Boolean(paddedData.starred));
-        props.setBoardLoaded(true);
       }
     }
   };
