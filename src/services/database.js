@@ -12,6 +12,12 @@ const attachBoardUpdateListener = (boardId, updateBoardInState) => {
   });
 };
 
+const detachBoardUpdateListener = (boardId) => {
+  const database = firebase.database();
+  const boardRef = database.ref(`boards/${boardId}`);
+  return boardRef.off("value");
+};
+
 const attachBoardDeleteListener = (userId, deleteBoardFromState) => {
   const database = firebase.database();
   const userBoardRef = database.ref(`/users/${userId}/boards`);
@@ -77,4 +83,5 @@ export {
   attachBoardDeleteListener,
   attachBoardAddedListener,
   attachInvitesListener,
+  detachBoardUpdateListener,
 };
