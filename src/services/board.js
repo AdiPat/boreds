@@ -5,26 +5,7 @@ import uniqid from "uniqid";
 // adds empty board
 const addNewBoard = async (userId, boardTitle) => {
   const _addNewBoard = firebase.functions().httpsCallable("addNewBoard");
-  return _addNewBoard({ userId, boardTitle })
-    .then((result) => {
-      const status = result.data.status;
-      if (status) {
-        console.log(`Successfully added board ${boardTitle}.`);
-      } else {
-        console.log(`Failed to add board ${boardTitle}.`);
-      }
-      return status;
-    })
-    .catch((err) => {
-      if (err) {
-        console.log(
-          `Failed to add board ${boardTitle}. `,
-          err.code,
-          err.message
-        );
-      }
-      return false;
-    });
+  return _addNewBoard({ userId, boardTitle });
 };
 
 // check duplicate board
