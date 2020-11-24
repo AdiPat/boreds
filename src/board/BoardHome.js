@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DashDrawer } from "../components/DashDrawer";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
 import { PublicBoardContent } from "./PublicBoardContent";
 import { updateBoardLastOpened, isBoardPublic } from "../services/board";
+import AppContext from "../providers/AppContext";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
   const [boardPublicStatus, setBoardPublicStatus] = useState(false);
-  const [isBoardStarred, setIsBoardStarred] = useState(false);
+  const { state } = useContext(AppContext);
   const boardId = props.boardId;
+  const board = state.boardsList[boardId];
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
 
@@ -37,14 +39,13 @@ function BoardHome(props) {
           boardId={props.boardId}
           boardTitle={boardTitle}
           public={boardPublicStatus}
-          starred={isBoardStarred}
+          starred={board.starred}
         />
       ) : null}
       {isLoggedIn ? (
         <BoardContent
           boardId={props.boardId}
           setBoardTitle={setBoardTitle}
-          setIsBoardStarred={setIsBoardStarred}
           isBoardPublic={boardPublicStatus}
         />
       ) : boardPublicStatus ? (

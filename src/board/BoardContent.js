@@ -53,7 +53,6 @@ function BoardContent(props) {
       // console.log(`Board Data: boardId=${props.boardId}`, paddedData);
       if (paddedData) {
         setCurBoardData(paddedData);
-        props.setIsBoardStarred(Boolean(paddedData.starred));
       }
     }
   };
