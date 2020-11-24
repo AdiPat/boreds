@@ -96,13 +96,12 @@ const checkDuplicateBoard = async (userId, title) => {
 
 // gets boards for user
 const getBoards = async (userId) => {
-  const userRef = firebase.database().ref(`users/${userId}`);
+  const userBoardsRef = firebase.database().ref(`users/${userId}/boards`);
   let boards = {};
   try {
-    const userSnapshot = await userRef.once("value");
-    const user = userSnapshot.val();
-    boards = user.boards;
-    if (boards === undefined) {
+    const snapshot = await userBoardsRef.once("value");
+    boards = snapshot.val();
+    if (!boards) {
       boards = {};
     }
   } catch (err) {
