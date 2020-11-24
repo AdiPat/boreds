@@ -53,7 +53,6 @@ const attachInvitesListener = async (userId, updateInvitesInState) => {
       .orderByChild("to")
       .equalTo(email)
       .on("value", async function (inviteSnapshot) {
-        console.log("Invites value changed listener called.");
         let inviteNotifications = [];
         let invites = inviteSnapshot.val();
 
