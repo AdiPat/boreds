@@ -90,12 +90,16 @@ const padEmptyLanes = (boardData) => {
 };
 
 const starBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
+  const boardRef = firebase
+    .database()
+    .ref(`users/${userId}/boards/${boardId}/starred`);
   boardRef.set(true);
 };
 
 const unstarBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
+  const boardRef = firebase
+    .database()
+    .ref(`users/${userId}/boards/${boardId}/starred`);
   boardRef.set(false);
 };
 
