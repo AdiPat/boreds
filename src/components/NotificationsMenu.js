@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 import { Typography, Divider, Menu } from "@material-ui/core";
-import { getAllInviteNotifications, getAllInvites } from "../services/invite";
 import { attachInvitesListener } from "../services/database";
 import { getCurrentUser } from "../services/user";
 import { NotificationsMenuItem } from "./NotificationsMenuItem";
@@ -46,12 +45,10 @@ function NotificationsMenu(props) {
   }, []);
 
   const renderMenu = () => {
-    console.log("renderMenu: invites ", invites);
     let menu = [];
     if (invites && invites.length) {
       menu = Object.keys(invites).map((inviteKey) => {
         const inviteObj = Object.assign({}, invites[inviteKey]);
-        //const boardTitle = await getBoardTitle(inviteObj.boardId);
         return (
           <NotificationsMenuItem
             emptyMessage={false}
