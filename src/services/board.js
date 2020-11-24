@@ -4,69 +4,26 @@ import uniqid from "uniqid";
 
 // adds empty board
 const addNewBoard = async (userId, boardTitle) => {
-  const boardId = uniqid();
-  const database = firebase.database();
-  const now = new Date();
-  const boardData = {
-    id: boardId,
-    title: boardTitle,
-    createdAt: now.toString(),
-    starred: false,
-    owner: userId,
-    public: false,
-    lastOpened: now.toString(),
-    lanes: [
-      {
-        id: uniqid(),
-        title: "To Do",
-        cards: [
-          {
-            id: uniqid(),
-            title: "Eat breakfast",
-            description: "Make Milk and Cereal.",
-          },
-          {
-            id: uniqid(),
-            title: "Pay Bill",
-            description: "Electricity bill pending.",
-          },
-        ],
-      },
-      {
-        id: uniqid(),
-        title: "Completed",
-        cards: [
-          {
-            id: uniqid(),
-            title: "Data Science Assignment",
-            description: "Complete Linear Regression.",
-          },
-        ],
-      },
-    ],
-  };
-  const userBoardRef = database.ref(`users/${userId}/boards/${boardId}`);
-  userBoardRef
-    .set({
-      id: boardId,
-      title: boardTitle,
-      createdAt: now.toString(),
-    })
-    .then(() => {
-      console.log("Successfully added board to users/board ");
+  const _addNewBoard = firebase.functions().httpsCallable("addNewBoard");
+  return _addNewBoard({ userId, boardTitle })
+    .then((result) => {
+      const status = result.data.status;
+      if (status) {
+        console.log(`Successfully added board ${boardTitle}.`);
+      } else {
+        console.log(`Failed to add board ${boardTitle}.`);
+      }
+      return status;
     })
     .catch((err) => {
-      console.log("Failed to add board to users/board. ");
-    });
-
-  database
-    .ref(`boards/${boardId}`)
-    .set(boardData)
-    .then(() => {
-      console.log("Successfully added board: ", boardTitle);
-    })
-    .catch((err) => {
-      console.error("Failed to add board.", err);
+      if (err) {
+        console.log(
+          `Failed to add board ${boardTitle}. `,
+          err.code,
+          err.message
+        );
+      }
+      return false;
     });
 };
 

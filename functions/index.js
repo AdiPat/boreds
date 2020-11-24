@@ -11,6 +11,7 @@ exports.deleteBoardTrigger = boardFunctions.deleteBoardTrigger;
 exports.updateBoardUserOnCreation = boardFunctions.updateBoardUserOnCreation;
 exports.getPublicBoard = boardFunctions.getPublicBoard;
 exports.updateBoardLanes = boardFunctions.updateBoardLanes;
+exports.addNewBoard = boardFunctions.addNewBoard;
 
 // invite functions
 exports.checkDuplicateInvite = inviteFunctions.checkDuplicateInvite;
