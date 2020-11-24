@@ -33,7 +33,6 @@ function PublicBoardContent(props) {
     if (paddedData) {
       setCurBoardData(paddedData);
       props.setBoardTitle(paddedData.title);
-      props.setBoardLoaded(true);
     }
   };
 
