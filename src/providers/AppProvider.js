@@ -18,6 +18,7 @@ class AppProvider extends React.Component {
     this.setBoardsMigratedFlag = this.setBoardsMigratedFlag.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
     this.deleteBoard = this.deleteBoard.bind(this);
+    this.addBoard = this.addBoard.bind(this);
   }
 
   setBoardsList(newBoardsList) {
@@ -40,6 +41,14 @@ class AppProvider extends React.Component {
         return updatedState;
       });
     }
+  }
+
+  addBoard(boardId, boardData) {
+    this.setState((prevState) => {
+      let updatedState = Object.assign({}, prevState);
+      updatedState.boardsList[boardId] = boardData;
+      return updatedState;
+    });
   }
 
   deleteBoard(boardId) {
