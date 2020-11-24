@@ -101,11 +101,20 @@ exports.func = functions.https.onCall(async (data, context) => {
         addStatus = false;
         return false;
       });
+  } else {
+    throw new functions.https.HttpsError(
+      "internal",
+      `Failed to create board ${boardTitle}.`
+    );
   }
 
   // if users write succeeded and boards write failed
   if (usersWriteSuccessful && !boardsWriteSuccessful) {
     await newUserBoardRef.remove();
+    throw new functions.https.HttpsError(
+      "internal",
+      `Failed to create board ${boardTitle}.`
+    );
   }
 
   addStatus = usersWriteSuccessful && boardsWriteSuccessful;
