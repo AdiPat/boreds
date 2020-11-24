@@ -83,7 +83,9 @@ function BoardListItem(props) {
       <Card elevation={3} className={classes.boardListCard}>
         <CardHeader
           avatar={
-            <Avatar className={getAvatarClass()}>{props.title[0]}</Avatar>
+            <Avatar className={getAvatarClass()}>
+              {props.title[0] || null}
+            </Avatar>
           }
           title={trimString(props.title, 20)}
           className={classes.boardListCardHeader}
