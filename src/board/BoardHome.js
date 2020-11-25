@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import { DashDrawer } from "../components/DashDrawer";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
 import { PublicBoardContent } from "./PublicBoardContent";
 import { updateBoardLastOpened, isBoardPublic } from "../services/board";
 import AppContext from "../providers/AppContext";
+import { AppDrawer } from "../components/drawer/AppDrawer";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
@@ -32,7 +32,7 @@ function BoardHome(props) {
 
   return (
     <div>
-      <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
+      <AppDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
       {isLoggedIn ? (
         <BoardToolbar
           userId={props.userId}

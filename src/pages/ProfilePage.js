@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import AppContext from "../providers/AppContext";
 import { CircularLoader } from "../components/CircularLoader";
-import { DashDrawer } from "../components/DashDrawer";
+import { AppDrawer } from "../components/drawer/AppDrawer";
 import { ProfileContent } from "../profile/ProfileContent";
 
 function Profile(props) {
@@ -18,7 +18,7 @@ function Profile(props) {
     <CircularLoader color="secondary" />
   ) : user != null ? (
     <div>
-      <DashDrawer userId={user.uid} />
+      <AppDrawer dashTitle="Profile" userId={user.uid} />
       <ProfileContent />
     </div>
   ) : (

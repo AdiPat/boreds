@@ -1,11 +1,11 @@
-import { DashDrawer } from "../components/DashDrawer";
+import { AppDrawer } from "../components/drawer/AppDrawer";
 import { DashContent } from "./DashContent";
 
 function Dashboard(props) {
   const userId = props.user ? props.user.uid : null;
   return (
     <div>
-      <DashDrawer dashTitle="Dashboard" userId={userId}></DashDrawer>
+      <AppDrawer dashTitle="Dashboard" userId={userId}></AppDrawer>
       <DashContent user={props.user}></DashContent>
     </div>
   );
