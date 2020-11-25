@@ -1,12 +1,11 @@
+import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { DeleteBoardModal } from "../components/modals/DeleteBoardModal";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import { InviteModal } from "../../components/InviteModal";
 
-function DeleteButton(props) {
+function InviteButton(props) {
   const [openModal, setOpenModal] = useState(false);
   const theme = useTheme();
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
@@ -23,36 +22,27 @@ function DeleteButton(props) {
     <div>
       <Button
         variant="outlined"
-        style={{
-          marginRight: theme.spacing(2),
-          color: red[600],
-          borderColor: red[600],
-        }}
+        color={"primary"}
+        style={{ marginRight: theme.spacing(2) }}
         onClick={handleOpenModal}
       >
-        <DeleteIcon style={{ marginRight: theme.spacing(1) }} />
+        <GroupAddIcon style={{ marginRight: theme.spacing(1) }} />
         {!mediaQueryBelowXs ? (
-          <Typography variant="body1">Delete</Typography>
+          <Typography variant="body1">Invite</Typography>
         ) : null}
       </Button>
-
-      <DeleteBoardModal
+      <InviteModal
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        boardTitle={props.boardTitle}
-        userId={props.userId}
         boardId={props.boardId}
-        redirectUrl="/dashboard"
       />
     </div>
   );
 }
 
-DeleteButton.propTypes = {
-  userId: PropTypes.string.isRequired,
+InviteButton.propTypes = {
   boardId: PropTypes.string.isRequired,
-  boardTitle: PropTypes.string.isRequired,
 };
 
-export { DeleteButton };
+export { InviteButton };

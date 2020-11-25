@@ -4,7 +4,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import PublicIcon from "@material-ui/icons/Public";
 import LockIcon from "@material-ui/icons/Lock";
-import { VisibilityMenu } from "./VisibilityMenu";
+import { VisibilityMenu } from "../VisibilityMenu";
 
 function VisibilityButton(props) {
   const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);

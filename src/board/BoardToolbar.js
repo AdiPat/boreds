@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import { VisibilityButton } from "./VisibilityButton";
-import { InviteButton } from "./InviteButton";
-import { DeleteButton } from "./DeleteButton";
-import { StarButton } from "./StarButton";
+import { VisibilityButton } from "./buttons/VisibilityButton";
+import { InviteButton } from "./buttons/InviteButton";
+import { DeleteButton } from "./buttons/DeleteButton";
+import { StarButton } from "./buttons/StarButton";
 import { ToolbarTitle } from "./ToolbarTitle";
 import { starBoard, unstarBoard } from "../services/board";
 

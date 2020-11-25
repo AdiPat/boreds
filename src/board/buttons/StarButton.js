@@ -9,7 +9,7 @@ import {
   unstarBoard,
   attachStarListener,
   detachStarListener,
-} from "../services/star";
+} from "../../services/star";
 
 function StarButton(props) {
   const [starred, setStarred] = useState(false);
