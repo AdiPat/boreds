@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { CircularLoader } from "../components/CircularLoader";
-import { CreateBoardModal } from "../components/CreateBoardModal";
+import { CreateBoardModal } from "../components/modals/CreateBoardModal";
 
 function NoBoardAction() {
   const [isLoaded, setIsLoaded] = useState(false);

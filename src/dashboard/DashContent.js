@@ -4,7 +4,7 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import StarIcon from "@material-ui/icons/Star";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import { DashPane } from "./DashPane";
-import { DeleteBoardModal } from "../components/DeleteBoardModal";
+import { DeleteBoardModal } from "../components/modals/DeleteBoardModal";
 import { NoBoardAction } from "./NoBoardAction";
 import AppContext from "../providers/AppContext";
 import { getStarredBoards, getRecentBoards } from "../services/board";

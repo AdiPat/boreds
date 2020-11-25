@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import { DeleteBoardModal } from "../components/DeleteBoardModal";
+import { DeleteBoardModal } from "../components/modals/DeleteBoardModal";
 import { InviteModal } from "../components/InviteModal";
 import { VisibilityMenu } from "./VisibilityMenu";
 import { VisibilityButton } from "./VisibilityButton";

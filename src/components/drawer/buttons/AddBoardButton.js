@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SideMenuButton } from "./SideMenuButton";
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
-import { CreateBoardModal } from "../../CreateBoardModal";
+import { CreateBoardModal } from "../../modals/CreateBoardModal";
 
 function AddBoardButton() {
   const [openModal, setOpenModal] = useState(false);

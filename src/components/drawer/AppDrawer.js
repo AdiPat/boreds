@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CreateBoardModal } from "../CreateBoardModal";
 import { NotificationsMenu } from "../NotificationsMenu";
 import { DrawerAppBar } from "./DrawerAppBar";
 import { DrawerAppBarTitle } from "./DrawerAppBarTitle";
