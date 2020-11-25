@@ -33,7 +33,7 @@ function BoardListItem(props) {
         <Divider />
         <CardActions>
           <OpenBoardButton boardId={props.boardId} />
-          <StarButton />
+          <StarButton userId={userId} boardId={props.boardId} />
           <DeleteBoardButton
             userId={userId}
             boardId={props.boardId}
