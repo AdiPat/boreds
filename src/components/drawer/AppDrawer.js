@@ -2,15 +2,15 @@ import { useState } from "react";
 import { CreateBoardModal } from "../CreateBoardModal";
 import { NotificationsMenu } from "../NotificationsMenu";
 import { DrawerAppBar } from "./DrawerAppBar";
-import { OpenDrawerButton } from "./OpenDrawerButton";
-import { DrawerNotificationsButton } from "./DrawerNotificationButton";
 import { DrawerAppBarTitle } from "./DrawerAppBarTitle";
 import { SideMenu } from "./SideMenu";
-import { CloseDrawerButton } from "./CloseDrawerButton";
-import { AddBoardButton } from "./AddBoardButton";
-import { DashButton } from "./DashButton";
-import { ProfileButton } from "./ProfileButton";
-import { LogoutButton } from "./LogoutButton";
+import { CloseDrawerButton } from "./buttons/CloseDrawerButton";
+import { AddBoardButton } from "./buttons/AddBoardButton";
+import { DashButton } from "./buttons/DashButton";
+import { ProfileButton } from "./buttons/ProfileButton";
+import { LogoutButton } from "./buttons/LogoutButton";
+import { OpenDrawerButton } from "./buttons/OpenDrawerButton";
+import { DrawerNotificationsButton } from "./buttons/DrawerNotificationButton";
 
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
