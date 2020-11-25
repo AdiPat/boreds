@@ -17,6 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
 import { InviteModal } from "../components/InviteModal";
 import { VisibilityMenu } from "./VisibilityMenu";
+import { VisibilityButton } from "./VisibilityButton";
 import { starBoard, unstarBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
@@ -82,23 +83,10 @@ function BoardToolbar(props) {
           <strong>{props.boardTitle}</strong>
         </Typography>
       ) : null}
-      <Button
-        variant="outlined"
-        color="primary"
-        style={{ marginRight: "16px" }}
-        onClick={openVisbilityMenu}
-      >
-        {props.public ? (
-          <PublicIcon style={{ marginRight: theme.spacing(1) }} />
-        ) : (
-          <LockIcon style={{ marginRight: theme.spacing(1) }} />
-        )}
-        {!mediaQueryBelowXs ? (
-          <Typography variant="body1">
-            {props.public ? "Public" : "Private"}
-          </Typography>
-        ) : null}
-      </Button>
+      <VisibilityButton
+        openVisbilityMenu={openVisbilityMenu}
+        public={props.public}
+      />
       <Button
         variant="outlined"
         color={"primary"}
