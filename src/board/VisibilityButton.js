@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import PublicIcon from "@material-ui/icons/Public";
@@ -27,5 +28,10 @@ function VisibilityButton(props) {
     </Button>
   );
 }
+
+VisibilityButton.propTypes = {
+  openVisbilityMenu: PropTypes.func.isRequired,
+  public: PropTypes.bool.isRequired,
+};
 
 export { VisibilityButton };

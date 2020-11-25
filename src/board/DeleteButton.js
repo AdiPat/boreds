@@ -1,4 +1,5 @@
 import { useTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -24,5 +25,9 @@ function DeleteButton(props) {
     </Button>
   );
 }
+
+DeleteButton.propTypes = {
+  handleDelete: PropTypes.func.isRequired,
+};
 
 export { DeleteButton };

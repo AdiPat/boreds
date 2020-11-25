@@ -1,4 +1,4 @@
-import { useTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import { yellow } from "@material-ui/core/colors";
 import { IconButton } from "@material-ui/core";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -21,5 +21,10 @@ function StarButton(props) {
     </IconButton>
   );
 }
+
+StarButton.propTypes = {
+  handleStarFlip: PropTypes.func.isRequired,
+  starred: PropTypes.bool.isRequired,
+};
 
 export { StarButton };

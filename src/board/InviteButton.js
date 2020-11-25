@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
@@ -20,5 +21,9 @@ function InviteButton(props) {
     </Button>
   );
 }
+
+InviteButton.propTypes = {
+  handleInvite: PropTypes.func.isRequired,
+};
 
 export { InviteButton };

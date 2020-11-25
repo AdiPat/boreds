@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
 import { Typography, useMediaQuery } from "@material-ui/core";
 
@@ -11,5 +12,9 @@ function ToolbarTitle(props) {
     </Typography>
   ) : null;
 }
+
+ToolbarTitle.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export { ToolbarTitle };
