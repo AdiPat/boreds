@@ -34,10 +34,15 @@ class AppProvider extends React.Component {
   updateBoard(boardId, boardData) {
     if (boardId && boardData) {
       this.setState((prevState) => {
-        //console.log("prevState: ", prevState);
         let updatedState = Object.assign({}, prevState);
-        updatedState.boardsList[boardId] = boardData;
-        // console.log("updatedState: ", updatedState);
+        let updatedBoard = updatedState.boardsList[boardId];
+        if (!updatedBoard) {
+          updatedBoard = {};
+        }
+        updatedState.boardsList[boardId] = Object.assign(
+          updatedBoard,
+          boardData
+        );
         return updatedState;
       });
     }

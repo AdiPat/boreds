@@ -36,9 +36,18 @@ const attachBoardAddedListener = (userId, updateBoardInState) => {
     const board = snapshot.val();
     const boardId = board.id;
     const boardRef = database.ref(`/boards/${boardId}`);
+    const userBoardRef = database.ref(`users/${userId}/boards/${boardId}`);
     boardRef.on("value", function (newSnapshot) {
       const boardData = newSnapshot.val();
+      delete boardData.starred;
       updateBoardInState(boardId, boardData);
+    });
+    userBoardRef.on("value", function (newSnapshot) {
+      const boardData = newSnapshot.val();
+      const boardPartialUpdate = {
+        starred: boardData.starred,
+      };
+      updateBoardInState(boardId, boardPartialUpdate);
     });
   });
 };
