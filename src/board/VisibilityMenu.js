@@ -79,7 +79,11 @@ function VisibilityMenu(props) {
 }
 
 VisibilityMenu.propTypes = {
-  anchorEl: PropTypes.node.isRequired,
+  anchorEl: PropTypes.oneOfType([
+    PropTypes.node.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.instanceOf(Element).isRequired,
+  ]).isRequired,
   userId: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired,
