@@ -37,7 +37,7 @@ function BoardListItem(props) {
           <DeleteBoardButton
             userId={userId}
             boardId={props.boardId}
-            boardTitle={props.boardTitle}
+            boardTitle={props.title}
           />
         </CardActions>
       </Card>
