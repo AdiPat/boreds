@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,6 +33,11 @@ const StyledMenu = withStyles({
 
 function VisibilityMenu(props) {
   const theme = useTheme();
+
+  const handleVisibilityChange = (visibility) => {
+    setBoardVisibility(props.userId, props.boardId, visibility);
+  };
+
   return (
     <div>
       <StyledMenu
@@ -54,24 +60,14 @@ function VisibilityMenu(props) {
           </Typography>
         </div>
         <Divider />
-        <MenuItem
-          button
-          onClick={() =>
-            setBoardVisibility(props.userId, props.boardId, "public")
-          }
-        >
+        <MenuItem button onClick={() => handleVisibilityChange("public")}>
           <ListItemIcon>
             <PublicIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Public" />
         </MenuItem>
         <Divider />
-        <MenuItem
-          button
-          onClick={() =>
-            setBoardVisibility(props.userId, props.boardId, "private")
-          }
-        >
+        <MenuItem button onClick={() => handleVisibilityChange("private")}>
           <ListItemIcon>
             <LockIcon fontSize="small" />
           </ListItemIcon>
@@ -81,5 +77,12 @@ function VisibilityMenu(props) {
     </div>
   );
 }
+
+VisibilityMenu.propTypes = {
+  anchorEl: PropTypes.node.isRequired,
+  userId: PropTypes.string.isRequired,
+  boardId: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export { VisibilityMenu };
