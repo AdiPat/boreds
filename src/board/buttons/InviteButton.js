@@ -3,7 +3,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { useState } from "react";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import { InviteModal } from "../../components/InviteModal";
+import { InviteModal } from "../../components/modals/InviteModal";
 
 function InviteButton(props) {
   const [openModal, setOpenModal] = useState(false);
