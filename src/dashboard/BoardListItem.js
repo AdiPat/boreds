@@ -32,7 +32,7 @@ function BoardListItem(props) {
         <BoardListItemHeader title={props.title} />
         <Divider />
         <CardActions>
-          <OpenBoardButton />
+          <OpenBoardButton boardId={props.boardId} />
           <StarButton />
           <DeleteBoardButton
             userId={userId}

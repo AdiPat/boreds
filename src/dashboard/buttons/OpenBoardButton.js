@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { Button } from "@material-ui/core";
 import PropTypes from "prop-types";
 
-function OpenBoardButton() {
+function OpenBoardButton(props) {
   const history = useHistory();
 
   const handleOpenBoard = (boardId) => {
@@ -10,7 +10,11 @@ function OpenBoardButton() {
   };
 
   return (
-    <Button variant="outlined" color="primary" onClick={handleOpenBoard}>
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={() => handleOpenBoard(props.boardId)}
+    >
       Open
     </Button>
   );
