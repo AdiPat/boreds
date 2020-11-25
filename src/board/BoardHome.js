@@ -39,7 +39,6 @@ function BoardHome(props) {
           boardId={props.boardId}
           boardTitle={boardTitle}
           public={boardPublicStatus}
-          starred={board.starred}
         />
       ) : null}
       {isLoggedIn ? (

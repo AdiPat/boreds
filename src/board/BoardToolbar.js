@@ -39,7 +39,7 @@ function BoardToolbar(props) {
         boardId={props.boardId}
         boardTitle={props.boardTitle}
       />
-      <StarButton />
+      <StarButton userId={props.userId} boardId={props.boardId} />
     </Toolbar>
   );
 }
@@ -48,7 +48,6 @@ BoardToolbar.propTypes = {
   userId: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
   public: PropTypes.bool.isRequired,
-  starred: PropTypes.bool.isRequired,
 };
 
 export { BoardToolbar };
