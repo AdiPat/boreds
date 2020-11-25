@@ -89,20 +89,6 @@ const padEmptyLanes = (boardData) => {
   return updatedData;
 };
 
-const starBoard = (userId, boardId) => {
-  const boardRef = firebase
-    .database()
-    .ref(`users/${userId}/boards/${boardId}/starred`);
-  boardRef.set(true);
-};
-
-const unstarBoard = (userId, boardId) => {
-  const boardRef = firebase
-    .database()
-    .ref(`users/${userId}/boards/${boardId}/starred`);
-  boardRef.set(false);
-};
-
 const updateBoardLastOpened = (userId, boardId, lastOpened) => {
   console.log("updateBoardLastOpened");
   const boardRef = firebase.database().ref(`boards/${boardId}`);
@@ -204,8 +190,6 @@ export {
   addNewBoard,
   checkDuplicateBoard,
   padEmptyLanes,
-  starBoard,
-  unstarBoard,
   updateBoardLastOpened,
   getStarredBoards,
   getRecentBoards,
