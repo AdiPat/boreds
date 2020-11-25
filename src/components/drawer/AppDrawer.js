@@ -13,7 +13,6 @@ import { ProfileButton } from "./ProfileButton";
 import { LogoutButton } from "./LogoutButton";
 
 function AppDrawer(props) {
-  const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [notificationsCount, setNotificationsCount] = useState(null);
   const [notificationsMenuAnchorEl, setNotificationsMenuAnchorEl] = useState(
@@ -38,14 +37,6 @@ function AppDrawer(props) {
     setOpenDrawer(false);
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
   return (
     <div>
       <DrawerAppBar isDrawerOpen={openDrawer}>
@@ -68,16 +59,11 @@ function AppDrawer(props) {
           <CloseDrawerButton handleDrawerClose={handleDrawerClose} />
         }
       >
-        <AddBoardButton openModal={handleOpenModal} />
+        <AddBoardButton />
         <DashButton />
         <ProfileButton />
         <LogoutButton />
       </SideMenu>
-      <CreateBoardModal
-        handleOpenModal={handleOpenModal}
-        handleCloseModal={handleCloseModal}
-        openModal={openModal}
-      ></CreateBoardModal>
       <NotificationsMenu
         anchorEl={notificationsMenuAnchorEl}
         handleClose={closeNotificationsMenu}

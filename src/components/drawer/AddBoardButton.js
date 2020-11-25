@@ -1,20 +1,34 @@
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { SideMenuButton } from "./SideMenuButton";
 import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import { CreateBoardModal } from "../CreateBoardModal";
 
-function AddBoardButton(props) {
+function AddBoardButton() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
-    <SideMenuButton
-      key="CreateBoard"
-      text="Create Board"
-      icon={<AddCircleRoundedIcon />}
-      clickHandler={props.openModal}
-    />
+    <div>
+      <SideMenuButton
+        btnKey="CreateBoard"
+        text="Create Board"
+        icon={<AddCircleRoundedIcon />}
+        clickHandler={handleOpenModal}
+      />
+      <CreateBoardModal
+        handleOpenModal={handleOpenModal}
+        handleCloseModal={handleCloseModal}
+        openModal={openModal}
+      ></CreateBoardModal>
+    </div>
   );
 }
-
-AddBoardButton.propTypes = {
-  openModal: PropTypes.func.isRequired,
-};
 
 export { AddBoardButton };
