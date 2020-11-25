@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { DrawerAppBar } from "./DrawerAppBar";
 import { DrawerAppBarTitle } from "./DrawerAppBarTitle";
 import { SideMenu } from "./SideMenu";
@@ -51,5 +52,10 @@ function AppDrawer(props) {
     </div>
   );
 }
+
+AppDrawer.propTypes = {
+  dashTitle: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+};
 
 export { AppDrawer };
