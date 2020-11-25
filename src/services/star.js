@@ -25,7 +25,7 @@ const attachStarListener = (userId, boardId, updateStarInState) => {
 
 const detachStarListener = (userId, boardId) => {
   const database = firebase.database();
-  const boardRef = database.ref(`users/${userId}/${boardId}/starred`);
+  const boardRef = database.ref(`users/${userId}/boards/${boardId}/starred`);
   boardRef.off("value");
 };
 
