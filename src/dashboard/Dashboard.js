@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { AppDrawer } from "../components/drawer/AppDrawer";
 import { DashContent } from "./DashContent";
 
@@ -6,9 +7,13 @@ function Dashboard(props) {
   return (
     <div>
       <AppDrawer dashTitle="Dashboard" userId={userId}></AppDrawer>
-      <DashContent user={props.user}></DashContent>
+      <DashContent userId={props.userId}></DashContent>
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 export { Dashboard };

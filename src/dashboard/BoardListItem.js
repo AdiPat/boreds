@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
@@ -83,9 +84,7 @@ function BoardListItem(props) {
       <Card elevation={3} className={classes.boardListCard}>
         <CardHeader
           avatar={
-            <Avatar className={getAvatarClass()}>
-              {props.title[0] || null}
-            </Avatar>
+            <Avatar className={getAvatarClass()}>{props.title[0]}</Avatar>
           }
           title={trimString(props.title, 20)}
           className={classes.boardListCardHeader}
@@ -121,5 +120,13 @@ function BoardListItem(props) {
     </Grid>
   );
 }
+
+BoardListItem.propTypes = {
+  isStarred: PropTypes.bool.isRequired,
+  boardId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
+  loadDeleteModal: PropTypes.func.isRequired,
+};
 
 export { BoardListItem };

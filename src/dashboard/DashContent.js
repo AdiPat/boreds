@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
@@ -5,7 +6,6 @@ import StarIcon from "@material-ui/icons/Star";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import { DashPane } from "./DashPane";
 import { DeleteBoardModal } from "../components/modals/DeleteBoardModal";
-import { NoBoardAction } from "./NoBoardAction";
 import AppContext from "../providers/AppContext";
 import { getStarredBoards, getRecentBoards } from "../services/board";
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 function DashContent(props) {
   const classes = useStyles();
   const { state } = useContext(AppContext);
-  const userId = state.user.uid;
+  const userId = props.userId;
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [deleteModalBoardTitle, setDeleteModalBoardTitle] = useState("");
   const [deleteBoardId, setDeleteBoardId] = useState(null);
@@ -48,32 +48,24 @@ function DashContent(props) {
 
   return (
     <main className={classes.content}>
-      {starredBoards && starredBoards.length ? (
-        <DashPane
-          paneTitle="Starred Boards"
-          icon={<StarIcon />}
-          paneBoards={starredBoards}
-          loadDeleteModal={loadDeleteModal}
-        />
-      ) : null}
-      {recentBoards && recentBoards.length ? (
-        <DashPane
-          paneTitle="Recent Boards"
-          icon={<ScheduleIcon />}
-          paneBoards={recentBoards}
-          loadDeleteModal={loadDeleteModal}
-        />
-      ) : null}
-      {Object.keys(boardsList).length ? (
-        <DashPane
-          paneTitle="All Boards"
-          icon={<LibraryBooksIcon />}
-          paneBoards={boardsList}
-          loadDeleteModal={loadDeleteModal}
-        />
-      ) : (
-        <NoBoardAction />
-      )}
+      <DashPane
+        paneTitle="Starred Boards"
+        icon={<StarIcon />}
+        paneBoards={starredBoards}
+        loadDeleteModal={loadDeleteModal}
+      />
+      <DashPane
+        paneTitle="Recent Boards"
+        icon={<ScheduleIcon />}
+        paneBoards={recentBoards}
+        loadDeleteModal={loadDeleteModal}
+      />
+      <DashPane
+        paneTitle="All Boards"
+        icon={<LibraryBooksIcon />}
+        paneBoards={boardsList}
+        loadDeleteModal={loadDeleteModal}
+      />
       <DeleteBoardModal
         handleOpenModal={() => setOpenDeleteModal(true)}
         handleCloseModal={() => setOpenDeleteModal(false)}
@@ -81,9 +73,14 @@ function DashContent(props) {
         boardTitle={deleteModalBoardTitle}
         userId={userId}
         boardId={deleteBoardId}
+        showNoBoards={true}
       />
     </main>
   );
 }
+
+DashContent.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
 
 export { DashContent };
