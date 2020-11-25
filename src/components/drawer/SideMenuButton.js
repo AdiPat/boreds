@@ -3,7 +3,7 @@ import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
 function SideMenuButton(props) {
   return (
-    <ListItem button key={props.key} onClick={props.clickHandler}>
+    <ListItem button key={props.btnKey} onClick={props.clickHandler}>
       <ListItemIcon>{props.icon}</ListItemIcon>
       <ListItemText primary={props.text} />
     </ListItem>
@@ -11,7 +11,7 @@ function SideMenuButton(props) {
 }
 
 SideMenuButton.propTypes = {
-  key: PropTypes.string.isRequired,
+  btnKey: PropTypes.string.isRequired,
   clickHandler: PropTypes.func.isRequired,
   icon: PropTypes.node.isRequired,
   text: PropTypes.string.isRequired,

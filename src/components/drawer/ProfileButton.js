@@ -11,7 +11,7 @@ function ProfileButton() {
 
   return (
     <SideMenuButton
-      key="OpenProfile"
+      btnKey="OpenProfile"
       text="Profile"
       icon={<AccountBoxRounded />}
       clickHandler={handleProfileClick}

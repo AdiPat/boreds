@@ -13,7 +13,7 @@ function LogoutButton() {
 
   return (
     <SideMenuButton
-      key="Logout"
+      btnKey="Logout"
       text="Logout"
       icon={<ExitToAppIcon />}
       clickHandler={handleLogout}

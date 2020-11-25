@@ -11,7 +11,7 @@ function DashButton() {
 
   return (
     <SideMenuButton
-      key="OpenDash"
+      btnKey="OpenDash"
       text="All Boards"
       icon={<LibraryBooksIcon />}
       clickHandler={handleShowBoards}
