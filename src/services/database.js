@@ -31,8 +31,8 @@ const attachBoardDeleteListener = (userId, deleteBoardFromState) => {
 
 const attachBoardAddedListener = (userId, updateBoardInState) => {
   const database = firebase.database();
-  const userBoardRef = database.ref(`/users/${userId}/boards`);
-  userBoardRef.on("child_added", function (snapshot) {
+  const userRef = database.ref(`/users/${userId}`);
+  userRef.child("boards").on("child_added", function (snapshot) {
     const board = snapshot.val();
     const boardId = board.id;
     const boardRef = database.ref(`/boards/${boardId}`);
