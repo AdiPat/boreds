@@ -32,7 +32,7 @@ function NotificationsMenu(props) {
 
   const updateInvitesInState = (invites) => {
     setInvites(invites);
-    props.setNotificationsCount(Object.keys(invites).length);
+    // props.setNotificationsCount(Object.keys(invites).length);
   };
 
   useEffect(() => {

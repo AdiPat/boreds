@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NotificationsMenu } from "../NotificationsMenu";
 import { DrawerAppBar } from "./DrawerAppBar";
 import { DrawerAppBarTitle } from "./DrawerAppBarTitle";
 import { SideMenu } from "./SideMenu";
@@ -13,20 +12,7 @@ import { DrawerNotificationsButton } from "./buttons/DrawerNotificationButton";
 
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [notificationsCount, setNotificationsCount] = useState(null);
-  const [notificationsMenuAnchorEl, setNotificationsMenuAnchorEl] = useState(
-    null
-  );
-
   const isLoggedIn = props.userId != null;
-
-  const openNotificationsMenu = (e) => {
-    setNotificationsMenuAnchorEl(e.target);
-  };
-
-  const closeNotificationsMenu = () => {
-    setNotificationsMenuAnchorEl(null);
-  };
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -47,8 +33,7 @@ function AppDrawer(props) {
         <DrawerAppBarTitle dashTitle={props.dashTitle} />
         <DrawerNotificationsButton
           isLoggedIn={isLoggedIn}
-          openNotificationsMenu={openNotificationsMenu}
-          notificationsCount={notificationsCount}
+          userId={props.userId}
         />
       </DrawerAppBar>
       <SideMenu
@@ -63,11 +48,6 @@ function AppDrawer(props) {
         <ProfileButton />
         <LogoutButton />
       </SideMenu>
-      <NotificationsMenu
-        anchorEl={notificationsMenuAnchorEl}
-        handleClose={closeNotificationsMenu}
-        setNotificationsCount={setNotificationsCount}
-      />
     </div>
   );
 }
