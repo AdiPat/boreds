@@ -1,23 +1,15 @@
 import { useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import {
-  Toolbar,
-  Typography,
-  Button,
-  useMediaQuery,
-  IconButton,
-} from "@material-ui/core";
-import { grey, red, yellow } from "@material-ui/core/colors";
-import LockIcon from "@material-ui/icons/Lock";
-import PublicIcon from "@material-ui/icons/Public";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import StarIcon from "@material-ui/icons/Star";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { makeStyles } from "@material-ui/core/styles";
+import { Toolbar } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import { DeleteBoardModal } from "../components/DeleteBoardModal";
 import { InviteModal } from "../components/InviteModal";
 import { VisibilityMenu } from "./VisibilityMenu";
 import { VisibilityButton } from "./VisibilityButton";
+import { InviteButton } from "./InviteButton";
+import { DeleteButton } from "./DeleteButton";
+import { StarButton } from "./StarButton";
+import { ToolbarTitle } from "./ToolbarTitle";
 import { starBoard, unstarBoard } from "../services/board";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,23 +26,13 @@ const useStyles = makeStyles((theme) => ({
       left: theme.spacing(8),
     },
   },
-  deleteButton: {
-    marginRight: theme.spacing(2),
-    color: red[600],
-    borderColor: red[600],
-  },
-  starIcon: {
-    color: yellow[700],
-  },
 }));
 
 function BoardToolbar(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openInviteModal, setOpenInviteModal] = useState(false);
   const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);
-  const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleDelete = () => {
     setOpenDeleteModal(true);
@@ -78,43 +60,14 @@ function BoardToolbar(props) {
 
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
-      {!mediaQueryBelowXs ? (
-        <Typography type="h6" style={{ marginRight: theme.spacing(2) }}>
-          <strong>{props.boardTitle}</strong>
-        </Typography>
-      ) : null}
+      <ToolbarTitle title={props.boardTitle} />
       <VisibilityButton
         openVisbilityMenu={openVisbilityMenu}
         public={props.public}
       />
-      <Button
-        variant="outlined"
-        color={"primary"}
-        style={{ marginRight: theme.spacing(2) }}
-        onClick={handleInvite}
-      >
-        <GroupAddIcon style={{ marginRight: theme.spacing(1) }} />
-        {!mediaQueryBelowXs ? (
-          <Typography variant="body1">Invite</Typography>
-        ) : null}
-      </Button>
-      <Button
-        variant="outlined"
-        className={classes.deleteButton}
-        onClick={handleDelete}
-      >
-        <DeleteIcon style={{ marginRight: theme.spacing(1) }} />
-        {!mediaQueryBelowXs ? (
-          <Typography variant="body1">Delete</Typography>
-        ) : null}
-      </Button>
-      <IconButton onClick={handleStarFlip}>
-        {props.starred ? (
-          <StarIcon className={classes.starIcon} />
-        ) : (
-          <StarBorderIcon />
-        )}
-      </IconButton>
+      <InviteButton handleInvite={handleInvite} />
+      <DeleteButton handleDelete={handleDelete} />
+      <StarButton handleStarFlip={handleStarFlip} />
 
       <DeleteBoardModal
         handleOpenModal={() => setOpenDeleteModal(true)}
