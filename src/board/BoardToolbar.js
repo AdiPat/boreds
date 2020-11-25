@@ -31,13 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 function BoardToolbar(props) {
   const classes = useStyles();
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openInviteModal, setOpenInviteModal] = useState(false);
   const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);
-
-  const handleDelete = () => {
-    setOpenDeleteModal(true);
-  };
 
   const handleInvite = () => {
     setOpenInviteModal(true);
@@ -67,18 +62,12 @@ function BoardToolbar(props) {
         public={props.public}
       />
       <InviteButton handleInvite={handleInvite} />
-      <DeleteButton handleDelete={handleDelete} />
-      <StarButton handleStarFlip={handleStarFlip} />
-
-      <DeleteBoardModal
-        handleOpenModal={() => setOpenDeleteModal(true)}
-        handleCloseModal={() => setOpenDeleteModal(false)}
-        openModal={openDeleteModal}
-        boardTitle={props.boardTitle}
+      <DeleteButton
         userId={props.userId}
         boardId={props.boardId}
-        redirectUrl="/dashboard"
+        boardTitle={props.boardTitle}
       />
+      <StarButton handleStarFlip={handleStarFlip} />
       <InviteModal
         handleOpenModal={() => setOpenInviteModal(true)}
         handleCloseModal={() => setOpenInviteModal(false)}
