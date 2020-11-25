@@ -29,14 +29,6 @@ const useStyles = makeStyles((theme) => ({
 function BoardToolbar(props) {
   const classes = useStyles();
 
-  const handleStarFlip = () => {
-    if (props.starred) {
-      unstarBoard(props.userId, props.boardId);
-    } else {
-      starBoard(props.userId, props.boardId);
-    }
-  };
-
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
       <ToolbarTitle title={props.boardTitle} />
@@ -47,7 +39,7 @@ function BoardToolbar(props) {
         boardId={props.boardId}
         boardTitle={props.boardTitle}
       />
-      <StarButton handleStarFlip={handleStarFlip} />
+      <StarButton />
     </Toolbar>
   );
 }

@@ -1,18 +1,23 @@
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { yellow } from "@material-ui/core/colors";
 import { IconButton } from "@material-ui/core";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 
-function StarButton(props) {
+function StarButton() {
+  const [starred, setStarred] = useState(false);
+
+  const handleStarFlip = () => {
+    setStarred(!starred);
+    // TOOD: Add call to star service
+  };
+
   return (
-    <IconButton onClick={props.handleStarFlip}>
-      {props.starred ? (
+    <IconButton onClick={handleStarFlip}>
+      {starred ? (
         <StarIcon
           style={{
-            starIcon: {
-              color: yellow[700],
-            },
+            color: yellow[700],
           }}
         />
       ) : (
@@ -21,10 +26,5 @@ function StarButton(props) {
     </IconButton>
   );
 }
-
-StarButton.propTypes = {
-  handleStarFlip: PropTypes.func.isRequired,
-  starred: PropTypes.bool.isRequired,
-};
 
 export { StarButton };
