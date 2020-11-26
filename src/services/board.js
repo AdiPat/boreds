@@ -155,6 +155,16 @@ const updateBoardData = (userId, boardId, newData) => {
     );
 };
 
+const boardExists = async (boardId) => {
+  const _boardExists = firebase.functions().httpsCallable("boardExists");
+  return _boardExists({ boardId: boardId })
+    .then((result) => result.data.exists)
+    .catch((err) => {
+      console.error("boardExists(): ", err.code, err.message);
+      return false;
+    });
+};
+
 const isBoardPublic = async (boardId) => {
   const database = firebase.database();
   const publicReadableRef = database.ref(
@@ -196,6 +206,7 @@ export {
   deleteBoard,
   setBoardVisibility,
   updateBoardData,
+  boardExists,
   isBoardPublic,
   getPublicBoard,
 };
