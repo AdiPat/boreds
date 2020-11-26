@@ -2,6 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const boardFunctions = require("./board/index");
 const inviteFunctions = require("./invite/index");
+const taskFunctions = require("./tasks/index");
 
 admin.initializeApp();
 
@@ -21,3 +22,10 @@ exports.getAllReceivedInvites = inviteFunctions.getAllReceivedInvites;
 exports.createInvite = inviteFunctions.createInvite;
 exports.acceptInvite = inviteFunctions.acceptInvite;
 exports.rejectInvite = inviteFunctions.rejectInvite;
+
+// tasks functions
+exports.addTask = taskFunctions.addTask;
+exports.deleteTask = taskFunctions.deleteTask;
+exports.addTaskTrigger = taskFunctions.addTaskTrigger;
+exports.deleteTaskTrigger = taskFunctions.deleteTaskTrigger;
+exports.flipTaskStar = taskFunctions.flipTaskStar;
