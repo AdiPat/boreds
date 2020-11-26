@@ -2,11 +2,9 @@ import React from "react";
 import firebase from "firebase/app";
 import "firebase/database";
 import AppContext from "./AppContext";
-import { getBoardIds } from "../services/board";
 import {
   attachBoardAddedListener,
   attachBoardDeleteListener,
-  attachBoardUpdateListener,
 } from "../services/database";
 
 class AppProvider extends React.Component {
@@ -20,6 +18,7 @@ class AppProvider extends React.Component {
     this.setBoardsMigratedFlag = this.setBoardsMigratedFlag.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
     this.deleteBoard = this.deleteBoard.bind(this);
+    this.addBoard = this.addBoard.bind(this);
   }
 
   setBoardsList(newBoardsList) {
@@ -35,13 +34,26 @@ class AppProvider extends React.Component {
   updateBoard(boardId, boardData) {
     if (boardId && boardData) {
       this.setState((prevState) => {
-        //console.log("prevState: ", prevState);
         let updatedState = Object.assign({}, prevState);
-        updatedState.boardsList[boardId] = boardData;
-        // console.log("updatedState: ", updatedState);
+        let updatedBoard = updatedState.boardsList[boardId];
+        if (!updatedBoard) {
+          updatedBoard = {};
+        }
+        updatedState.boardsList[boardId] = Object.assign(
+          updatedBoard,
+          boardData
+        );
         return updatedState;
       });
     }
+  }
+
+  addBoard(boardId, boardData) {
+    this.setState((prevState) => {
+      let updatedState = Object.assign({}, prevState);
+      updatedState.boardsList[boardId] = boardData;
+      return updatedState;
+    });
   }
 
   deleteBoard(boardId) {
@@ -61,12 +73,6 @@ class AppProvider extends React.Component {
       if (userAuth) {
         const userId = userAuth.uid;
 
-        getBoardIds(userId).then((boardIds) => {
-          //console.log("boardIdList: ", boardIds);
-          boardIds.forEach((boardId) => {
-            attachBoardUpdateListener(boardId, thisComponent.updateBoard);
-          });
-        });
         attachBoardAddedListener(userId, thisComponent.updateBoard);
         attachBoardDeleteListener(userId, thisComponent.deleteBoard);
       }

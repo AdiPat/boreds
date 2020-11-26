@@ -31,14 +31,23 @@ const attachBoardDeleteListener = (userId, deleteBoardFromState) => {
 
 const attachBoardAddedListener = (userId, updateBoardInState) => {
   const database = firebase.database();
-  const userBoardRef = database.ref(`/users/${userId}/boards`);
-  userBoardRef.on("child_added", function (snapshot) {
+  const userRef = database.ref(`/users/${userId}`);
+  userRef.child("boards").on("child_added", function (snapshot) {
     const board = snapshot.val();
     const boardId = board.id;
     const boardRef = database.ref(`/boards/${boardId}`);
+    const userBoardRef = database.ref(`users/${userId}/boards/${boardId}`);
     boardRef.on("value", function (newSnapshot) {
       const boardData = newSnapshot.val();
+      delete boardData.starred;
       updateBoardInState(boardId, boardData);
+    });
+    userBoardRef.on("value", function (newSnapshot) {
+      const boardData = newSnapshot.val();
+      const boardPartialUpdate = {
+        starred: boardData.starred,
+      };
+      updateBoardInState(boardId, boardPartialUpdate);
     });
   });
 };

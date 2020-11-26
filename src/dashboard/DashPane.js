@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { BoardList } from "./BoardList";
 import { CircularLoader } from "../components/CircularLoader";
+import { NoBoardAction } from "./NoBoardAction";
 
 const useStyles = makeStyles((theme) => ({
   dashGrid: {
@@ -35,7 +37,7 @@ function DashPane(props) {
 
   return (
     <Grid container alignItems="center" className={classes.dashGrid}>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <div className={classes.dashItem}>
           {React.cloneElement(props.icon, { className: classes.dashItemIcon })}
           <Typography className={classes.dashItemTitle} variant="h6">
@@ -51,8 +53,24 @@ function DashPane(props) {
       ) : (
         <CircularLoader loaderHeight="100px" color="primary" />
       )}
+      {!Object.keys(props.paneBoards).length && props.showNoBoards ? (
+        <NoBoardAction />
+      ) : null}
     </Grid>
   );
 }
+
+DashPane.propTypes = {
+  paneTitle: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
+  paneBoards: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  loadDeleteModal: PropTypes.func.isRequired,
+  showNoBoards: PropTypes.bool,
+};
+
+DashPane.defaultProps = {
+  paneBoards: {},
+  showNoBoards: false,
+};
 
 export { DashPane };

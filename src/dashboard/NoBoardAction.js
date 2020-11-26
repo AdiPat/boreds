@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Grid,
   Card,
@@ -7,11 +7,9 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import { CircularLoader } from "../components/CircularLoader";
-import { CreateBoardModal } from "../components/CreateBoardModal";
+import { CreateBoardModal } from "../components/modals/CreateBoardModal";
 
 function NoBoardAction() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -22,13 +20,7 @@ function NoBoardAction() {
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 500);
-  });
-
-  return !isLoaded ? (
-    <CircularLoader color="primary" loaderHeight="100px" />
-  ) : (
+  return (
     <Grid container style={{ marginLeft: "10px", padding: "20px" }}>
       <Grid item xs={12} sm={2} md={2}>
         <Card variant="outlined">

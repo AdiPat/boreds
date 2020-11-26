@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 import { BoardListItem } from "./BoardListItem";
 
 function BoardList(props) {
@@ -10,6 +11,7 @@ function BoardList(props) {
     const boardId = boardItem.id;
     return (
       <BoardListItem
+        key={boardId}
         clickHandler={() => history.push(`/board/${boardId}`)}
         boardId={boardId}
         title={boardItem.title}
@@ -20,5 +22,13 @@ function BoardList(props) {
   });
   return boardListComponent;
 }
+
+BoardList.propTypes = {
+  boardsList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+};
+
+BoardList.defaultProps = {
+  boardsList: {},
+};
 
 export { BoardList };

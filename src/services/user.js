@@ -1,5 +1,4 @@
 import firebase from "firebase/app";
-import uniqid from "uniqid";
 import "firebase/database";
 import "firebase/auth";
 

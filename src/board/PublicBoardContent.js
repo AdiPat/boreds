@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularLoader } from "../components/CircularLoader";
 import Board from "react-trello";
-import { padEmptyLanes, isBoardPublic } from "../services/board";
+import { padEmptyLanes } from "../services/board";
 import { attachBoardUpdateListener } from "../services/database";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,6 @@ function PublicBoardContent(props) {
     if (paddedData) {
       setCurBoardData(paddedData);
       props.setBoardTitle(paddedData.title);
-      props.setBoardLoaded(true);
     }
   };
 

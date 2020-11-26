@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
-import { DashDrawer } from "../components/DashDrawer";
+import PropTypes from "prop-types";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
 import { PublicBoardContent } from "./PublicBoardContent";
 import { updateBoardLastOpened, isBoardPublic } from "../services/board";
+import { AppDrawer } from "../components/drawer/AppDrawer";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
   const [boardPublicStatus, setBoardPublicStatus] = useState(false);
-  const [isBoardStarred, setIsBoardStarred] = useState(false);
-  const boardId = props.boardId;
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
 
   const _updateBoardVisibilityStatus = async (boardId) => {
-    let publicStatus = await isBoardPublic(props.boardId);
+    let publicStatus = await isBoardPublic(boardId);
     setBoardPublicStatus(publicStatus);
   };
 
@@ -23,30 +22,23 @@ function BoardHome(props) {
     if (!lastOpened && userId) {
       const now = new Date();
       setLastOpened(now);
-      updateBoardLastOpened(userId, boardId, now);
+      updateBoardLastOpened(props.userId, props.boardId, now);
     }
     _updateBoardVisibilityStatus();
   });
 
   return (
     <div>
-      <DashDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
+      <AppDrawer dashTitle={" - " + boardTitle} userId={props.userId} />
       {isLoggedIn ? (
         <BoardToolbar
           userId={props.userId}
           boardId={props.boardId}
           boardTitle={boardTitle}
-          public={boardPublicStatus}
-          starred={isBoardStarred}
         />
       ) : null}
       {isLoggedIn ? (
-        <BoardContent
-          boardId={props.boardId}
-          setBoardTitle={setBoardTitle}
-          setIsBoardStarred={setIsBoardStarred}
-          isBoardPublic={boardPublicStatus}
-        />
+        <BoardContent boardId={props.boardId} setBoardTitle={setBoardTitle} />
       ) : boardPublicStatus ? (
         <PublicBoardContent
           boardId={props.boardId}
@@ -56,5 +48,13 @@ function BoardHome(props) {
     </div>
   );
 }
+
+PropTypes.propTypes = {
+  userId: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ]).isRequired,
+  boardId: PropTypes.string.isRequired,
+};
 
 export { BoardHome };

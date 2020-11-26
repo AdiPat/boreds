@@ -4,71 +4,8 @@ import uniqid from "uniqid";
 
 // adds empty board
 const addNewBoard = async (userId, boardTitle) => {
-  const errMsg = "";
-  const boardId = uniqid();
-  const database = firebase.database();
-  const now = new Date();
-  const boardData = {
-    id: boardId,
-    title: boardTitle,
-    createdAt: now.toString(),
-    starred: false,
-    owner: userId,
-    public: false,
-    lastOpened: now.toString(),
-    lanes: [
-      {
-        id: uniqid(),
-        title: "To Do",
-        cards: [
-          {
-            id: uniqid(),
-            title: "Eat breakfast",
-            description: "Make Milk and Cereal.",
-          },
-          {
-            id: uniqid(),
-            title: "Pay Bill",
-            description: "Electricity bill pending.",
-          },
-        ],
-      },
-      {
-        id: uniqid(),
-        title: "Completed",
-        cards: [
-          {
-            id: uniqid(),
-            title: "Data Science Assignment",
-            description: "Complete Linear Regression.",
-          },
-        ],
-      },
-    ],
-  };
-  const userBoardRef = database.ref(`users/${userId}/boards/${boardId}`);
-  userBoardRef
-    .set({
-      id: boardId,
-      title: boardTitle,
-      createdAt: now.toString(),
-    })
-    .then(() => {
-      console.log("Successfully added board to users/board ");
-    })
-    .catch((err) => {
-      console.log("Failed to add board to users/board. ");
-    });
-
-  database
-    .ref(`boards/${boardId}`)
-    .set(boardData)
-    .then(() => {
-      console.log("Successfully added board: ", boardTitle);
-    })
-    .catch((err) => {
-      console.error("Failed to add board.", err);
-    });
+  const _addNewBoard = firebase.functions().httpsCallable("addNewBoard");
+  return _addNewBoard({ userId, boardTitle });
 };
 
 // check duplicate board
@@ -152,16 +89,6 @@ const padEmptyLanes = (boardData) => {
   return updatedData;
 };
 
-const starBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
-  boardRef.set(true);
-};
-
-const unstarBoard = (userId, boardId) => {
-  const boardRef = firebase.database().ref(`boards/${boardId}/starred`);
-  boardRef.set(false);
-};
-
 const updateBoardLastOpened = (userId, boardId, lastOpened) => {
   console.log("updateBoardLastOpened");
   const boardRef = firebase.database().ref(`boards/${boardId}`);
@@ -200,31 +127,34 @@ const deleteBoard = (userId, boardId) => {
     .catch((err) => console.log("Remove failed from users/. ", err));
 };
 
-const setBoardVisibility = (userId, boardId, visibility) => {
+const setBoardVisibility = async (userId, boardId, visibility) => {
   const boardRef = firebase.database().ref(`boards/${boardId}`);
   const isBoardPublic = visibility === "public";
-  boardRef
-    .child("public")
-    .set(isBoardPublic)
-    .then(() => {
-      console.log("Set board visibility public=", isBoardPublic);
-    })
-    .catch((err) => {
-      console.log("Failed to set board visibility: ", err);
-    });
+  return boardRef.child("public").set(isBoardPublic);
 };
 
 const updateBoardData = (userId, boardId, newData) => {
-  const lanesRef = firebase.database().ref(`boards/${boardId}/lanes`);
+  const _updateBoardLanes = firebase
+    .functions()
+    .httpsCallable("updateBoardLanes");
 
-  lanesRef
-    .set(newData.lanes)
+  _updateBoardLanes({ boardId: boardId, userId: userId, board: newData })
     .then((d) => {
       console.log(`Updated new data for ${boardId} ${userId}`);
     })
     .catch((err) =>
       console.log(`Failed to update lanes for ${boardId} ${userId}`, err)
     );
+};
+
+const boardExists = async (boardId) => {
+  const _boardExists = firebase.functions().httpsCallable("boardExists");
+  return _boardExists({ boardId: boardId })
+    .then((result) => result.data.exists)
+    .catch((err) => {
+      console.error("boardExists(): ", err.code, err.message);
+      return false;
+    });
 };
 
 const isBoardPublic = async (boardId) => {
@@ -235,6 +165,9 @@ const isBoardPublic = async (boardId) => {
   let isBoardPublic = null;
   try {
     isBoardPublic = await (await publicReadableRef.once("value")).val();
+    if (!isBoardPublic) {
+      isBoardPublic = false;
+    }
   } catch (err) {
     console.error(`Failed to get public status for board: ${boardId}. `, err);
   }
@@ -262,14 +195,13 @@ export {
   addNewBoard,
   checkDuplicateBoard,
   padEmptyLanes,
-  starBoard,
-  unstarBoard,
   updateBoardLastOpened,
   getStarredBoards,
   getRecentBoards,
   deleteBoard,
   setBoardVisibility,
   updateBoardData,
+  boardExists,
   isBoardPublic,
   getPublicBoard,
 };

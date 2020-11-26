@@ -21,7 +21,7 @@ function DisplayNameReset(props) {
     if (displayName === "" || !displayName) {
       setErrorMessage("Display name is empty.");
       setSuccessMessage("");
-    } else if (displayName == oldDisplayName) {
+    } else if (displayName === oldDisplayName) {
       setErrorMessage("Display name unchanged.");
       setSuccessMessage("");
     } else if (!displayName) {
