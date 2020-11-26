@@ -24,12 +24,15 @@ exports.func = functions.https.onCall(async (data, context) => {
       console.log(
         `Successfully flipped star for task[${taskId}] from ${starred} to ${!starred}.`
       );
-      status = true;
     })
     .catch((err) => {
       if (err) {
         `Failed to flip star for task[${taskId}] from ${starred} to ${!starred}.`,
           err;
+        throw new functions.https.HttpsError(
+          "internal",
+          `Failed to update star for ${taskId}.`
+        );
       }
       status = false;
     });
