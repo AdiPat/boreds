@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles, useTheme } from "@material-ui/core/styles";
-import Menu from "@material-ui/core/Menu";
+import { useTheme } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -9,27 +8,8 @@ import Divider from "@material-ui/core/Divider";
 import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import { Typography } from "@material-ui/core";
+import { StyledMenu } from "../components/StyledMenu";
 import { setBoardVisibility } from "../services/board";
-
-const StyledMenu = withStyles({
-  paper: {
-    border: "1px solid #d3d4d5",
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "center",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "center",
-    }}
-    {...props}
-  />
-));
 
 function VisibilityMenu(props) {
   const theme = useTheme();
