@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
 import { PublicBoardContent } from "./PublicBoardContent";
@@ -11,13 +12,12 @@ function BoardHome(props) {
   const [lastOpened, setLastOpened] = useState(null);
   const [boardPublicStatus, setBoardPublicStatus] = useState(false);
   const { state } = useContext(AppContext);
-  const boardId = props.boardId;
   const board = state.boardsList[boardId];
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
 
   const _updateBoardVisibilityStatus = async (boardId) => {
-    let publicStatus = await isBoardPublic(props.boardId);
+    let publicStatus = await isBoardPublic(boardId);
     setBoardPublicStatus(publicStatus);
   };
 
@@ -25,7 +25,7 @@ function BoardHome(props) {
     if (!lastOpened && userId) {
       const now = new Date();
       setLastOpened(now);
-      updateBoardLastOpened(userId, boardId, now);
+      updateBoardLastOpened(props.userId, props.boardId, now);
     }
     _updateBoardVisibilityStatus();
   });
@@ -56,5 +56,13 @@ function BoardHome(props) {
     </div>
   );
 }
+
+PropTypes.propTypes = {
+  userId: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ]).isRequired,
+  boardId: PropTypes.string.isRequired,
+};
 
 export { BoardHome };
