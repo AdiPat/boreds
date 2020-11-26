@@ -66,11 +66,13 @@ exports.func = functions.https.onCall(async (data, context) => {
   const tasksRef = userRef.child("tasks");
   const newTaskRef = tasksRef.push();
   const taskId = newTaskRef.key;
+  const now = new Date().getTime();
   const taskData = {
     id: taskId,
     title: taskTitle,
     description: taskDescription,
     starred: false,
+    createdAt: now,
   };
 
   let writeSuccessful = false;
