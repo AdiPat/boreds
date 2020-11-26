@@ -1,8 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../providers/AppContext";
 import { BoardHome } from "../board/BoardHome";
+import { NotFoundPage } from "./NotFoundPage";
+import { boardExists } from "../services/board";
 
 function BoardPage(props) {
+  const [resourceExists, setResourceExists] = useState(false);
   const { user } = useContext(AppContext);
   const boardId = props.match.params.boardId;
   let userId = null;
@@ -11,7 +14,16 @@ function BoardPage(props) {
     userId = user.uid;
   }
 
-  return <BoardHome boardId={boardId} userId={userId} />;
+  useEffect(() => {
+    console.log("resourceExists: ", resourceExists);
+    boardExists(boardId).then((status) => setResourceExists(status));
+  }, []);
+
+  return resourceExists ? (
+    <BoardHome boardId={boardId} userId={userId} />
+  ) : (
+    <NotFoundPage />
+  );
 }
 
 export { BoardPage };
