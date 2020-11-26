@@ -35,7 +35,13 @@ function VisibilityMenu(props) {
   const theme = useTheme();
 
   const handleVisibilityChange = (visibility) => {
-    setBoardVisibility(props.userId, props.boardId, visibility);
+    setBoardVisibility(props.userId, props.boardId, visibility)
+      .then(() => {
+        props.handleClose();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (

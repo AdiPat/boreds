@@ -32,7 +32,7 @@ function BoardToolbar(props) {
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
       <ToolbarTitle title={props.boardTitle} />
-      <VisibilityButton public={props.public} />
+      <VisibilityButton userId={props.userId} boardId={props.boardId} />
       <InviteButton boardId={props.boardId} />
       <DeleteButton
         userId={props.userId}

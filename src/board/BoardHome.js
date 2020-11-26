@@ -1,18 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { BoardContent } from "./BoardContent";
 import { BoardToolbar } from "./BoardToolbar";
 import { PublicBoardContent } from "./PublicBoardContent";
 import { updateBoardLastOpened, isBoardPublic } from "../services/board";
-import AppContext from "../providers/AppContext";
 import { AppDrawer } from "../components/drawer/AppDrawer";
 
 function BoardHome(props) {
   const [boardTitle, setBoardTitle] = useState("");
   const [lastOpened, setLastOpened] = useState(null);
   const [boardPublicStatus, setBoardPublicStatus] = useState(false);
-  const { state } = useContext(AppContext);
-  const board = state.boardsList[boardId];
   const userId = props.userId;
   const isLoggedIn = Boolean(userId);
 
@@ -38,15 +35,10 @@ function BoardHome(props) {
           userId={props.userId}
           boardId={props.boardId}
           boardTitle={boardTitle}
-          public={boardPublicStatus}
         />
       ) : null}
       {isLoggedIn ? (
-        <BoardContent
-          boardId={props.boardId}
-          setBoardTitle={setBoardTitle}
-          isBoardPublic={boardPublicStatus}
-        />
+        <BoardContent boardId={props.boardId} setBoardTitle={setBoardTitle} />
       ) : boardPublicStatus ? (
         <PublicBoardContent
           boardId={props.boardId}
