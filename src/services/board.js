@@ -127,18 +127,10 @@ const deleteBoard = (userId, boardId) => {
     .catch((err) => console.log("Remove failed from users/. ", err));
 };
 
-const setBoardVisibility = (userId, boardId, visibility) => {
+const setBoardVisibility = async (userId, boardId, visibility) => {
   const boardRef = firebase.database().ref(`boards/${boardId}`);
   const isBoardPublic = visibility === "public";
-  boardRef
-    .child("public")
-    .set(isBoardPublic)
-    .then(() => {
-      console.log("Set board visibility public=", isBoardPublic);
-    })
-    .catch((err) => {
-      console.log("Failed to set board visibility: ", err);
-    });
+  return boardRef.child("public").set(isBoardPublic);
 };
 
 const updateBoardData = (userId, boardId, newData) => {
@@ -173,6 +165,9 @@ const isBoardPublic = async (boardId) => {
   let isBoardPublic = null;
   try {
     isBoardPublic = await (await publicReadableRef.once("value")).val();
+    if (!isBoardPublic) {
+      isBoardPublic = false;
+    }
   } catch (err) {
     console.error(`Failed to get public status for board: ${boardId}. `, err);
   }
