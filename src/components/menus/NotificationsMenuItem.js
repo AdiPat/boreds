@@ -3,7 +3,7 @@ import { MenuItem, Typography, IconButton, Divider } from "@material-ui/core";
 import { green, red } from "@material-ui/core/colors";
 import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { acceptInvite, rejectInvite } from "../services/invite";
+import { acceptInvite, rejectInvite } from "../../services/invite";
 
 function NotificationsMenuItem(props) {
   const theme = useTheme();

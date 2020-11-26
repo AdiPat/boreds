@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import LockIcon from "@material-ui/icons/Lock";
 import PublicIcon from "@material-ui/icons/Public";
 import { Typography } from "@material-ui/core";
-import { StyledMenu } from "../components/StyledMenu";
+import { StyledMenu } from "../components/menus/StyledMenu";
 import { setBoardVisibility } from "../services/board";
 
 function VisibilityMenu(props) {

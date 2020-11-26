@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Divider } from "@material-ui/core";
-import { attachInvitesListener } from "../services/database";
-import { getCurrentUser } from "../services/user";
+import { attachInvitesListener } from "../../services/database";
+import { getCurrentUser } from "../../services/user";
 import { NotificationsMenuHeader } from "./NotificationsMenuHeader";
 import { NotificationsMenuItem } from "./NotificationsMenuItem";
 import { StyledMenu } from "./StyledMenu";

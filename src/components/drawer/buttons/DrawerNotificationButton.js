@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { IconButton, Badge } from "@material-ui/core";
 import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
-import { NotificationsMenu } from "../../NotificationsMenu";
+import { NotificationsMenu } from "../../menus/NotificationsMenu";
 import { getReceivedInvitesCount } from "../../../services/invite";
 
 function DrawerNotificationsButton(props) {
