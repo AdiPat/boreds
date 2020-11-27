@@ -24,7 +24,7 @@ exports.func = functions.https.onCall(async (data, context) => {
   const userId = context.auth.token.userId;
 
   // type checking
-  _.forEach([{ userId }, { taskTitle }, { priority }], (val) => {
+  _.forEach([{ userId }, { taskId }, { priority }], (val) => {
     if (typeof val !== "string") {
       let field = Object.keys(val)[0];
       throw new functions.https.HttpsError(
