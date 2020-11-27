@@ -1,4 +1,3 @@
-const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const boardFunctions = require("./board/index");
 const inviteFunctions = require("./invite/index");
@@ -30,3 +29,4 @@ exports.addTaskTrigger = taskFunctions.addTaskTrigger;
 exports.deleteTaskTrigger = taskFunctions.deleteTaskTrigger;
 exports.flipTaskStar = taskFunctions.flipTaskStar;
 exports.setTaskVisibility = taskFunctions.setTaskVisibility;
+exports.getTask = taskFunctions.getTask;
