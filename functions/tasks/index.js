@@ -10,6 +10,7 @@ const editTaskDescription = require("./editTaskDescription");
 const setTaskPriority = require("./setTaskPriority");
 const getTaskPriority = require("./getTaskPriority");
 const getTaskStar = require("./getTaskStar");
+const setTaskStar = require("./setTaskStar");
 
 exports.addTask = addTask.func;
 exports.deleteTask = deleteTask.func;
@@ -23,3 +24,4 @@ exports.editTaskDescription = editTaskDescription.func;
 exports.setTaskPriority = setTaskPriority.func;
 exports.getTaskPriority = getTaskPriority.func;
 exports.getTaskStar = getTaskStar.func;
+exports.setTaskStar = setTaskStar.func;
