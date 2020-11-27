@@ -5,4 +5,9 @@ exports.constants = {
   ROLES: {
     admin: "admin",
   },
+  TASK_PRIORITIES: {
+    high: "high",
+    medium: "medium",
+    low: "low",
+  },
 };
