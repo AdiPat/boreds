@@ -27,13 +27,17 @@ exports.func = functions.database
 
     const tasksRef = database.ref(`tasks/${taskId}`);
     const userEmailRef = database.ref(`users/${userId}/email`);
-    const userEmail = (await userEmailRef.once("value")).val();
+    const userEmailExists = (await userEmailRef.once("value")).exists();
+
+    if (!userEmailExists) {
+      throw new functions.https.HttpsError("unauthenticated", "Invalid user.");
+    }
 
     // add extra data
     let extraTaskData = Object.assign({}, taskData);
     extraTaskData.public = false;
     extraTaskData.roles = {};
-    extraTaskData.roles[userEmail] = CONSTANTS.ROLES.admin;
+    extraTaskData.roles[userId] = CONSTANTS.ROLES.admin;
 
     await tasksRef
       .set(extraTaskData)
