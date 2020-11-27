@@ -36,3 +36,4 @@ exports.setTaskPriority = taskFunctions.setTaskPriority;
 exports.getTaskPriority = taskFunctions.getTaskPriority;
 exports.getTaskStar = taskFunctions.getTaskStar;
 exports.setTaskStar = taskFunctions.setTaskStar;
+exports.getTasks = taskFunctions.getTasks;
