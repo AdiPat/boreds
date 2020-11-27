@@ -6,6 +6,7 @@ const flipTaskStar = require("./flipTaskStar");
 const setTaskVisibility = require("./setTaskVisibility");
 const getTask = require("./getTask");
 const editTaskTitle = require("./editTaskTitle");
+const editTaskDescription = require("./editTaskDescription");
 
 exports.addTask = addTask.func;
 exports.deleteTask = deleteTask.func;
@@ -15,3 +16,4 @@ exports.flipTaskStar = flipTaskStar.func;
 exports.setTaskVisibility = setTaskVisibility.func;
 exports.getTask = getTask.func;
 exports.editTaskTitle = editTaskTitle.func;
+exports.editTaskDescription = editTaskTitle.func;

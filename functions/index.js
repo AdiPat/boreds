@@ -31,3 +31,4 @@ exports.flipTaskStar = taskFunctions.flipTaskStar;
 exports.setTaskVisibility = taskFunctions.setTaskVisibility;
 exports.getTask = taskFunctions.getTask;
 exports.editTaskTitle = taskFunctions.editTaskTitle;
+exports.editTaskDescription = taskFunctions.editTaskDescription;
