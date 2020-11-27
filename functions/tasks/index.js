@@ -16,4 +16,4 @@ exports.flipTaskStar = flipTaskStar.func;
 exports.setTaskVisibility = setTaskVisibility.func;
 exports.getTask = getTask.func;
 exports.editTaskTitle = editTaskTitle.func;
-exports.editTaskDescription = editTaskTitle.func;
+exports.editTaskDescription = editTaskDescription.func;
