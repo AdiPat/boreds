@@ -3,9 +3,11 @@ const addTaskTrigger = require("./addTaskTrigger");
 const deleteTask = require("./deleteTask");
 const deleteTaskTrigger = require("./deleteTaskTrigger");
 const flipTaskStar = require("./flipTaskStar");
+const setTaskVisibility = require("./setTaskVisibility");
 
 exports.addTask = addTask.func;
 exports.deleteTask = deleteTask.func;
 exports.addTaskTrigger = addTaskTrigger.func;
 exports.deleteTaskTrigger = deleteTaskTrigger.func;
 exports.flipTaskStar = flipTaskStar.func;
+exports.setTaskVisibility = setTaskVisibility.func;

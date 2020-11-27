@@ -29,3 +29,4 @@ exports.deleteTask = taskFunctions.deleteTask;
 exports.addTaskTrigger = taskFunctions.addTaskTrigger;
 exports.deleteTaskTrigger = taskFunctions.deleteTaskTrigger;
 exports.flipTaskStar = taskFunctions.flipTaskStar;
+exports.setTaskVisibility = taskFunctions.setTaskVisibility;
