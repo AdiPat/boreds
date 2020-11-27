@@ -10,9 +10,16 @@ const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
   const database = admin.database();
-  const userId = context.auth.token.uid;
   const taskId = data.taskId;
 
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Function requires authentication."
+    );
+  }
+
+  const userId = context.auth.token.uid;
   const taskRef = database.ref(`tasks/${taskId}`);
   const taskData = (await taskRef.once("value")).val();
   const roles = taskData.roles;

@@ -12,6 +12,13 @@ exports.func = functions.https.onCall(async (data, context) => {
   const visibility = data.visibility;
   const taskId = data.taskId;
 
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Function requires authentication."
+    );
+  }
+
   if (visibility !== "public" || visibility !== "private") {
     throw new functions.https.HttpsError(
       "invalid-argument",

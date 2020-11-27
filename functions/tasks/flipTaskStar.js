@@ -9,8 +9,18 @@ const admin = require("firebase-admin");
 exports.func = functions.https.onCall(async (data, context) => {
   const database = admin.database();
   const taskId = data.taskId;
+
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Function requires authentication."
+    );
+  }
+
+  const userId = context.auth.token.uid;
+
   const taskStarredRef = database.ref(
-    "users/${userId}/tasks/${taskId}/starred"
+    `users/${userId}/tasks/${taskId}/starred`
   );
 
   let status = false;

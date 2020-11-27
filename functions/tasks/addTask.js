@@ -11,9 +11,17 @@ const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
   const database = admin.database();
-  const userId = context.auth.token.uid;
   const taskTitle = data.taskTitle;
   const taskDescription = data.taskDescription;
+
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Function requires authentication."
+    );
+  }
+
+  const userId = context.auth.token.uid;
 
   // type checking
   _.forEach([{ userId }, { taskTitle }, { taskDescription }], (val) => {
