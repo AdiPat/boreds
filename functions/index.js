@@ -34,3 +34,4 @@ exports.editTaskTitle = taskFunctions.editTaskTitle;
 exports.editTaskDescription = taskFunctions.editTaskDescription;
 exports.setTaskPriority = taskFunctions.setTaskPriority;
 exports.getTaskPriority = taskFunctions.getTaskPriority;
+exports.getTaskStar = taskFunctions.getTaskStar;
