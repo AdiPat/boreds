@@ -24,4 +24,23 @@ const addTask = async (taskTitle, taskDescription) => {
     });
 };
 
-export { addTask };
+const getTasks = async () => {
+  const _getTasks = firebase.functions().httpsCallable("getTasks");
+  let response = {
+    tasks: {},
+    msg: "",
+  };
+
+  return _getTasks()
+    .then((result) => {
+      response.tasks = result.data.tasks;
+      return response;
+    })
+    .catch((err) => {
+      response.errorCode = err.code;
+      response.msg = err.message;
+      return response;
+    });
+};
+
+export { addTask, getTasks };
