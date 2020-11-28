@@ -24,8 +24,8 @@ exports.func = functions.https.onCall(async (data, context) => {
 
   // type checking
   _.forEach([{ userId }, { taskTitle }, { taskDescription }], (val) => {
-    if (typeof val !== "string") {
-      let field = Object.keys(val)[0];
+    let field = Object.keys(val)[0];
+    if (typeof val[field] !== "string") {
       throw new functions.https.HttpsError(
         "invalid-argument",
         `${field} should be a string.`
@@ -64,7 +64,7 @@ exports.func = functions.https.onCall(async (data, context) => {
 
   // check if user exists
   const userRef = database.ref(`users/${userId}`);
-  const userExists = (await userRef("once")).exists();
+  const userExists = (await userRef.once("value")).exists();
 
   if (!userExists) {
     throw new functions.https.HttpsError("permission-denied", "Invalid user.");
