@@ -4,29 +4,24 @@ import { Divider } from "@material-ui/core";
 import { StyledMenu } from "../../components/menus/StyledMenu";
 import { SelectTaskMenuItem } from "./SelectTaskMenuItem";
 import { SelectTaskMenuHeader } from "./SelectTaskMenuHeader";
-
-const TASKS = {
-  hello123: {
-    id: "hello123",
-    title: "Hello World",
-  },
-  abc1: {
-    id: "abc1",
-    title: "Work",
-  },
-  xjhiwd1: {
-    id: "xjhiwd1",
-    title: "Play",
-  },
-};
+import { getTasks } from "../../services/tasks";
 
 function SelectTaskMenu(props) {
   const [tasks, setTasks] = useState({});
 
   useEffect(() => {
-    // TODO: Replace with API call
-    setTasks(TASKS);
-  }, [tasks]);
+    const isMenuOpen = props.anchorEl !== null;
+    if (isMenuOpen) {
+      getTasks().then((result) => {
+        if (result.errorCode) {
+          console.log(result.errorCode, result.msg);
+        } else {
+          console.log(result.tasks);
+          setTasks(result.tasks);
+        }
+      });
+    }
+  }, [props.anchorEl]);
 
   let renderMenu = () => {
     let menuJsx = [];
@@ -67,7 +62,6 @@ SelectTaskMenu.propTypes = {
     PropTypes.object,
   ]).isRequired,
   handleClose: PropTypes.func.isRequired,
-  tasksId: PropTypes.string.isRequired,
 };
 
 export { SelectTaskMenu };
