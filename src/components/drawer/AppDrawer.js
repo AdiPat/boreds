@@ -11,6 +11,7 @@ import { LogoutButton } from "./buttons/LogoutButton";
 import { OpenDrawerButton } from "./buttons/OpenDrawerButton";
 import { DrawerNotificationsButton } from "./buttons/DrawerNotificationButton";
 import { TasksButton } from "./buttons/TasksButton";
+import { GeneralAddButton } from "./buttons/GeneralAddButton";
 
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -45,7 +46,7 @@ function AppDrawer(props) {
           <CloseDrawerButton handleDrawerClose={handleDrawerClose} />
         }
       >
-        <AddBoardButton />
+        <GeneralAddButton />
         <DashButton />
         <TasksButton />
         <ProfileButton />
