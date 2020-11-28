@@ -8,7 +8,7 @@ const StyledMenu = withStyles({
   },
 })((props) => (
   <Menu
-    elevation={0}
+    elevation={props.elevation}
     getContentAnchorEl={null}
     anchorOrigin={props.anchorOrigin}
     transformOrigin={props.transformOrigin}
@@ -17,12 +17,14 @@ const StyledMenu = withStyles({
 ));
 
 StyledMenu.propTypes = {
+  elevation: PropTypes.number,
   anchorOrigin: PropTypes.object,
   transformOrigin: PropTypes.object,
 };
 
 StyledMenu.defaultProps = {
   // menu opens at the bottom with anchor at center
+  elevation: 0,
   anchorOrigin: {
     vertical: "bottom",
     horizontal: "center",
