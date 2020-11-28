@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SideMenuButton } from "./SideMenuButton";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import { CreateTaskModal } from "../../modals/CreateTaskModal";
 
 function AddTaskButton() {
   const [openModal, setOpenModal] = useState(false);
@@ -21,11 +22,11 @@ function AddTaskButton() {
         icon={<PlaylistAddIcon />}
         clickHandler={handleOpenModal}
       />
-      {/* TODO: <CreateTaskModal
+      <CreateTaskModal
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-      ></CreateTaskModal> */}
+      ></CreateTaskModal>
     </div>
   );
 }
