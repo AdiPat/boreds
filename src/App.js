@@ -7,6 +7,7 @@ import { SignupPage } from "./pages/SignupPage";
 import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { BoardPage } from "./pages/BoardPage";
+import { TasksPage } from "./pages/TasksPage";
 import AppProvider from "./providers/AppProvider";
 import {
   firebaseApp,
@@ -44,6 +45,9 @@ function App() {
           <Route path="/board/:boardId" component={BoardPage} />
           <Route exact path="/profile">
             <Profile />
+          </Route>
+          <Route exact path="/tasks">
+            <TasksPage />
           </Route>
         </Switch>
       </Router>
