@@ -16,12 +16,13 @@ function GeneralAddButton() {
   };
 
   return (
-    <div ref={btnRef}>
+    <div>
       <SideMenuButton
         btnKey="GeneralCreate"
         text="Quick Create"
         icon={<AddCircleRoundedIcon />}
         clickHandler={handleOpenMenu}
+        btnRef={btnRef}
       />
       <GeneralAddMenu anchorEl={anchorEl} handleClose={handleCloseMenu} />
     </div>
