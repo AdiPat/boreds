@@ -6,7 +6,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const _ = require("lodash");
-const { user } = require("firebase-functions/lib/providers/auth");
 const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
