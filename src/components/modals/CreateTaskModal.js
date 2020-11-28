@@ -1,23 +1,36 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
-import { Grid, TextField, Button, Snackbar } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Snackbar,
+  Divider,
+} from "@material-ui/core";
 import { SimpleModal } from "./SimpleModal";
 
 function CreateTaskModal(props) {
   const theme = useTheme();
-  const [newTaskName, setNewTaskName] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskDescription, setNewTaskDescription] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleTitleChange = (e) => {
-    setNewTaskName(e.target.value);
+    setNewTaskTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setNewTaskDescription(e.target.value);
   };
 
   const resetParams = (snackbarMsg) => {
     setSnackbarMessage(snackbarMsg);
     setOpenSnackbar(true);
-    setNewTaskName("");
+    setNewTaskTitle("");
+    setNewTaskDescription("");
     props.handleCloseModal();
   };
 
@@ -25,7 +38,7 @@ function CreateTaskModal(props) {
     e.preventDefault();
     // createTask()
     resetParams(
-      `TODO: Connect createTask() to backend to create task ${newTaskName}. `
+      `TODO: Connect createTask() to backend to create task ${newTaskTitle}. `
     );
   };
 
@@ -35,23 +48,74 @@ function CreateTaskModal(props) {
         openModal={props.openModal}
         handleCloseModal={props.handleCloseModal}
       >
-        <form onSubmit={handleSubmit}>
-          <Grid container direction="column" justify="center">
-            <Grid item xs={12}>
-              <TextField
-                label="Add task title"
-                variant="outlined"
-                value={newTaskName}
-                onChange={handleTitleChange}
-              />
-            </Grid>
-            <Grid item xs={12} style={{ marginTop: theme.spacing(1) }}>
-              <Button type="submit" variant="contained" color="primary">
-                Create Task
-              </Button>
-            </Grid>
+        <Typography
+          variant="h5"
+          align="center"
+          style={{ marginBottom: theme.spacing(2) }}
+        >
+          Create new Task
+        </Typography>
+        <Divider />
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              variant="body1"
+              style={{
+                textTransform: "uppercase",
+                marginTop: theme.spacing(2),
+              }}
+            >
+              Title
+            </Typography>
           </Grid>
-        </form>
+          <Grid item xs={12} style={{ padding: theme.spacing(0, 2, 2, 0) }}>
+            <TextField
+              label="Add task title"
+              variant="outlined"
+              value={newTaskTitle}
+              onChange={handleTitleChange}
+              style={{ width: "100%", marginTop: theme.spacing(1) }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              variant="body1"
+              style={{
+                textTransform: "uppercase",
+              }}
+            >
+              Description
+            </Typography>
+          </Grid>
+          <Grid item xs={12} style={{ padding: theme.spacing(0, 2, 2, 0) }}>
+            <TextField
+              label="Add task description"
+              variant="outlined"
+              value={newTaskDescription}
+              onChange={handleDescriptionChange}
+              style={{ width: "100%", marginTop: theme.spacing(1) }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: theme.spacing(1),
+            }}
+          >
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+            >
+              Create Task
+            </Button>
+          </Grid>
+        </Grid>
       </SimpleModal>
       <Snackbar
         anchorOrigin={{
@@ -60,7 +124,7 @@ function CreateTaskModal(props) {
         }}
         open={openSnackbar}
         onClose={(event, reason) => {
-          setOpenSnackbar(false);
+          setTimeout(() => setOpenSnackbar(false), 3000);
         }}
         autoHideDuration={3000}
         message={snackbarMessage}
@@ -72,6 +136,7 @@ function CreateTaskModal(props) {
 CreateTaskModal.propTypes = {
   openModal: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
+  handleCloseMenu: PropTypes.func.isRequired,
 };
 
 CreateTaskModal.defaultProps = {

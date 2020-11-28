@@ -26,7 +26,7 @@ function GeneralAddMenu(props) {
         style={{ marginLeft: theme.spacing(2) }}
       >
         <AddBoardButton />
-        <AddTaskButton />
+        <AddTaskButton handleCloseMenu={props.handleClose} />
       </StyledMenu>
     </div>
   );
