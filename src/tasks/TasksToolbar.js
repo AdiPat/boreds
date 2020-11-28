@@ -6,6 +6,7 @@ import { TasksVisibilityButton } from "./buttons/TasksVisibilityButton";
 import { TasksInviteButton } from "./buttons/TasksInviteButton";
 import { TasksDeleteButton } from "./buttons/TasksDeleteButton";
 import { TasksStarButton } from "./buttons/TasksStarButton";
+import { TasksSelectButton } from "./buttons/TasksSelectButton";
 import { TasksToolbarTitle } from "./TasksToolbarTitle";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ function TasksToolbar(props) {
   return (
     <Toolbar variant="regular" className={classes.toolbar}>
       <TasksToolbarTitle title={props.title} />
+      <TasksSelectButton taskId={props.taskId} />
       <TasksVisibilityButton userId={props.userId} taskId={props.taskId} />
       <TasksInviteButton taskId={props.taskId} />
       <TasksDeleteButton
