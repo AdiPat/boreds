@@ -9,12 +9,15 @@ import {
   Snackbar,
   Divider,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { SimpleModal } from "./SimpleModal";
+import { addTask } from "../../services/tasks";
 
 function CreateTaskModal(props) {
   const theme = useTheme();
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -31,15 +34,21 @@ function CreateTaskModal(props) {
     setOpenSnackbar(true);
     setNewTaskTitle("");
     setNewTaskDescription("");
+    setErrorMessage("");
     props.handleCloseModal();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // createTask()
-    resetParams(
-      `TODO: Connect createTask() to backend to create task ${newTaskTitle}. `
-    );
+    console.log("handleSubmit()");
+    addTask(newTaskTitle, newTaskDescription).then((response) => {
+      const status = response.status;
+      if (!status) {
+        setErrorMessage(response.msg);
+      } else {
+        resetParams(response.msg);
+      }
+    });
   };
 
   return (
@@ -96,6 +105,18 @@ function CreateTaskModal(props) {
               style={{ width: "100%", marginTop: theme.spacing(1) }}
             />
           </Grid>
+          {errorMessage.length ? (
+            <Grid
+              item
+              xs={12}
+              style={{
+                width: "100%",
+                margin: theme.spacing(1, 0),
+              }}
+            >
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid>
+          ) : null}
           <Grid
             item
             xs={12}
@@ -106,7 +127,6 @@ function CreateTaskModal(props) {
             }}
           >
             <Button
-              type="submit"
               size="large"
               variant="contained"
               color="primary"
@@ -124,7 +144,7 @@ function CreateTaskModal(props) {
         }}
         open={openSnackbar}
         onClose={(event, reason) => {
-          setTimeout(() => setOpenSnackbar(false), 3000);
+          setTimeout(() => setOpenSnackbar(false), 5000);
         }}
         autoHideDuration={3000}
         message={snackbarMessage}
