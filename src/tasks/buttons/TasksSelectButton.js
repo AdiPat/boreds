@@ -1,11 +1,10 @@
 import { useState, useRef } from "react";
-import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/core/styles";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { SelectTaskMenu } from "../menus/SelectTaskMenu";
 
-function TasksSelectButton(props) {
+function TasksSelectButton() {
   const [anchorEl, setAnchorEl] = useState(null);
   const btnRef = useRef(null);
   const theme = useTheme();
@@ -34,17 +33,9 @@ function TasksSelectButton(props) {
           <Typography variant="body1">Tasks</Typography>
         ) : null}
       </Button>
-      <SelectTaskMenu
-        taskId={props.taskId}
-        handleClose={handleCloseMenu}
-        anchorEl={anchorEl}
-      />
+      <SelectTaskMenu handleClose={handleCloseMenu} anchorEl={anchorEl} />
     </div>
   );
 }
-
-TasksSelectButton.propTypes = {
-  taskId: PropTypes.string.isRequired,
-};
 
 export { TasksSelectButton };
