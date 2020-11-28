@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 0,
     paddingLeft: 0,
     marginLeft: theme.spacing(11),
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     alignItems: "flex-start",
     ["@media (max-width: 400px)"]: {
       marginLeft: theme.spacing(7),
