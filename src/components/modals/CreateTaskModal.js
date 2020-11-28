@@ -8,6 +8,7 @@ import {
   Button,
   Snackbar,
   Divider,
+  Portal,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { SimpleModal } from "./SimpleModal";
@@ -137,18 +138,20 @@ function CreateTaskModal(props) {
           </Grid>
         </Grid>
       </SimpleModal>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={openSnackbar}
-        onClose={(event, reason) => {
-          setTimeout(() => setOpenSnackbar(false), 5000);
-        }}
-        autoHideDuration={3000}
-        message={snackbarMessage}
-      />
+      <Portal container={document.getElementById("tasksContent")}>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={openSnackbar}
+          onClose={(event, reason) => {
+            setOpenSnackbar(false);
+          }}
+          autoHideDuration={3000}
+          message={snackbarMessage}
+        />
+      </Portal>
     </div>
   );
 }
@@ -156,7 +159,6 @@ function CreateTaskModal(props) {
 CreateTaskModal.propTypes = {
   openModal: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
-  handleCloseMenu: PropTypes.func.isRequired,
 };
 
 CreateTaskModal.defaultProps = {

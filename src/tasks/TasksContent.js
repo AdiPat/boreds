@@ -37,7 +37,7 @@ function TasksContent(props) {
   }, []);
 
   return (
-    <main className={classes.content}>
+    <main className={classes.content} id="tasksContent">
       {isLoggedIn ? (
         <div>
           <h1>Hello {props.userId} to Tasks!</h1>
