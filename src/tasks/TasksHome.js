@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { AppDrawer } from "../components/drawer/AppDrawer";
 import { TasksContent } from "./TasksContent";
 import { TasksToolbar } from "./TasksToolbar";
+import { ActivityInputField } from "./ActivityInputField";
 import TasksContext from "../providers/TasksContext";
 import { CircularLoader } from "../components/CircularLoader";
 
@@ -25,6 +26,7 @@ function TasksHome(props) {
       {isLoggedIn ? (
         <React.Fragment>
           <TasksToolbar title="Dummy Text" userId={userId} taskId="123" />
+          <ActivityInputField />
           <TasksContent userId={userId} />
         </React.Fragment>
       ) : (
