@@ -9,11 +9,13 @@ class TasksProvider extends React.Component {
     this.state = {
       selectedTask: "",
       tasks: {},
+      remount: false,
     };
 
     this.setSelectedTask = this.setSelectedTask.bind(this);
     this.setTasks = this.setTasks.bind(this);
     this.forceProviderUpdate = this.forceProviderUpdate.bind(this);
+    this.loadTasks = this.loadTasks.bind(this);
   }
 
   setSelectedTask(taskId) {
@@ -29,10 +31,10 @@ class TasksProvider extends React.Component {
   }
 
   forceProviderUpdate() {
-    this.forceUpdate();
+    this.setState({ remount: !this.state.remount });
   }
 
-  componentDidMount() {
+  loadTasks() {
     const thisComponent = this;
     // get tasks
     getTasks().then((result) => {
@@ -44,6 +46,10 @@ class TasksProvider extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.loadTasks();
+  }
+
   render() {
     return (
       <TasksContext.Provider
@@ -51,6 +57,7 @@ class TasksProvider extends React.Component {
           state: this.state,
           setSelectedTask: this.setSelectedTask,
           setTasks: this.setTasks,
+          loadTasks: this.loadTasks,
           forceProviderUpdate: this.forceProviderUpdate,
         }}
       >

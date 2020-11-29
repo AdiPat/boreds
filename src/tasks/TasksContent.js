@@ -22,29 +22,12 @@ const useStyles = makeStyles((theme) => ({
 
 function TasksContent(props) {
   const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const history = useHistory();
-
-  useEffect(() => {
-    // dirty hack
-    setTimeout(() => {
-      if (!props.userId) {
-        history.push("/login");
-      } else {
-        setIsLoggedIn(true);
-      }
-    }, 2000);
-  }, []);
 
   return (
     <main className={classes.content} id="tasksContent">
-      {isLoggedIn ? (
-        <div>
-          <h1>Hello {props.userId} to Tasks!</h1>
-        </div>
-      ) : (
-        <CircularLoader color="secondary" />
-      )}
+      <div>
+        <p>To be added.</p>
+      </div>
     </main>
   );
 }
