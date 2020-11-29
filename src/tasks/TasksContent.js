@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularLoader } from "../components/CircularLoader";
+import { TasksActivityList } from "./TasksActivityList";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -25,9 +25,7 @@ function TasksContent(props) {
 
   return (
     <main className={classes.content} id="tasksContent">
-      <div>
-        <p>To be added.</p>
-      </div>
+      <TasksActivityList />
     </main>
   );
 }
