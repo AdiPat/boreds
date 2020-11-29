@@ -1,25 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Divider } from "@material-ui/core";
 import { StyledMenu } from "../../components/menus/StyledMenu";
 import { SelectTaskMenuItem } from "./SelectTaskMenuItem";
 import { SelectTaskMenuHeader } from "./SelectTaskMenuHeader";
-import { getTasks } from "../../services/tasks";
+import TasksContext from "../../providers/TasksContext";
 
 function SelectTaskMenu(props) {
   const [tasks, setTasks] = useState({});
+  const context = useContext(TasksContext);
 
   useEffect(() => {
     const isMenuOpen = props.anchorEl !== null;
     if (isMenuOpen) {
-      getTasks().then((result) => {
-        if (result.errorCode) {
-          console.log(result.errorCode, result.msg);
-        } else {
-          console.log(result.tasks);
-          setTasks(result.tasks);
-        }
-      });
+      context.forceProviderUpdate();
+      setTasks(context.state.tasks);
     }
   }, [props.anchorEl]);
 
