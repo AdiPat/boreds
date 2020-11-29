@@ -38,7 +38,7 @@ function TasksToolbar(props) {
   return (
     <Grid container>
       <Toolbar variant="regular" className={classes.toolbar}>
-        <TasksToolbarTitle title={context.state.selectedTask} />
+        <TasksToolbarTitle title={context.state.selectedTask.title} />
         <TasksSelectButton />
         <TasksVisibilityButton userId={props.userId} taskId={props.taskId} />
         <TasksInviteButton taskId={props.taskId} />

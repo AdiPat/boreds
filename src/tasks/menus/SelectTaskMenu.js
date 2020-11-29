@@ -27,6 +27,7 @@ function SelectTaskMenu(props) {
         return (
           <SelectTaskMenuItem
             key={taskId}
+            taskId={taskId}
             text={tasks[taskId].title}
             handleCloseMenu={props.handleClose}
             selectTask={context.setSelectedTask}

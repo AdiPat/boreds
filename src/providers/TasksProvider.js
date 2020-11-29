@@ -7,7 +7,7 @@ class TasksProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTask: "",
+      selectedTask: {},
       tasks: {},
       remount: false,
     };
@@ -19,7 +19,11 @@ class TasksProvider extends React.Component {
   }
 
   setSelectedTask(taskId) {
-    this.setState({ selectedTask: taskId });
+    const tasks = this.state.tasks;
+    const curTask = tasks[taskId];
+    if (curTask) {
+      this.setState({ selectedTask: curTask });
+    }
   }
 
   setTasks(newTasks) {

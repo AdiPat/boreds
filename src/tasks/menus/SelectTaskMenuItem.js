@@ -5,7 +5,7 @@ import { ListItemText } from "@material-ui/core";
 function SelectTaskMenuItem(props) {
   const handleClick = () => {
     props.handleCloseMenu();
-    props.selectTask(props.text);
+    props.selectTask(props.taskId);
   };
 
   return (
