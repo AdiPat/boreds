@@ -24,7 +24,14 @@ function SelectTaskMenu(props) {
 
     if (tasksLen) {
       menuJsx = Object.keys(tasks).map((taskId) => {
-        return <SelectTaskMenuItem key={taskId} text={tasks[taskId].title} />;
+        return (
+          <SelectTaskMenuItem
+            key={taskId}
+            text={tasks[taskId].title}
+            handleCloseMenu={props.handleClose}
+            selectTask={context.setSelectedTask}
+          />
+        );
       });
     } else {
       menuJsx.push(<SelectTaskMenuItem key="empty" text="You have no tasks" />);

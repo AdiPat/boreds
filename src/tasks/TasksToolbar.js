@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Grid } from "@material-ui/core";
@@ -8,6 +9,7 @@ import { TasksDeleteButton } from "./buttons/TasksDeleteButton";
 import { TasksStarButton } from "./buttons/TasksStarButton";
 import { TasksSelectButton } from "./buttons/TasksSelectButton";
 import { TasksToolbarTitle } from "./TasksToolbarTitle";
+import TasksContext from "../providers/TasksContext";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -31,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
 
 function TasksToolbar(props) {
   const classes = useStyles();
+  const context = useContext(TasksContext);
 
   return (
     <Grid container>
       <Toolbar variant="regular" className={classes.toolbar}>
-        <TasksToolbarTitle title={props.title} />
+        <TasksToolbarTitle title={context.state.selectedTask} />
         <TasksSelectButton />
         <TasksVisibilityButton userId={props.userId} taskId={props.taskId} />
         <TasksInviteButton taskId={props.taskId} />
