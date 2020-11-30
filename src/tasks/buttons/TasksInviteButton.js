@@ -17,7 +17,7 @@ function TasksInviteButton(props) {
     setOpenModal(false);
   };
 
-  return (
+  return props.taskId ? (
     <div>
       <Button
         variant="outlined"
@@ -33,11 +33,15 @@ function TasksInviteButton(props) {
       {/* TODO: Add invite modal
       /> */}
     </div>
-  );
+  ) : null;
 }
 
 TasksInviteButton.propTypes = {
   taskId: PropTypes.string.isRequired,
+};
+
+TasksInviteButton.defaultProps = {
+  taskId: null,
 };
 
 export { TasksInviteButton };

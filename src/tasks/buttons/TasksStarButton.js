@@ -24,7 +24,7 @@ function TasksStarButton(props) {
     };
   }, []);
 
-  return (
+  return props.taskId ? (
     <IconButton onClick={handleStarFlip}>
       {starred ? (
         <StarIcon
@@ -36,12 +36,17 @@ function TasksStarButton(props) {
         <StarBorderIcon />
       )}
     </IconButton>
-  );
+  ) : null;
 }
 
 TasksStarButton.propTypes = {
   userId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
+};
+
+TasksStarButton.defaultProps = {
+  userId: null,
+  taskId: null,
 };
 
 export { TasksStarButton };

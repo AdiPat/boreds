@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Grid } from "@material-ui/core";
@@ -9,7 +8,6 @@ import { TasksDeleteButton } from "./buttons/TasksDeleteButton";
 import { TasksStarButton } from "./buttons/TasksStarButton";
 import { TasksSelectButton } from "./buttons/TasksSelectButton";
 import { TasksToolbarTitle } from "./TasksToolbarTitle";
-import TasksContext from "../providers/TasksContext";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -33,12 +31,11 @@ const useStyles = makeStyles((theme) => ({
 
 function TasksToolbar(props) {
   const classes = useStyles();
-  const context = useContext(TasksContext);
 
   return (
     <Grid container>
       <Toolbar variant="regular" className={classes.toolbar}>
-        <TasksToolbarTitle title={context.state.selectedTask.title} />
+        <TasksToolbarTitle title={props.taskTitle} />
         <TasksSelectButton />
         <TasksVisibilityButton userId={props.userId} taskId={props.taskId} />
         <TasksInviteButton taskId={props.taskId} />
@@ -56,6 +53,12 @@ function TasksToolbar(props) {
 TasksToolbar.propTypes = {
   userId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
+  taskTitle: PropTypes.string.isRequired,
+};
+
+TasksToolbar.defaultProps = {
+  taskId: undefined,
+  taskTitle: "",
 };
 
 export { TasksToolbar };

@@ -18,7 +18,7 @@ function TasksDeleteButton(props) {
     setOpenModal(false);
   };
 
-  return (
+  return props.taskId ? (
     <div>
       <Button
         variant="outlined"
@@ -36,13 +36,19 @@ function TasksDeleteButton(props) {
       </Button>
       {/* TODO: Add delete task modal*/}
     </div>
-  );
+  ) : null;
 }
 
 TasksDeleteButton.propTypes = {
   userId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
   taskTitle: PropTypes.string.isRequired,
+};
+
+TasksDeleteButton.defaultProps = {
+  userId: null,
+  taskId: null,
+  taskTitle: "",
 };
 
 export { TasksDeleteButton };

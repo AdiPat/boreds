@@ -41,7 +41,7 @@ function ActivityInputField(props) {
     });
   };
 
-  return (
+  return props.taskId ? (
     <Grid container className={classes.inputContainer}>
       <Grid item md={6} sm={8} xs={10}>
         <TextField
@@ -83,11 +83,15 @@ function ActivityInputField(props) {
         message={snackbarMessage}
       />
     </Grid>
-  );
+  ) : null;
 }
 
 ActivityInputField.propTypes = {
-  taskId: PropTypes.string.isRequired,
+  taskId: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+    PropTypes.oneOf([undefined]).isRequired,
+  ]).isRequired,
 };
 
 export { ActivityInputField };
