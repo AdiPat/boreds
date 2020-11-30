@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { TasksActivityList } from "./TasksActivityList";
+import { ActivityInputField } from "./ActivityInputField";
 
 const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     flexGrow: 1,
     paddingRight: 0,
     paddingLeft: 0,
@@ -25,6 +26,7 @@ function TasksContent(props) {
 
   return (
     <main className={classes.content} id="tasksContent">
+      <ActivityInputField />
       <TasksActivityList />
     </main>
   );
