@@ -5,6 +5,7 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const _ = require("lodash");
 const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
@@ -20,7 +21,7 @@ exports.func = functions.https.onCall(async (data, context) => {
     );
   }
 
-  const userId = context.auth.token.userId;
+  const userId = context.auth.token.uid;
 
   // type checking
   _.forEach(
@@ -87,7 +88,7 @@ exports.func = functions.https.onCall(async (data, context) => {
     .child("activities")
     .push()
     .set({
-      position: postition,
+      position: position,
       text: activityText,
     })
     .then(() => {
