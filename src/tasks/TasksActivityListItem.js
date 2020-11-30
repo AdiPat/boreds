@@ -9,8 +9,10 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ScheduleIcon from "@material-ui/icons/Schedule";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useTheme } from "@material-ui/core/styles";
 
 function TasksActivityListItem(props) {
@@ -20,7 +22,7 @@ function TasksActivityListItem(props) {
       <Paper variant="outlined">
         <ListItem key={props.activityId}>
           <Grid container>
-            <Grid item xs={12} sm={6} md={8}>
+            <Grid item xs={12} sm={12} md={12}>
               <ListItemText style={{ marginRight: theme.spacing(2) }}>
                 {props.text.length > 200
                   ? props.text.substring(0, 190) + "..."
@@ -30,29 +32,29 @@ function TasksActivityListItem(props) {
             <Grid
               item
               xs={6}
-              sm={4}
+              sm={2}
               md={2}
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "left",
                 alignItems: "center",
                 alignSelf: "flex-start",
               }}
             >
               <Button variant="contained" size="small" color="primary">
-                <span style={{ fontSize: 12 }}>Priority</span>
+                <span style={{ fontSize: 10 }}>Priority</span>
                 <ArrowDropDownIcon />
               </Button>
             </Grid>
             <Grid
               item
-              xs={6}
-              sm={2}
-              md={2}
+              xs={1}
+              sm={1}
+              md={1}
               style={{
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "left",
                 alignSelf: "flex-start",
               }}
             >
@@ -63,6 +65,27 @@ function TasksActivityListItem(props) {
                 disableRipple
               >
                 <ScheduleIcon />
+              </IconButton>
+            </Grid>
+            <Grid
+              item
+              xs={1}
+              sm={1}
+              md={1}
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                alignItems: "center",
+                alignSelf: "flex-start",
+              }}
+            >
+              <IconButton
+                variant="contained"
+                size="small"
+                style={{ color: red[500] }}
+                disableRipple
+              >
+                <DeleteForeverIcon />
               </IconButton>
             </Grid>
           </Grid>
