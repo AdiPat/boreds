@@ -1,16 +1,15 @@
 import PropTypes from "prop-types";
 import {
   Grid,
-  Button,
   ListItem,
   ListItemText,
   IconButton,
   Paper,
 } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import { useTheme } from "@material-ui/core/styles";
 import { TasksActivityDeleteButton } from "./buttons/TasksActivityDeleteButton";
+import { ActivityPriorityButton } from "./buttons/ActivityPriorityButton";
 
 function TasksActivityListItem(props) {
   const theme = useTheme();
@@ -36,10 +35,10 @@ function TasksActivityListItem(props) {
                 alignSelf: "flex-start",
               }}
             >
-              <Button variant="contained" size="small" color="primary">
-                <span style={{ fontSize: 10 }}>Priority</span>
-                <ArrowDropDownIcon />
-              </Button>
+              <ActivityPriorityButton
+                taskId={props.taskId}
+                activityId={props.activityId}
+              />
             </Grid>
             <Grid
               item
