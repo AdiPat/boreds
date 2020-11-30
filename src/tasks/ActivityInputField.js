@@ -1,4 +1,5 @@
 import { Grid, TextField, IconButton, InputProps } from "@material-ui/core";
+import { lightGreen } from "@material-ui/core/colors";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
@@ -25,17 +26,21 @@ function ActivityInputField() {
   return (
     <div className={classes.inputContainer}>
       <Grid container>
-        <Grid item md={10} sm={10} xs={10}>
+        <Grid item md={6} sm={8} xs={10}>
           <TextField
             label="Enter Task Activity"
             variant="outlined"
             style={{ width: "100%" }}
             InputProps={{
               endAdornment: (
-                <IconButton color="secondary" size="medium">
+                <IconButton size="medium" disableFocusRipple>
                   <AddBoxIcon
                     size="medium"
-                    style={{ height: "40px", width: "40px" }}
+                    style={{
+                      height: "40px",
+                      width: "40px",
+                      color: lightGreen[700],
+                    }}
                   />
                 </IconButton>
               ),
