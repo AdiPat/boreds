@@ -40,8 +40,13 @@ const detachTasksActivitiesListener = async (taskId) => {
 };
 
 const deleteTaskActivity = async (taskId, activityId) => {
-  // TODO:
-  return false;
+  const _deleteTaskActivity = firebase
+    .functions()
+    .httpsCallable("deleteTaskActivity");
+
+  return _deleteTaskActivity({ taskId, activityId })
+    .then((result) => result.data.status)
+    .catch((err) => console.error(err));
 };
 
 export {

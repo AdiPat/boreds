@@ -7,7 +7,6 @@ import { deleteTaskActivity } from "../../services/tasks-activity";
 function TasksActivityDeleteButton(props) {
   const handleClick = () => {
     deleteTaskActivity(props.taskId, props.activityId);
-    console.log("TasksActivityDeleteButton.onClick()");
   };
 
   return (

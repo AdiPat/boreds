@@ -16,6 +16,7 @@ function TasksActivityList(props) {
     let listJsx = [];
     listJsx = Object.keys(activities).map((activityId) => (
       <TasksActivityListItem
+        taskId={props.taskId}
         activityId={activityId}
         text={activities[activityId].text}
       />
