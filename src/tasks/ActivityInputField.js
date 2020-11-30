@@ -38,7 +38,14 @@ function ActivityInputField(props) {
         setOpenSnackbar(true);
         setSnackbarMessage(result.message);
       }
+      setActivityText("");
     });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleActivitySubmit();
+    }
   };
 
   return props.taskId ? (
@@ -50,6 +57,7 @@ function ActivityInputField(props) {
           style={{ width: "100%" }}
           value={activityText}
           onChange={handleTextChange}
+          onKeyDown={handleKeyDown}
           InputProps={{
             endAdornment: (
               <IconButton
