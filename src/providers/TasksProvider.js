@@ -13,9 +13,14 @@ class TasksProvider extends React.Component {
     };
 
     this.setSelectedTask = this.setSelectedTask.bind(this);
+    this.clearSelectedTask = this.clearSelectedTask.bind(this);
     this.setTasks = this.setTasks.bind(this);
     this.forceProviderUpdate = this.forceProviderUpdate.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
+  }
+
+  getSelectedTask() {
+    return this.state.selectedTask;
   }
 
   setSelectedTask(taskId) {
@@ -24,6 +29,10 @@ class TasksProvider extends React.Component {
     if (curTask) {
       this.setState({ selectedTask: curTask });
     }
+  }
+
+  clearSelectedTask() {
+    this.setState({ selectedTask: {} });
   }
 
   setTasks(newTasks) {
@@ -60,6 +69,7 @@ class TasksProvider extends React.Component {
         value={{
           state: this.state,
           setSelectedTask: this.setSelectedTask,
+          clearSelectedTask: this.clearSelectedTask,
           setTasks: this.setTasks,
           loadTasks: this.loadTasks,
           forceProviderUpdate: this.forceProviderUpdate,
