@@ -26,17 +26,20 @@ function TasksContent(props) {
 
   return (
     <main className={classes.content} id="tasksContent">
-      <ActivityInputField />
-      <TasksActivityList />
+      <ActivityInputField taskId={props.taskId} />
+      <TasksActivityList taskId={props.taskId} />
     </main>
   );
 }
 
 TasksContent.propTypes = {
-  userId: PropTypes.oneOfType([
-    PropTypes.string.isRequired, // authenticated user
-    PropTypes.oneOf([null]).isRequired, // public task
-  ]).isRequired,
+  userId: PropTypes.string.isRequired,
+  taskId: PropTypes.string.isRequired,
+};
+
+TasksContent.defaultProps = {
+  userId: null,
+  taskId: null,
 };
 
 export { TasksContent };
