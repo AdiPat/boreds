@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { ActivityPriorityMenu } from "../menus/ActivityPriorityMenu";
 
-function ActivityPriorityButton() {
+function ActivityPriorityButton(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const btnRef = useRef(null);
 
@@ -32,7 +32,12 @@ function ActivityPriorityButton() {
         <span style={{ fontSize: 10 }}>Priority</span>
         <ArrowDropDownIcon />
       </Button>
-      <ActivityPriorityMenu anchorEl={anchorEl} handleClose={closeMenu} />
+      <ActivityPriorityMenu
+        taskId={props.taskId}
+        activityId={props.activityId}
+        anchorEl={anchorEl}
+        handleClose={closeMenu}
+      />
     </div>
   );
 }
