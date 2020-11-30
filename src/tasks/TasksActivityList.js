@@ -33,6 +33,7 @@ function TasksActivityList(props) {
     return function cleanup() {
       if (props.taskId) {
         detachTasksActivitiesListener(props.taskId);
+        setActivites({}); // clear stale data
       }
     };
   }, [props.taskId]);

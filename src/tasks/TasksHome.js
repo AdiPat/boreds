@@ -10,28 +10,30 @@ function TasksHome(props) {
   const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const context = useContext(TasksContext);
-  const selectedTask = context.state.selectedTask;
 
   useEffect(() => {
+    if (isLoggedIn && props.taskId) {
+      context.setSelectedTask(props.taskId);
+    }
+
+    if (isLoggedIn && !props.taskId) {
+      context.clearSelectedTask(); // reset
+    }
+
     if (props.user) {
       setUserId(props.user.uid);
       setIsLoggedIn(true);
       context.loadTasks();
     }
-  }, [props.user]);
+  }, [props.user, props.taskId]);
 
   return (
     <React.Fragment>
       <AppDrawer dashTitle="Tasks" userId={userId} />
       {isLoggedIn ? (
         <React.Fragment>
-          <TasksToolbar
-            title="Dummy Text"
-            userId={userId}
-            taskId={selectedTask.id}
-            taskTitle={selectedTask.title}
-          />
-          <TasksContent userId={userId} taskId={selectedTask.id} />
+          <TasksToolbar userId={userId} taskId={props.taskId} />
+          <TasksContent userId={userId} taskId={props.taskId} />
         </React.Fragment>
       ) : (
         <CircularLoader color="secondary" />

@@ -30,7 +30,6 @@ function SelectTaskMenu(props) {
             taskId={taskId}
             text={tasks[taskId].title}
             handleCloseMenu={props.handleClose}
-            selectTask={context.setSelectedTask}
           />
         );
       });

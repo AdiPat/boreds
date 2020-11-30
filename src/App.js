@@ -49,6 +49,7 @@ function App() {
           <Route exact path="/tasks">
             <TasksPage />
           </Route>
+          <Route path="/tasks/:taskId" component={TasksPage} />
         </Switch>
       </Router>
     </AppProvider>

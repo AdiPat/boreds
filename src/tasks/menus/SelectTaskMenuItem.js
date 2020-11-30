@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
+import { useHistory } from "react-router";
 import { StyledMenuItem } from "../../components/menus/StyledMenuItem";
 import { ListItemText } from "@material-ui/core";
 
 function SelectTaskMenuItem(props) {
+  const history = useHistory();
   const handleClick = () => {
     props.handleCloseMenu();
-    props.selectTask(props.taskId);
+    history.push(`/tasks/${props.taskId}`);
   };
 
   return (
@@ -19,7 +21,7 @@ SelectTaskMenuItem.propTypes = {
   taskId: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   handleCloseMenu: PropTypes.func.isRequired,
-  selectTask: PropTypes.func.isRequired,
+  // selectTask: PropTypes.func.isRequired,
 };
 
 export { SelectTaskMenuItem };

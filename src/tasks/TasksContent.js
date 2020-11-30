@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { TasksActivityList } from "./TasksActivityList";
 import { ActivityInputField } from "./ActivityInputField";
