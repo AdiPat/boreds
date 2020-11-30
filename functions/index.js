@@ -38,3 +38,4 @@ exports.getTaskStar = taskFunctions.getTaskStar;
 exports.setTaskStar = taskFunctions.setTaskStar;
 exports.getTasks = taskFunctions.getTasks;
 exports.addTaskActivity = taskFunctions.addTaskActivity;
+exports.deleteTaskActivity = taskFunctions.deleteTaskActivity;

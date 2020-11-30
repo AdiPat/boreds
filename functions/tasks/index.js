@@ -13,6 +13,7 @@ const getTaskStar = require("./getTaskStar");
 const setTaskStar = require("./setTaskStar");
 const getTasks = require("./getTasks");
 const addTaskActivity = require("./addTaskActivity");
+const deleteTaskActivity = require("./deleteTaskActivity");
 
 exports.addTask = addTask.func;
 exports.deleteTask = deleteTask.func;
@@ -29,3 +30,4 @@ exports.getTaskStar = getTaskStar.func;
 exports.setTaskStar = setTaskStar.func;
 exports.getTasks = getTasks.func;
 exports.addTaskActivity = addTaskActivity.func;
+exports.deleteTaskActivity = deleteTaskActivity.func;
