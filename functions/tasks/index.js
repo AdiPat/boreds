@@ -14,6 +14,7 @@ const setTaskStar = require("./setTaskStar");
 const getTasks = require("./getTasks");
 const addTaskActivity = require("./addTaskActivity");
 const deleteTaskActivity = require("./deleteTaskActivity");
+const setActivityPriority = require("./setActivityPriority");
 
 exports.addTask = addTask.func;
 exports.deleteTask = deleteTask.func;
@@ -31,3 +32,4 @@ exports.setTaskStar = setTaskStar.func;
 exports.getTasks = getTasks.func;
 exports.addTaskActivity = addTaskActivity.func;
 exports.deleteTaskActivity = deleteTaskActivity.func;
+exports.setActivityPriority = setActivityPriority.func;
