@@ -14,6 +14,14 @@
         ".write": "auth != null"
       }
     },
+    "tasks": {
+      ".read": false, 
+      ".write": false, 
+      "$taskId": {
+        ".read": "auth != null && data.child('roles').child(auth.uid).val() == 'admin'", 
+        ".write": false
+      }
+    },
     "publicReadable": {
         ".read": true, 
         ".write": false
