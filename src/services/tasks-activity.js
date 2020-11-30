@@ -39,8 +39,14 @@ const detachTasksActivitiesListener = async (taskId) => {
   taskActivitiesRef.off("value");
 };
 
+const deleteTaskActivity = async (taskId, activityId) => {
+  // TODO:
+  return false;
+};
+
 export {
   addTaskActivity,
   attachTasksActivitiesListener,
   detachTasksActivitiesListener,
+  deleteTaskActivity,
 };

@@ -4,16 +4,13 @@ import {
   Button,
   ListItem,
   ListItemText,
-  ListItemIcon,
   IconButton,
   Paper,
-  Typography,
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { useTheme } from "@material-ui/core/styles";
+import { TasksActivityDeleteButton } from "./buttons/TasksActivityDeleteButton";
 
 function TasksActivityListItem(props) {
   const theme = useTheme();
@@ -77,14 +74,10 @@ function TasksActivityListItem(props) {
                 alignSelf: "flex-start",
               }}
             >
-              <IconButton
-                variant="contained"
-                size="small"
-                style={{ color: red[500] }}
-                disableRipple
-              >
-                <DeleteForeverIcon />
-              </IconButton>
+              <TasksActivityDeleteButton
+                taskId={props.taskId}
+                activityId={props.activityId}
+              />
             </Grid>
           </Grid>
         </ListItem>
@@ -94,10 +87,8 @@ function TasksActivityListItem(props) {
 }
 
 TasksActivityListItem.propTypes = {
-  taskId: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.oneOf([null]),
-  ]).isRequired,
+  taskId: PropTypes.string.isRequired,
+  activityId: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };
 
