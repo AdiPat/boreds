@@ -49,9 +49,23 @@ const deleteTaskActivity = async (taskId, activityId) => {
     .catch((err) => console.error(err));
 };
 
+const setActivityPriority = async (taskId, activityId, priority) => {
+  const _setActivityPriority = firebase
+    .functions()
+    .httpsCallable("setActivityPriority");
+
+  return _setActivityPriority({ taskId, activityId, priority })
+    .then((result) => result.data.status)
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
+};
+
 export {
   addTaskActivity,
   attachTasksActivitiesListener,
   detachTasksActivitiesListener,
   deleteTaskActivity,
+  setActivityPriority,
 };
