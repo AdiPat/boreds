@@ -56,6 +56,13 @@ exports.func = functions.https.onCall(async (data, context) => {
     );
   }
 
+  if (activityText.length == 0) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      `activityText is empty.`
+    );
+  }
+
   const taskRef = database.ref(`tasks/${taskId}`);
 
   // check permissions
