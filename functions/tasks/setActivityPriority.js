@@ -21,12 +21,13 @@ exports.func = functions.https.onCall(async (data, context) => {
       "Function requires authentication."
     );
   }
+  const userId = context.auth.token.uid;
 
   // type check
   _.forEach(
     [
       { taskId: taskId, type: "string" },
-      { activityText: activityText, type: "string" },
+      { activityId: activityId, type: "string" },
       { priority: priority, type: "string" },
     ],
     (val) => {
