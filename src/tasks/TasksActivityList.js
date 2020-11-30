@@ -19,6 +19,7 @@ function TasksActivityList(props) {
         taskId={props.taskId}
         activityId={activityId}
         text={activities[activityId].text}
+        priority={activities[activityId].priority}
       />
     ));
     return listJsx;

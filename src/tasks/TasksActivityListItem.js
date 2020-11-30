@@ -10,6 +10,7 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import { useTheme } from "@material-ui/core/styles";
 import { TasksActivityDeleteButton } from "./buttons/TasksActivityDeleteButton";
 import { ActivityPriorityButton } from "./buttons/ActivityPriorityButton";
+import { ActivityPriorityChip } from "./ActivityPriorityChip";
 
 function TasksActivityListItem(props) {
   const theme = useTheme();
@@ -79,6 +80,7 @@ function TasksActivityListItem(props) {
               />
             </Grid>
           </Grid>
+          <ActivityPriorityChip priority={props.priority} />
         </ListItem>
       </Paper>
     </Grid>
@@ -89,6 +91,11 @@ TasksActivityListItem.propTypes = {
   taskId: PropTypes.string.isRequired,
   activityId: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  priority: PropTypes.string.isRequired,
+};
+
+TasksActivityListItem.defaultProps = {
+  priority: "none",
 };
 
 export { TasksActivityListItem };
