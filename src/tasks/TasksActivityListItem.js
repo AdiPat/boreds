@@ -24,9 +24,7 @@ function TasksActivityListItem(props) {
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <ListItemText style={{ marginRight: theme.spacing(2) }}>
-                {props.text.length > 200
-                  ? props.text.substring(0, 190) + "..."
-                  : props.text}
+                {props.text}
               </ListItemText>
             </Grid>
             <Grid
