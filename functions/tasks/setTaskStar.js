@@ -43,7 +43,12 @@ exports.func = functions.https.onCall(async (data, context) => {
 
   // check if task is valid
   const taskRef = database.ref(`tasks/${taskId}/id`);
-  const taskExists = (await taskRef.once("value")).exists();
+  const userTaskStarRef = database.ref(
+    `users/${userId}/tasks/${taskId}/starred`
+  );
+  const taskExists =
+    (await taskRef.once("value")).exists() &&
+    (await userTaskStarRef.parent.once("value")).exists();
 
   if (!taskExists) {
     throw new functions.https.HttpsError(
@@ -52,8 +57,7 @@ exports.func = functions.https.onCall(async (data, context) => {
     );
   }
 
-  await taskRef.parent
-    .child("starred")
+  await userTaskStarRef
     .set(starred)
     .then(() => {
       console.log(`Successfully set starred[${starred}] for task[${taskId}].`);
