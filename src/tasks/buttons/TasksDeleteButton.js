@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { DeleteTaskModal } from "../../components/modals/DeleteTaskModal";
 
 function TasksDeleteButton(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -34,7 +35,12 @@ function TasksDeleteButton(props) {
           <Typography variant="body1">Delete</Typography>
         ) : null}
       </Button>
-      {/* TODO: Add delete task modal*/}
+      <DeleteTaskModal
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        taskId={props.taskId}
+        taskTitle={props.taskTitle}
+      />
     </div>
   ) : null;
 }
