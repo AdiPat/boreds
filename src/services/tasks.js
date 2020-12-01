@@ -43,4 +43,42 @@ const getTasks = async () => {
     });
 };
 
-export { addTask, getTasks };
+const attachTaskStarListener = async (userId, taskId, updateStarInState) => {
+  const database = firebase.database();
+  const starRef = database.ref(`users/${userId}/tasks/${taskId}/starred`);
+  starRef.on("value", function (snapshot) {
+    const starred = snapshot.val() || false;
+    updateStarInState(starred);
+  });
+};
+
+const detachTaskStarListener = async (userId, taskId) => {
+  const database = firebase.database();
+  const starRef = database.ref(`users/${userId}/tasks/${taskId}/starred`);
+  starRef.off("value");
+};
+
+const starTask = async (userId, taskId) => {
+  const _setTaskStar = firebase.functions().httpsCallable("setTaskStar");
+
+  return _setTaskStar({ taskId: taskId, starred: true })
+    .then((result) => result.data.starred)
+    .catch((err) => console.error(err));
+};
+
+const unstarTask = async (userId, taskId) => {
+  const _setTaskStar = firebase.functions().httpsCallable("setTaskStar");
+
+  return _setTaskStar({ taskId: taskId, starred: false })
+    .then((result) => result.data.starred)
+    .catch((err) => console.error(err));
+};
+
+export {
+  addTask,
+  getTasks,
+  attachTaskStarListener,
+  detachTaskStarListener,
+  starTask,
+  unstarTask,
+};

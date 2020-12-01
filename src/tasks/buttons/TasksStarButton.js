@@ -4,25 +4,31 @@ import { yellow } from "@material-ui/core/colors";
 import { IconButton } from "@material-ui/core";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
+import {
+  attachTaskStarListener,
+  detachTaskStarListener,
+  starTask,
+  unstarTask,
+} from "../../services/tasks";
 
 function TasksStarButton(props) {
   const [starred, setStarred] = useState(false);
 
   const handleStarFlip = () => {
     if (starred) {
-      // unstarTask(props.userId, props.taskId);
+      unstarTask(props.userId, props.taskId);
     } else {
-      // starTask(props.userId, props.taskId);
+      starTask(props.userId, props.taskId);
     }
   };
 
   useEffect(() => {
-    // attachStarListener(props.userId, props.taskId, setStarred);
+    attachTaskStarListener(props.userId, props.taskId, setStarred);
 
     return function cleanup() {
-      // detachStarListener(props.userId, props.taskId);
+      detachTaskStarListener(props.userId, props.taskId);
     };
-  }, []);
+  }, [props.taskId]);
 
   return props.taskId ? (
     <IconButton onClick={handleStarFlip}>
