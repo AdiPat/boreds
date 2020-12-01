@@ -74,6 +74,16 @@ const unstarTask = async (userId, taskId) => {
     .catch((err) => console.error(err));
 };
 
+const deleteTask = async (taskId) => {
+  const _deleteTask = firebase.functions().httpsCallable("deleteTask");
+  return _deleteTask({ taskId })
+    .then((result) => result.data.success)
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
+};
+
 export {
   addTask,
   getTasks,
@@ -81,4 +91,5 @@ export {
   detachTaskStarListener,
   starTask,
   unstarTask,
+  deleteTask,
 };
