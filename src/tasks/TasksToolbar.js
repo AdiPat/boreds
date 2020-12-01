@@ -47,7 +47,7 @@ function TasksToolbar(props) {
         <TasksDeleteButton
           userId={props.userId}
           taskId={props.taskId}
-          taskTitle={props.taskTitle}
+          taskTitle={toolbarTitle}
         />
         <TasksStarButton userId={props.userId} taskId={props.taskId} />
       </Toolbar>
@@ -58,7 +58,6 @@ function TasksToolbar(props) {
 TasksToolbar.propTypes = {
   userId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
-  taskTitle: PropTypes.string.isRequired,
 };
 
 TasksToolbar.defaultProps = {
