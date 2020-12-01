@@ -6,6 +6,8 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const _ = require("lodash");
+const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
   const database = admin.database();
@@ -28,6 +30,23 @@ exports.func = functions.https.onCall(async (data, context) => {
   }
 
   const userTaskRef = database.ref(`users/${userId}/tasks/${taskId}`);
+
+  const taskRolesRef = database.ref(`tasks/${taskId}/roles`);
+  const roles = (await taskRolesRef.once("value")).val();
+
+  const hasPermissions = _.find(
+    Object.keys(
+      Object.keys(roles),
+      (key) => key === userId && roles[key] === CONSTANTS.ROLES.admin
+    )
+  );
+
+  if (!hasPermissions) {
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      `User doesn't have access to this task[${taskId}].`
+    );
+  }
 
   let deleteSuccessful = false;
 
