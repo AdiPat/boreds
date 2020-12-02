@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -54,15 +55,22 @@ function TasksToolbar(props) {
     <Grid container>
       <Toolbar variant="regular" className={classes.toolbar}>
         <TasksToolbarTitle title={toolbarTitle} />
-        <TasksSelectButton />
-        <TasksVisibilityButton userId={props.userId} taskId={props.taskId} />
-        <TasksInviteButton taskId={props.taskId} />
-        <TasksDeleteButton
-          userId={props.userId}
-          taskId={props.taskId}
-          taskTitle={toolbarTitle}
-        />
-        <TasksStarButton userId={props.userId} taskId={props.taskId} />
+        {props.userId ? (
+          <React.Fragment>
+            <TasksSelectButton />
+            <TasksVisibilityButton
+              userId={props.userId}
+              taskId={props.taskId}
+            />
+            <TasksInviteButton taskId={props.taskId} />
+            <TasksDeleteButton
+              userId={props.userId}
+              taskId={props.taskId}
+              taskTitle={toolbarTitle}
+            />
+            <TasksStarButton userId={props.userId} taskId={props.taskId} />
+          </React.Fragment>
+        ) : null}
       </Toolbar>
     </Grid>
   );
