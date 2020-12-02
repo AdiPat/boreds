@@ -112,6 +112,35 @@ const detachTasksListener = async (userTasksRef) => {
   userTasksRef.off("value");
 };
 
+const attachTaskVisibilityListener = async (
+  taskId,
+  updateVisibilityInState
+) => {
+  const database = firebase.database();
+  const taskVisibilityRef = database.ref(`tasks/${taskId}/public`);
+  taskVisibilityRef.on("value", function (snapshot) {
+    const publicStatus = snapshot.val();
+    updateVisibilityInState(publicStatus, taskVisibilityRef);
+  });
+};
+
+const detachTaskVisibilityListener = async (taskVisibilityRef) => {
+  taskVisibilityRef.off("value");
+};
+
+const setTaskVisibility = async (taskId, visibility) => {
+  const _setTaskVisibility = firebase
+    .functions()
+    .httpsCallable("setTaskVisibility");
+
+  return _setTaskVisibility({ taskId, visibility })
+    .then((result) => result.data.status)
+    .catch((err) => {
+      console.error("setTaskVisibility(): ", err.message, err.code);
+      return false;
+    });
+};
+
 export {
   addTask,
   getTasks,
@@ -124,4 +153,7 @@ export {
   detachTaskTitleListener,
   attachTasksListener,
   detachTasksListener,
+  attachTaskVisibilityListener,
+  detachTaskVisibilityListener,
+  setTaskVisibility,
 };

@@ -6,6 +6,8 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const _ = require("lodash");
+const CONSTANTS = require("../constants").constants;
 
 exports.func = functions.https.onCall(async (data, context) => {
   const database = admin.database();
@@ -19,7 +21,7 @@ exports.func = functions.https.onCall(async (data, context) => {
     );
   }
 
-  if (visibility !== "public" || visibility !== "private") {
+  if (!["private", "public"].includes(visibility)) {
     throw new functions.https.HttpsError(
       "invalid-argument",
       `Visibility has to be 'public' or 'private'. Found ${visibility}.`
@@ -36,21 +38,37 @@ exports.func = functions.https.onCall(async (data, context) => {
   // check if task exists
   let writeStatus = false;
   const taskRef = database.ref(`tasks/${taskId}`);
-
-  let taskSnapshot = await taskRef.once("value");
-
+  const taskSnapshot = await taskRef.once("value");
+  const taskData = taskSnapshot.val();
   const taskExists = taskSnapshot.exists();
+
   if (!taskExists) {
     throw new functions.https.HttpsError(
       "not-found",
       `Task with taskId[${taskId}] not found`
     );
   }
+
+  const roles = taskData.roles;
+
+  const hasPermissions = _.find(
+    Object.keys(
+      Object.keys(roles),
+      (key) => key === userId && roles[key] === CONSTANTS.ROLES.admin
+    )
+  );
+
+  if (!hasPermissions) {
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      `User doesn't have access to this task[${taskId}].`
+    );
+  }
+
   // get old status and new status
   const public = visibility === "public";
-  let oldPublicStatus = taskSnapshot.val().public ? "public" : "private";
 
-  await snapshot.ref
+  await taskRef
     .child("public")
     .set(public)
     .then(() => {
@@ -69,6 +87,6 @@ exports.func = functions.https.onCall(async (data, context) => {
     });
 
   return {
-    visibility: writeStatus ? visibility : oldPublicStatus,
+    status: writeStatus,
   };
 });

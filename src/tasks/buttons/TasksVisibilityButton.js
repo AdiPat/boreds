@@ -1,41 +1,56 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import PublicIcon from "@material-ui/icons/Public";
 import LockIcon from "@material-ui/icons/Lock";
+import { TasksVisibilityMenu } from "../menus/TasksVisibilityMenu";
+import {
+  attachTaskVisibilityListener,
+  detachTaskVisibilityListener,
+} from "../../services/tasks";
 
 function TasksVisibilityButton(props) {
-  const [remountCount, setRemountCount] = useState(0);
   const [publicStatus, setPublicStatus] = useState(null);
-  const [visibilityMenuAnchorEl, setVisibilitMenuAnchorEl] = useState(null);
+  const [publicRef, setPublicRef] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const btnRef = useRef(null);
   const theme = useTheme();
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const forceUpdate = () => {
-    setRemountCount(remountCount + 1);
+  const updateVisibility = (status, ref) => {
+    setPublicStatus(status);
+    setPublicRef(ref);
   };
 
   useEffect(() => {
-    // isTaskPublic(props.boardId).then((status) => setPublicStatus(status));
-  }, [remountCount]);
+    if (props.taskId && !publicRef) {
+      attachTaskVisibilityListener(props.taskId, updateVisibility);
+    }
 
-  const openVisbilityMenu = (event) => {
-    setVisibilitMenuAnchorEl(event.target);
+    return function cleanup() {
+      if (publicRef) {
+        detachTaskVisibilityListener(publicRef);
+      }
+    };
+  }, [props.taskId]);
+
+  const openMenu = (event) => {
+    setAnchorEl(btnRef.current);
   };
 
-  const closeVisibilityMenu = () => {
-    setVisibilitMenuAnchorEl(null);
-    forceUpdate();
+  const closeMenu = () => {
+    setAnchorEl(null);
   };
 
-  return publicStatus !== null ? (
+  return props.taskId ? (
     <div>
       <Button
         variant="outlined"
         color="primary"
         style={{ marginRight: "16px" }}
-        onClick={openVisbilityMenu}
+        onClick={openMenu}
+        ref={btnRef}
       >
         {publicStatus ? (
           <PublicIcon style={{ marginRight: theme.spacing(1) }} />
@@ -48,18 +63,24 @@ function TasksVisibilityButton(props) {
           </Typography>
         ) : null}
       </Button>
-      {/* TODO: Add TasksVisibilityMenu */}
+      <TasksVisibilityMenu
+        anchorEl={anchorEl}
+        handleClose={closeMenu}
+        userId={props.userId}
+        taskId={props.taskId}
+      />
     </div>
   ) : null;
 }
 
 TasksVisibilityButton.propTypes = {
-  userId: PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.oneOf([null]).isRequired,
-  ]).isRequired,
+  userId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
-  public: PropTypes.bool.isRequired,
+};
+
+TasksVisibilityButton.defaultProps = {
+  userId: null,
+  taskId: undefined,
 };
 
 export { TasksVisibilityButton };
