@@ -49,7 +49,7 @@ function TasksToolbar(props) {
     return function cleanup() {
       detachTaskTitleListener(taskId);
     };
-  }, [props.userId, props.taskId]);
+  }, [props.userId, props.taskId, toolbarTitle]);
 
   return (
     <Grid container>

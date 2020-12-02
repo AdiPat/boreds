@@ -15,10 +15,9 @@
       }
     },
     "tasks": {
-      ".read": false, 
       ".write": false, 
       "$taskId": {
-        ".read": "(auth != null && data.child('roles').child(auth.uid).val() == 'admin') || data.child('public').val() == true", 
+        ".read": "(auth != null && data.child('roles').child(auth.uid).val() == 'admin') || (data.child('public').val() == true)", 
         ".write": false
       }
     },

@@ -20,7 +20,7 @@ function TasksHome(props) {
   return (
     <React.Fragment>
       <AppDrawer dashTitle="Tasks" userId={userId} />
-      {context.state.loaded ? (
+      {context.state.loaded || true ? (
         <React.Fragment>
           <TasksToolbar userId={userId} taskId={taskId} />
           <TasksContent userId={userId} taskId={taskId} />
