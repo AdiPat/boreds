@@ -11,11 +11,7 @@ function SelectTaskMenu(props) {
   const context = useContext(TasksContext);
 
   useEffect(() => {
-    const isMenuOpen = props.anchorEl !== null;
-    if (isMenuOpen) {
-      context.forceProviderUpdate();
-      setTasks(context.state.tasks);
-    }
+    setTasks(context.state.tasks);
   }, [props.anchorEl]);
 
   let renderMenu = () => {
