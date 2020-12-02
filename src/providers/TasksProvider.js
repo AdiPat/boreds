@@ -7,32 +7,14 @@ class TasksProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTask: {},
       tasks: {},
       remount: false,
+      loaded: false,
+      user: props.user,
     };
-
-    this.setSelectedTask = this.setSelectedTask.bind(this);
-    this.clearSelectedTask = this.clearSelectedTask.bind(this);
     this.setTasks = this.setTasks.bind(this);
     this.forceProviderUpdate = this.forceProviderUpdate.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
-  }
-
-  getSelectedTask() {
-    return this.state.selectedTask;
-  }
-
-  setSelectedTask(taskId) {
-    const tasks = this.state.tasks;
-    const curTask = tasks[taskId];
-    if (curTask) {
-      this.setState({ selectedTask: curTask });
-    }
-  }
-
-  clearSelectedTask() {
-    this.setState({ selectedTask: {} });
   }
 
   setTasks(newTasks) {
@@ -47,20 +29,40 @@ class TasksProvider extends React.Component {
     this.setState({ remount: !this.state.remount });
   }
 
-  loadTasks() {
+  async loadTasks() {
     const thisComponent = this;
     // get tasks
-    getTasks().then((result) => {
+    return getTasks().then((result) => {
       if (result.errorCode) {
         console.log(result.errorCode, result.msg);
+        return { status: false };
       } else {
         thisComponent.setTasks(result.tasks);
+        return { status: true };
       }
     });
   }
 
   componentDidMount() {
-    this.loadTasks();
+    console.log(
+      "TaksProvider: componentDidMount()",
+      this.state,
+      this.props.user
+    );
+    if (this.state.user) {
+      this.loadTasks();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.user !== this.props.user) {
+      this.setState({ user: this.props.user, loaded: true });
+    }
+
+    // forced remount , reload tasks
+    if (prevState.remount !== this.state.remount) {
+      this.loadTasks();
+    }
   }
 
   render() {

@@ -7,33 +7,23 @@ import TasksContext from "../providers/TasksContext";
 import { CircularLoader } from "../components/CircularLoader";
 
 function TasksHome(props) {
-  const [userId, setUserId] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const context = useContext(TasksContext);
+  const [userId, setUserId] = useState(undefined);
+  const [taskId, setTaskId] = useState(undefined);
 
   useEffect(() => {
-    if (isLoggedIn && props.taskId) {
-      context.setSelectedTask(props.taskId);
-    }
-
-    if (isLoggedIn && !props.taskId) {
-      context.clearSelectedTask(); // reset
-    }
-
-    if (props.user) {
-      setUserId(props.user.uid);
-      setIsLoggedIn(true);
-      context.loadTasks();
-    }
-  }, [props.user, props.taskId]);
+    const uid = context.state.user ? context.state.user.uid : null;
+    setUserId(uid);
+    setTaskId(props.taskId);
+  }, [context.state.loaded, context.state.user, props.taskId, taskId]);
 
   return (
     <React.Fragment>
       <AppDrawer dashTitle="Tasks" userId={userId} />
-      {isLoggedIn ? (
+      {context.state.loaded ? (
         <React.Fragment>
-          <TasksToolbar userId={userId} taskId={props.taskId} />
-          <TasksContent userId={userId} taskId={props.taskId} />
+          <TasksToolbar userId={userId} taskId={taskId} />
+          <TasksContent userId={userId} taskId={taskId} />
         </React.Fragment>
       ) : (
         <CircularLoader color="secondary" />
