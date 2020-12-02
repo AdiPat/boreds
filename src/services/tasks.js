@@ -141,6 +141,19 @@ const setTaskVisibility = async (taskId, visibility) => {
     });
 };
 
+const isTaskPublic = async (taskId) => {
+  const _getTaskVisibility = firebase
+    .functions()
+    .httpsCallable("getTaskVisibility");
+
+  return _getTaskVisibility({ taskId })
+    .then((result) => result.data.visibility == "public")
+    .catch((err) => {
+      console.error("Failed to get task visibility", err.code, err.message);
+      return false; // default false
+    });
+};
+
 export {
   addTask,
   getTasks,
@@ -156,4 +169,5 @@ export {
   attachTaskVisibilityListener,
   detachTaskVisibilityListener,
   setTaskVisibility,
+  isTaskPublic,
 };

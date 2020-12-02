@@ -40,3 +40,4 @@ exports.getTasks = taskFunctions.getTasks;
 exports.addTaskActivity = taskFunctions.addTaskActivity;
 exports.deleteTaskActivity = taskFunctions.deleteTaskActivity;
 exports.setActivityPriority = taskFunctions.setActivityPriority;
+exports.getTaskVisibility = taskFunctions.getTaskVisibility;
