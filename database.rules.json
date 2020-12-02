@@ -18,7 +18,7 @@
       ".read": false, 
       ".write": false, 
       "$taskId": {
-        ".read": "auth != null && data.child('roles').child(auth.uid).val() == 'admin'", 
+        ".read": "(auth != null && data.child('roles').child(auth.uid).val() == 'admin') || data.child('public').val() == true", 
         ".write": false
       }
     },
