@@ -12,15 +12,17 @@ class TasksProvider extends React.PureComponent {
       loaded: false,
       user: props.user,
       tasksLoaded: false,
+      tasksRef: null,
     };
     this.setTasks = this.setTasks.bind(this);
     this.forceProviderUpdate = this.forceProviderUpdate.bind(this);
   }
 
-  setTasks(newTasks) {
+  setTasks(newTasks, tasksRef) {
     this.setState((prevState) => {
       const updatedState = Object.assign({}, prevState);
       updatedState.tasks = newTasks;
+      updatedState.tasksRef = tasksRef;
       return updatedState;
     });
   }
@@ -39,8 +41,8 @@ class TasksProvider extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    if (this.state.user) {
-      detachTasksListener(this.state.user.uid);
+    if (this.state.tasksRef) {
+      detachTasksListener(this.state.tasksRef);
     }
   }
 
