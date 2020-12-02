@@ -78,6 +78,7 @@ exports.func = functions.https.onCall(async (data, context) => {
     id: taskId,
     title: taskTitle,
     description: taskDescription,
+    public: false,
     starred: false,
     createdAt: now,
   };
