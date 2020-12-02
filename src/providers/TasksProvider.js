@@ -1,9 +1,9 @@
 import React from "react";
 import "firebase/database";
 import TasksContext from "./TasksContext";
-import { getTasks } from "../services/tasks";
+import { attachTasksListener, detachTasksListener } from "../services/tasks";
 
-class TasksProvider extends React.Component {
+class TasksProvider extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,10 +11,10 @@ class TasksProvider extends React.Component {
       remount: false,
       loaded: false,
       user: props.user,
+      tasksLoaded: false,
     };
     this.setTasks = this.setTasks.bind(this);
     this.forceProviderUpdate = this.forceProviderUpdate.bind(this);
-    this.loadTasks = this.loadTasks.bind(this);
   }
 
   setTasks(newTasks) {
@@ -29,39 +29,31 @@ class TasksProvider extends React.Component {
     this.setState({ remount: !this.state.remount });
   }
 
-  async loadTasks() {
+  componentDidMount() {
     const thisComponent = this;
-    // get tasks
-    return getTasks().then((result) => {
-      if (result.errorCode) {
-        console.log(result.errorCode, result.msg);
-        return { status: false };
-      } else {
-        thisComponent.setTasks(result.tasks);
-        return { status: true };
-      }
-    });
+    if (this.state.user) {
+      attachTasksListener(this.state.user.uid, this.setTasks).then(() => {
+        thisComponent.setState({ tasksLoaded: true });
+      });
+    }
   }
 
-  componentDidMount() {
-    console.log(
-      "TaksProvider: componentDidMount()",
-      this.state,
-      this.props.user
-    );
+  componentWillUnmount() {
     if (this.state.user) {
-      this.loadTasks();
+      detachTasksListener(this.state.user.uid);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const thisComponent = this;
     if (prevProps.user !== this.props.user) {
       this.setState({ user: this.props.user, loaded: true });
     }
 
-    // forced remount , reload tasks
-    if (prevState.remount !== this.state.remount) {
-      this.loadTasks();
+    if (!prevState.tasksLoaded && this.state.user) {
+      attachTasksListener(this.state.user.uid, this.setTasks).then(() => {
+        thisComponent.setState({ tasksLoaded: true });
+      });
     }
   }
 
