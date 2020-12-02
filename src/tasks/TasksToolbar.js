@@ -42,6 +42,8 @@ function TasksToolbar(props) {
     const taskId = props.taskId;
     if (taskId) {
       attachTaskTitleListener(taskId, setToolbarTitle);
+    } else {
+      setToolbarTitle("");
     }
     return function cleanup() {
       detachTaskTitleListener(taskId);
