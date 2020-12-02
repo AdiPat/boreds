@@ -3,19 +3,23 @@
  * Container component that calls TasksHome with user data.
  */
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TasksHome } from "../tasks/TasksHome";
 import AppContext from "../providers/AppContext";
 import TasksProvider from "../providers/TasksProvider";
 
 function TasksPage(props) {
-  const { state } = useContext(AppContext);
-  const user = state.user;
+  const context = useContext(AppContext);
+  const [user, setUser] = useState(null);
   const taskId = props.match ? props.match.params.taskId : undefined;
 
+  useEffect(() => {
+    setUser(context.user);
+  }, [context.user, user]);
+
   return (
-    <TasksProvider>
+    <TasksProvider user={user}>
       <TasksHome user={user} taskId={taskId} />
     </TasksProvider>
   );
