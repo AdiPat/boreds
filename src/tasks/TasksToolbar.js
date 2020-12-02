@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Grid } from "@material-ui/core";
@@ -9,7 +9,10 @@ import { TasksDeleteButton } from "./buttons/TasksDeleteButton";
 import { TasksStarButton } from "./buttons/TasksStarButton";
 import { TasksSelectButton } from "./buttons/TasksSelectButton";
 import { TasksToolbarTitle } from "./TasksToolbarTitle";
-import TasksContext from "../providers/TasksContext";
+import {
+  attachTaskTitleListener,
+  detachTaskTitleListener,
+} from "../services/tasks";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -33,9 +36,17 @@ const useStyles = makeStyles((theme) => ({
 
 function TasksToolbar(props) {
   const classes = useStyles();
-  const context = useContext(TasksContext);
-  const selectedTask = context.state.selectedTask;
-  const toolbarTitle = selectedTask ? selectedTask.title : "";
+  const [toolbarTitle, setToolbarTitle] = useState("");
+
+  useEffect(() => {
+    const taskId = props.taskId;
+    if (taskId) {
+      attachTaskTitleListener(taskId, setToolbarTitle);
+    }
+    return function cleanup() {
+      detachTaskTitleListener(taskId);
+    };
+  }, [props.userId, props.taskId]);
 
   return (
     <Grid container>
