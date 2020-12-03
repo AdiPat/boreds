@@ -36,7 +36,7 @@ function TasksHome(props) {
       }
     }
   }, [
-    context.state.loaded,
+    context.state.userLoaded,
     context.state.user,
     props.taskId,
     taskId,
@@ -47,7 +47,7 @@ function TasksHome(props) {
   return (
     <React.Fragment>
       <AppDrawer dashTitle="Tasks" userId={userId} />
-      {context.state.loaded || isPublic ? (
+      {context.state.userLoaded || isPublic ? (
         <React.Fragment>
           <TasksToolbar userId={userId} taskId={taskId} />
           <TasksContent userId={userId} taskId={taskId} />
@@ -60,10 +60,13 @@ function TasksHome(props) {
 }
 
 TasksHome.propTypes = {
-  user: PropTypes.oneOfType([
-    PropTypes.object.isRequired, // authenticated user
-    PropTypes.oneOf([null]).isRequired, // public task
-  ]).isRequired,
+  user: PropTypes.string,
+  taskId: PropTypes.string,
+};
+
+TasksHome.defaultProps = {
+  user: null,
+  taskId: undefined,
 };
 
 export { TasksHome };

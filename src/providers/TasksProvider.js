@@ -9,7 +9,7 @@ class TasksProvider extends React.PureComponent {
     this.state = {
       tasks: {},
       remount: false,
-      loaded: false,
+      userLoaded: false,
       user: props.user,
       tasksLoaded: false,
       tasksRef: null,
@@ -49,7 +49,7 @@ class TasksProvider extends React.PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const thisComponent = this;
     if (prevProps.user !== this.props.user) {
-      this.setState({ user: this.props.user, loaded: true });
+      this.setState({ user: this.props.user, userLoaded: true });
     }
 
     if (!prevState.tasksLoaded && this.state.user) {
