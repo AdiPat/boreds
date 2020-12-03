@@ -70,7 +70,7 @@ function ActivityInputField(props) {
                   style={{
                     height: "40px",
                     width: "40px",
-                    color: lightGreen[700],
+                    color: theme.palette.success.main,
                   }}
                 />
               </IconButton>

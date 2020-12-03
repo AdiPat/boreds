@@ -25,8 +25,8 @@ function TasksDeleteButton(props) {
         variant="outlined"
         style={{
           marginRight: theme.spacing(2),
-          color: red[600],
-          borderColor: red[600],
+          color: theme.palette.error.main,
+          borderColor: theme.palette.error.main,
         }}
         onClick={handleOpenModal}
       >
