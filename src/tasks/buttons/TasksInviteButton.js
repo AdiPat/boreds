@@ -3,6 +3,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { useState } from "react";
 import { Button, Typography, useMediaQuery } from "@material-ui/core";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import { TasksInviteModal } from "../../components/modals/TasksInviteModal";
 
 function TasksInviteButton(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -30,8 +31,11 @@ function TasksInviteButton(props) {
           <Typography variant="body1">Invite</Typography>
         ) : null}
       </Button>
-      {/* TODO: Add invite modal
-      /> */}
+      <TasksInviteModal
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        taskId={props.taskId}
+      />
     </div>
   ) : null;
 }
