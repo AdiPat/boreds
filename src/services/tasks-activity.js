@@ -26,7 +26,6 @@ const attachTasksActivitiesListener = async (
   const taskActivitiesRef = database.ref(`tasks/${taskId}/activities`);
   taskActivitiesRef.on("value", (snapshot) => {
     const activities = snapshot.val();
-    console.log("listener: ", activities);
     if (activities) {
       updateActivitiesInState(activities);
     }
