@@ -16,6 +16,7 @@ function TasksActivityList(props) {
     let listJsx = [];
     listJsx = Object.keys(activities).map((activityId) => (
       <TasksActivityListItem
+        userId={props.userId}
         taskId={props.taskId}
         activityId={activityId}
         text={activities[activityId].text}
@@ -48,10 +49,12 @@ function TasksActivityList(props) {
 }
 
 TasksActivityList.propTypes = {
+  userId: PropTypes.string,
   taskId: PropTypes.string.isRequired,
 };
 
 TasksActivityList.defaultProps = {
+  userId: null,
   taskId: null,
 };
 

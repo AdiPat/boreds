@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import {
   Grid,
   ListItem,
@@ -7,13 +8,38 @@ import {
   Paper,
 } from "@material-ui/core";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme, makeStyles } from "@material-ui/core/styles";
 import { TasksActivityDeleteButton } from "./buttons/TasksActivityDeleteButton";
 import { ActivityPriorityButton } from "./buttons/ActivityPriorityButton";
 import { ActivityPriorityChip } from "./ActivityPriorityChip";
 
+const useStyles = makeStyles((theme) => ({
+  gridItem: {
+    display: "flex",
+    alignItems: "center",
+  },
+  priorityBtn: {
+    justifyContent: "left",
+    alignSelf: "flex-start",
+  },
+  scheduleBtn: {
+    justifyContent: "center",
+    alignSelf: "flex-start",
+  },
+  deleteBtn: {
+    justifyContent: "left",
+    alignSelf: "flex-start",
+  },
+  hide: {
+    display: "none !important",
+  },
+}));
+
 function TasksActivityListItem(props) {
   const theme = useTheme();
+  const classes = useStyles();
+  const isLoggedIn = props.userId !== null && props.userId !== undefined;
+
   return (
     <Grid item xs={10} sm={10} style={{ marginBottom: theme.spacing(2) }}>
       <Paper variant="outlined">
@@ -29,12 +55,9 @@ function TasksActivityListItem(props) {
               xs={6}
               sm={2}
               md={2}
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                alignItems: "center",
-                alignSelf: "flex-start",
-              }}
+              className={clsx(classes.priorityBtn, {
+                [classes.hide]: !isLoggedIn,
+              })}
             >
               <ActivityPriorityButton
                 taskId={props.taskId}
@@ -46,12 +69,9 @@ function TasksActivityListItem(props) {
               xs={1}
               sm={1}
               md={1}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "left",
-                alignSelf: "flex-start",
-              }}
+              className={clsx(classes.scheduleBtn, {
+                [classes.hide]: !isLoggedIn,
+              })}
             >
               <IconButton
                 variant="contained"
@@ -67,12 +87,9 @@ function TasksActivityListItem(props) {
               xs={1}
               sm={1}
               md={1}
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                alignItems: "center",
-                alignSelf: "flex-start",
-              }}
+              className={clsx(classes.deleteBtn, {
+                [classes.hide]: !isLoggedIn,
+              })}
             >
               <TasksActivityDeleteButton
                 taskId={props.taskId}

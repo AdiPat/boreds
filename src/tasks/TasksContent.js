@@ -26,7 +26,7 @@ function TasksContent(props) {
   return (
     <main className={classes.content} id="tasksContent">
       {props.userId ? <ActivityInputField taskId={props.taskId} /> : null}
-      <TasksActivityList taskId={props.taskId} />
+      <TasksActivityList userId={props.userId} taskId={props.taskId} />
     </main>
   );
 }
