@@ -5,22 +5,49 @@ import { TasksContent } from "./TasksContent";
 import { TasksToolbar } from "./TasksToolbar";
 import TasksContext from "../providers/TasksContext";
 import { CircularLoader } from "../components/CircularLoader";
+import {
+  attachTaskVisibilityListener,
+  detachTaskVisibilityListener,
+} from "../services/tasks";
 
 function TasksHome(props) {
   const context = useContext(TasksContext);
   const [userId, setUserId] = useState(undefined);
   const [taskId, setTaskId] = useState(undefined);
+  const [visibilityRef, setVisibilityRef] = useState(null);
+  const [isPublic, setIsPublic] = useState(false);
+
+  const updateVisibility = (publicVal, ref) => {
+    setVisibilityRef(ref);
+    setIsPublic(publicVal);
+  };
 
   useEffect(() => {
     const uid = context.state.user ? context.state.user.uid : null;
+    if (!visibilityRef) {
+      attachTaskVisibilityListener(props.taskId, updateVisibility);
+    }
     setUserId(uid);
     setTaskId(props.taskId);
-  }, [context.state.loaded, context.state.user, props.taskId, taskId]);
+
+    function cleanup() {
+      if (visibilityRef) {
+        detachTaskVisibilityListener(visibilityRef);
+      }
+    }
+  }, [
+    context.state.loaded,
+    context.state.user,
+    props.taskId,
+    taskId,
+    visibilityRef,
+    isPublic,
+  ]);
 
   return (
     <React.Fragment>
       <AppDrawer dashTitle="Tasks" userId={userId} />
-      {context.state.loaded || true ? (
+      {context.state.loaded || isPublic ? (
         <React.Fragment>
           <TasksToolbar userId={userId} taskId={taskId} />
           <TasksContent userId={userId} taskId={taskId} />
