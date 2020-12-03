@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import { Popover, Grid, Typography, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     color: grey[600],
   },
+  hide: {
+    display: "none",
+  },
 }));
 
 function TasksInfoPopover(props) {
@@ -31,7 +35,11 @@ function TasksInfoPopover(props) {
   };
 
   return (
-    <div onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
+    <div
+      onMouseEnter={handlePopoverOpen}
+      onMouseLeave={handlePopoverClose}
+      className={clsx({ [classes.hide]: props.taskDescription == "" })}
+    >
       <InfoIcon className={classes.taskInfoIcon} />
       <Popover
         className={classes.popover}
