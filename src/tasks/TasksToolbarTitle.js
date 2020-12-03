@@ -7,7 +7,7 @@ function TasksToolbarTitle(props) {
   const mediaQueryBelowXs = useMediaQuery(theme.breakpoints.down("xs"));
 
   return !mediaQueryBelowXs ? (
-    <Typography type="h6" style={{ marginRight: theme.spacing(2) }}>
+    <Typography type="h6" style={{ marginRight: theme.spacing(1) }}>
       <strong>{props.title}</strong>
     </Typography>
   ) : null;

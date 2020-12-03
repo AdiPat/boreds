@@ -99,6 +99,21 @@ const detachTaskTitleListener = async (taskId) => {
   taskTitleRef.off("value");
 };
 
+const attachTaskDescriptionListener = async (taskId, updateTitleInState) => {
+  const database = firebase.database();
+  const taskTitleRef = database.ref(`tasks/${taskId}/description`);
+  taskTitleRef.on("value", function (snapshot) {
+    const title = snapshot.val();
+    updateTitleInState(title);
+  });
+};
+
+const detachTaskDescriptionListener = async (taskId) => {
+  const database = firebase.database();
+  const taskTitleRef = database.ref(`tasks/${taskId}/description`);
+  taskTitleRef.off("value");
+};
+
 const attachTasksListener = async (userId, updateTasksInState) => {
   const database = firebase.database();
   const userTasksRef = database.ref(`users/${userId}/tasks`);
@@ -164,6 +179,8 @@ export {
   deleteTask,
   attachTaskTitleListener,
   detachTaskTitleListener,
+  attachTaskDescriptionListener,
+  detachTaskDescriptionListener,
   attachTasksListener,
   detachTasksListener,
   attachTaskVisibilityListener,

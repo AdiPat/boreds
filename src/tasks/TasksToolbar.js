@@ -10,9 +10,12 @@ import { TasksDeleteButton } from "./buttons/TasksDeleteButton";
 import { TasksStarButton } from "./buttons/TasksStarButton";
 import { TasksSelectButton } from "./buttons/TasksSelectButton";
 import { TasksToolbarTitle } from "./TasksToolbarTitle";
+import { TasksInfoPopover } from "./TasksInfoPopover";
 import {
   attachTaskTitleListener,
   detachTaskTitleListener,
+  attachTaskDescriptionListener,
+  detachTaskDescriptionListener,
 } from "../services/tasks";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,23 +41,28 @@ const useStyles = makeStyles((theme) => ({
 function TasksToolbar(props) {
   const classes = useStyles();
   const [toolbarTitle, setToolbarTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
 
   useEffect(() => {
     const taskId = props.taskId;
     if (taskId) {
       attachTaskTitleListener(taskId, setToolbarTitle);
+      attachTaskDescriptionListener(taskId, setTaskDescription);
     } else {
       setToolbarTitle("");
+      setTaskDescription("");
     }
     return function cleanup() {
       detachTaskTitleListener(taskId);
+      detachTaskDescriptionListener(taskId);
     };
-  }, [props.userId, props.taskId, toolbarTitle]);
+  }, [props.userId, props.taskId, toolbarTitle, taskDescription]);
 
   return (
     <Grid container>
       <Toolbar variant="regular" className={classes.toolbar}>
         <TasksToolbarTitle title={toolbarTitle} />
+        <TasksInfoPopover taskDescription={taskDescription} />
         {props.userId ? (
           <React.Fragment>
             <TasksSelectButton />
