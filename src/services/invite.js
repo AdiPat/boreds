@@ -116,6 +116,25 @@ const rejectInvite = async (invite) => {
     .catch((err) => console.log(`Failed to reject invite. `, err));
 };
 
+const createTaskInvite = async (toEmail, taskId) => {
+  const _createTaskInvite = firebase
+    .functions()
+    .httpsCallable("createTaskInvite");
+
+  return _createTaskInvite({ toEmail, taskId })
+    .then((result) => ({
+      status: result.data.status,
+    }))
+    .catch((err) => {
+      console.error(
+        `Failed to send invite to ${toEmail}. `,
+        err.code,
+        err.message
+      );
+      return { status: false, message: err.message, code: err.code };
+    });
+};
+
 export {
   createInvite,
   checkDuplicateInvite,
@@ -124,4 +143,5 @@ export {
   getReceivedInvitesCount,
   acceptInvite,
   rejectInvite,
+  createTaskInvite,
 };

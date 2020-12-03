@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SideMenuButton } from "./SideMenuButton";
-import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
 import { CreateBoardModal } from "../../modals/CreateBoardModal";
 
 function AddBoardButton() {
@@ -19,7 +19,7 @@ function AddBoardButton() {
       <SideMenuButton
         btnKey="CreateBoard"
         text="Create Board"
-        icon={<AddCircleRoundedIcon />}
+        icon={<NoteAddIcon />}
         clickHandler={handleOpenModal}
       />
       <CreateBoardModal

@@ -1,7 +1,7 @@
-const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const boardFunctions = require("./board/index");
 const inviteFunctions = require("./invite/index");
+const taskFunctions = require("./tasks/index");
 
 admin.initializeApp();
 
@@ -21,3 +21,24 @@ exports.getAllReceivedInvites = inviteFunctions.getAllReceivedInvites;
 exports.createInvite = inviteFunctions.createInvite;
 exports.acceptInvite = inviteFunctions.acceptInvite;
 exports.rejectInvite = inviteFunctions.rejectInvite;
+exports.createTaskInvite = inviteFunctions.createTaskInvite;
+
+// tasks functions
+exports.addTask = taskFunctions.addTask;
+exports.deleteTask = taskFunctions.deleteTask;
+exports.addTaskTrigger = taskFunctions.addTaskTrigger;
+exports.deleteTaskTrigger = taskFunctions.deleteTaskTrigger;
+exports.flipTaskStar = taskFunctions.flipTaskStar;
+exports.setTaskVisibility = taskFunctions.setTaskVisibility;
+exports.getTask = taskFunctions.getTask;
+exports.editTaskTitle = taskFunctions.editTaskTitle;
+exports.editTaskDescription = taskFunctions.editTaskDescription;
+exports.setTaskPriority = taskFunctions.setTaskPriority;
+exports.getTaskPriority = taskFunctions.getTaskPriority;
+exports.getTaskStar = taskFunctions.getTaskStar;
+exports.setTaskStar = taskFunctions.setTaskStar;
+exports.getTasks = taskFunctions.getTasks;
+exports.addTaskActivity = taskFunctions.addTaskActivity;
+exports.deleteTaskActivity = taskFunctions.deleteTaskActivity;
+exports.setActivityPriority = taskFunctions.setActivityPriority;
+exports.getTaskVisibility = taskFunctions.getTaskVisibility;
