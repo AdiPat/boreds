@@ -15,6 +15,12 @@ exports.func = functions.database
     const invite = snapshot.val();
     const inviteId = context.params.inviteId;
     const now = new Date();
+
+    if (snapshot.hasChild("taskId")) {
+      console.log(`Invite[${invite.id}] is a task invite. Aborting trigger.`);
+      return;
+    }
+
     if (
       snapshot.hasChild("from") &&
       snapshot.hasChild("to") &&
