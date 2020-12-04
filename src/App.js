@@ -8,6 +8,7 @@ import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { BoardPage } from "./pages/BoardPage";
 import { TasksPage } from "./pages/TasksPage";
+import { CalendarPage } from "./pages/CalendarPage";
 import AppProvider from "./providers/AppProvider";
 import {
   firebaseApp,
@@ -50,6 +51,9 @@ function App() {
             <TasksPage />
           </Route>
           <Route path="/tasks/:taskId" component={TasksPage} />
+          <Route exact path="/calendar">
+            <CalendarPage />
+          </Route>
         </Switch>
       </Router>
     </AppProvider>
