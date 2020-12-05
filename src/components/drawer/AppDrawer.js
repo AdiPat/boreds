@@ -17,6 +17,7 @@ import { GeneralAddButton } from "./buttons/GeneralAddButton";
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isLoggedIn = props.userId != null;
+  const hasTopButtons = props.topButtons.length > 0;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -35,9 +36,11 @@ function AppDrawer(props) {
           openDrawer={openDrawer}
         />
         <DrawerAppBarTitle dashTitle={props.dashTitle} />
+        {props.topButtons}
         <DrawerNotificationsButton
           isLoggedIn={isLoggedIn}
           userId={props.userId}
+          hasTopButtons={hasTopButtons}
         />
       </DrawerAppBar>
       <SideMenu
@@ -61,11 +64,13 @@ function AppDrawer(props) {
 AppDrawer.propTypes = {
   dashTitle: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
+  topButtons: PropTypes.array,
 };
 
 AppDrawer.defaultProps = {
   dashTitle: "",
   userId: undefined,
+  topButtons: [],
 };
 
 export { AppDrawer };

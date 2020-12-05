@@ -1,11 +1,20 @@
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, Badge } from "@material-ui/core";
 import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
 import { NotificationsMenu } from "../../menus/NotificationsMenu";
 import { getReceivedInvitesCount } from "../../../services/invite";
 
+const useStyles = makeStyles((theme) => ({
+  notificationBtn: {
+    marginLeft: "auto",
+  },
+}));
+
 function DrawerNotificationsButton(props) {
+  const classes = useStyles();
   const [notificationsMenuAnchorEl, setNotificationsMenuAnchorEl] = useState(
     null
   );
@@ -26,12 +35,8 @@ function DrawerNotificationsButton(props) {
   };
 
   return props.isLoggedIn ? (
-    <div style={{ marginLeft: "auto" }}>
-      <IconButton
-        color="inherit"
-        style={{ marginLeft: "auto" }}
-        onClick={openNotificationsMenu}
-      >
+    <div className={clsx({ [classes.notificationBtn]: !props.hasTopButtons })}>
+      <IconButton color="inherit" onClick={openNotificationsMenu}>
         <Badge badgeContent={notificationsCount} color="secondary">
           <NotificationsRoundedIcon />
         </Badge>
@@ -47,6 +52,11 @@ function DrawerNotificationsButton(props) {
 DrawerNotificationsButton.propTypes = {
   userId: PropTypes.string.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  hasTopButtons: PropTypes.bool,
+};
+
+DrawerNotificationsButton.defaultProps = {
+  hasTopButtons: false,
 };
 
 export { DrawerNotificationsButton };
