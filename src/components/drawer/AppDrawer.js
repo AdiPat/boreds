@@ -17,7 +17,7 @@ import { GeneralAddButton } from "./buttons/GeneralAddButton";
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isLoggedIn = props.userId != null;
-  const hasTopButtons = props.topButtons.length > 0;
+  const hasTopButtons = props.topButtons !== null;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -70,7 +70,7 @@ AppDrawer.propTypes = {
 AppDrawer.defaultProps = {
   dashTitle: "",
   userId: undefined,
-  topButtons: [],
+  topButtons: null,
 };
 
 export { AppDrawer };
