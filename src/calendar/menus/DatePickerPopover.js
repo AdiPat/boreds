@@ -28,7 +28,6 @@ function DatePickerPopover(props) {
 }
 
 DatePickerPopover.propTypes = {
-  open: PropTypes.bool.isRequired,
   anchorEl: PropTypes.elementType.isRequired,
   closeMenu: PropTypes.func.isRequired,
   selectedDate: PropTypes.instanceOf(Date),

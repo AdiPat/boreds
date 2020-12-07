@@ -45,7 +45,6 @@ function DateButton() {
         <ArrowDropDownIcon />
       </Button>
       <DatePickerPopover
-        open={open}
         handleDateChange={handleDateChange}
         selectedDate={context.selectedDate}
         anchorEl={anchorEl}
