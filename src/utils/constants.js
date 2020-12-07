@@ -1,4 +1,17 @@
 let _constants = {
+  POPOVER: {
+    ALIGN_BOTTOM_CENTER: {
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+      transformOrigin: {
+        vertical: "top",
+        horizontal: "center",
+      },
+    },
+  },
+
   CALENDAR: {
     TIME_OPTIONS: {
       day: "Day",
