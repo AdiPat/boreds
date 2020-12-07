@@ -4,6 +4,7 @@ import { AppDrawer } from "../components/drawer/AppDrawer";
 import { CalendarContent } from "./CalendarContent";
 import { TimeDurationButton } from "./buttons/TimeDurationButton";
 import { DateButton } from "./buttons/DateButton";
+import CalendarProvider from "../providers/CalendarProvider";
 
 function CalendarContainer(props) {
   const userId = props.user.uid;
@@ -14,14 +15,16 @@ function CalendarContainer(props) {
   ];
 
   return (
-    <React.Fragment>
-      <AppDrawer
-        dashTitle="Calendar"
-        userId={userId}
-        topButtons={drawerTopButtons}
-      />
-      <CalendarContent userId={userId} />
-    </React.Fragment>
+    <CalendarProvider>
+      <React.Fragment>
+        <AppDrawer
+          dashTitle="Calendar"
+          userId={userId}
+          topButtons={drawerTopButtons}
+        />
+        <CalendarContent userId={userId} />
+      </React.Fragment>
+    </CalendarProvider>
   );
 }
 
