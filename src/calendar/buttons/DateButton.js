@@ -4,14 +4,17 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useTheme } from "@material-ui/core/styles";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
 import CalendarContext from "../../providers/CalendarContext";
+import { getDateButtonText } from "../../services/calendar";
 
 function DateButton() {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const btnRef = useRef(null);
   const context = useContext(CalendarContext);
-
   const open = Boolean(anchorEl);
+
+  // formatted btn display
+  const btnText = getDateButtonText(context.selectedDate);
 
   const openMenu = (e) => {
     setAnchorEl(e.currentTarget);
@@ -22,6 +25,7 @@ function DateButton() {
   };
 
   const handleDateChange = (date) => {
+    console.log("debug: curdate: ", date);
     context.setSelectedDate(date);
   };
 
@@ -37,7 +41,7 @@ function DateButton() {
         onClick={openMenu}
         ref={btnRef}
       >
-        <span>Set Date</span>
+        <span>{btnText}</span>
         <ArrowDropDownIcon />
       </Button>
       <DatePickerPopover

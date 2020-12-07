@@ -1,3 +1,4 @@
+import moment from "moment";
 import { validateMonth, validateYear, validateWeekday } from "../utils/util";
 import CONSTANTS from "../utils/constants";
 
@@ -99,10 +100,44 @@ const getWeekCalendar = (month, year) => {
   return weekCalendar;
 };
 
+const getDateButtonText = (date) => {
+  const curDate = moment(date);
+  const weekStartDate = moment(date).startOf("week");
+  const weekEndDate = moment(date).endOf("week");
+  let btnDisplay = curDate.format("MMMM YYYY");
+
+  const startMonth = weekStartDate.month();
+  const curMonth = curDate.month();
+  const endMonth = weekEndDate.month();
+
+  if (startMonth != curMonth) {
+    if (weekStartDate.year() != curDate.year()) {
+      btnDisplay =
+        weekStartDate.format("MMM YYYY") + " - " + curDate.format("MMM YYYY");
+    } else {
+      btnDisplay =
+        weekStartDate.format("MMM") + " - " + curDate.format("MMM YYYY");
+    }
+  }
+
+  if (endMonth != curMonth) {
+    if (weekEndDate.year() != curDate.year()) {
+      btnDisplay =
+        curDate.format("MMM YYYY") + " - " + weekEndDate.format("MMM YYYY");
+    } else {
+      btnDisplay =
+        curDate.format("MMM") + " - " + weekEndDate.format("MMM YYYY");
+    }
+  }
+
+  return btnDisplay;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
   getMonthCalendar,
   getWeekDayName,
   getWeekCalendar,
+  getDateButtonText,
 };
