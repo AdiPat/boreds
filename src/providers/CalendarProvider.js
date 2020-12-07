@@ -8,6 +8,9 @@ class CalendarProvider extends React.PureComponent {
       selectedDate: new Date(),
       remount: false,
     };
+
+    this.forceUpdate = this.forceUpdate.bind(this);
+    this.setSelectedDate = this.setSelectedDate.bind(this);
   }
 
   forceProviderUpdate() {
@@ -27,6 +30,8 @@ class CalendarProvider extends React.PureComponent {
       <CalendarContext.Provider
         value={{
           state: this.state,
+          selectedDate: this.state.selectedDate,
+          setSelectedDate: this.setSelectedDate,
         }}
       >
         {this.props.children}

@@ -1,14 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Button } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useTheme } from "@material-ui/core/styles";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
+import CalendarContext from "../../providers/CalendarContext";
 
 function DateButton() {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const btnRef = useRef(null);
+  const context = useContext(CalendarContext);
 
   const open = Boolean(anchorEl);
 
@@ -21,7 +22,7 @@ function DateButton() {
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    context.setSelectedDate(date);
   };
 
   return (
@@ -42,7 +43,7 @@ function DateButton() {
       <DatePickerPopover
         open={open}
         handleDateChange={handleDateChange}
-        selectedDate={selectedDate}
+        selectedDate={context.selectedDate}
         anchorEl={anchorEl}
         closeMenu={closeMenu}
       />
