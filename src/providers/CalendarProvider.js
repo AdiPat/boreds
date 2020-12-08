@@ -1,16 +1,23 @@
 import React from "react";
 import CalendarContext from "./CalendarContext";
+import moment from "moment";
+import { isDateEqual } from "../utils/util";
+import { getWeekCalendar, getWeek } from "../services/calendar";
 
 class CalendarProvider extends React.PureComponent {
   constructor(props) {
+    const now = moment(new Date());
     super(props);
     this.state = {
-      selectedDate: new Date(),
+      selectedDate: now,
       remount: false,
+      calendar: getWeekCalendar(now.month(), now.year()),
     };
 
     this.forceUpdate = this.forceUpdate.bind(this);
     this.setSelectedDate = this.setSelectedDate.bind(this);
+    this.updateCalendar = this.updateCalendar.bind(this);
+    this.getCurrentWeek = this.getCurrentWeek.bind(this);
   }
 
   forceProviderUpdate() {
@@ -21,9 +28,27 @@ class CalendarProvider extends React.PureComponent {
     this.setState({ selectedDate: date });
   }
 
-  //   componentDidMount() {
+  getCurrentWeek() {
+    return getWeek(this.state.selectedDate);
+  }
 
-  //   }
+  updateCalendar() {
+    const weekCalendar = getWeekCalendar(
+      this.state.selectedDate.month(),
+      this.state.selectedDate.year()
+    );
+    this.setState({ calendar: weekCalendar });
+  }
+
+  componentDidMount() {
+    this.updateCalendar();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!isDateEqual(prevState.selectedDate, this.state.selectedDate)) {
+      this.updateCalendar();
+    }
+  }
 
   render() {
     return (
@@ -32,6 +57,8 @@ class CalendarProvider extends React.PureComponent {
           state: this.state,
           selectedDate: this.state.selectedDate,
           setSelectedDate: this.setSelectedDate,
+          getCurrentWeek: this.getCurrentWeek,
+          calendar: this.state.calendar,
         }}
       >
         {this.props.children}
