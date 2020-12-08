@@ -127,6 +127,21 @@ const getWeek = (date) => {
   return week;
 };
 
+const getTimeSlots = () => {
+  const times = [];
+  for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY; i++) {
+    const hourObj = moment().hour(i);
+    const slot = {
+      start: hourObj.format("hh A"),
+      end: hourObj.clone().add(1, "hour").format("hh A"),
+    };
+    slot.start = slot.start[0] === "0" ? slot.start.substring(1) : slot.start;
+    slot.end = slot.end[0] === "0" ? slot.end.substring(1) : slot.end;
+    times.push(slot);
+  }
+  return times;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -135,4 +150,5 @@ export {
   getWeekCalendar,
   getDateButtonText,
   getWeek,
+  getTimeSlots,
 };

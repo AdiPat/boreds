@@ -13,6 +13,17 @@ let _constants = {
   },
 
   CALENDAR: {
+    HOURS_IN_DAY: 24,
+    IDS: {
+      calendarHeader: "calendarHeader",
+    },
+    DURATIONS: {
+      day: "day",
+      week: "week",
+      month: "month",
+      year: "year",
+      fourdays: "fourdays",
+    },
     TIME_OPTIONS: {
       day: "Day",
       week: "Week",

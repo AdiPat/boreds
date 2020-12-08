@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
 import { Grid, Typography, Avatar } from "@material-ui/core";
 import CalendarContext from "../providers/CalendarContext";
+import CONSTANTS from "../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   avatarOrange: {
@@ -32,11 +33,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarHeader(props) {
+const getHeaderHeight = () => {
+  const header = document.getElementById(CONSTANTS.CALENDAR.IDS.calendarHeader);
+  return header.offsetHeight + "px";
+};
+
+function CalendarHeader({ setOffset }) {
   const classes = useStyles();
   const theme = useTheme();
   const context = useContext(CalendarContext);
   const selectedDate = context.selectedDate;
+
+  useEffect(() => {
+    const offsetHeight = getHeaderHeight();
+    setOffset(offsetHeight);
+  }, []);
 
   const renderDates = () => {
     const week = context.getCurrentWeek();
@@ -65,7 +76,14 @@ function CalendarHeader(props) {
     return weekJsx;
   };
 
-  return <div className={classes.headerContainer}>{renderDates()}</div>;
+  return (
+    <div
+      id={CONSTANTS.CALENDAR.IDS.calendarHeader}
+      className={classes.headerContainer}
+    >
+      {renderDates()}
+    </div>
+  );
 }
 
 export { CalendarHeader };
