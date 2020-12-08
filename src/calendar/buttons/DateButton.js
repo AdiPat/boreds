@@ -25,7 +25,6 @@ function DateButton() {
   };
 
   const handleDateChange = (date) => {
-    console.log("debug: curdate: ", date);
     context.setSelectedDate(date);
   };
 
