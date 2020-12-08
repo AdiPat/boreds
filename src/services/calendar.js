@@ -35,14 +35,10 @@ const getMonthCalendar = (month, year) => {
 
   const daysCount = getDaysInMonth(_month, _year);
   const dates = [];
-  const curMonth = getMonthName(_month);
+
   for (let day = 1; day <= daysCount; day++) {
     const curDate = new Date(_year, _month, day);
-    const curDay = {
-      day: getWeekDayName(curDate.getDay()),
-      month: curMonth,
-      dateObj: curDate,
-    };
+    const curDay = moment(curDate);
     dates.push(curDay);
   }
   return dates;
@@ -58,43 +54,22 @@ const getWeekCalendar = (month, year) => {
 
   let weekCalendar = getMonthCalendar(_month, _year);
 
-  let firstDay = weekCalendar[0].dateObj.getDay();
-  let lastDay = weekCalendar[weekCalendar.length - 1].dateObj.getDay();
-  let prevMonth = null;
-  let nextMonth = null;
-
-  if (month == CONSTANTS.CALENDAR.MONTHS_INDEX.JANUARY) {
-    prevMonth = getMonthCalendar(11, _year - 1);
-  } else {
-    prevMonth = getMonthCalendar(_month - 1, _year);
+  // pad start of the month
+  let firstDay = weekCalendar[0].clone();
+  let weekStart = firstDay.clone().startOf("week");
+  while (firstDay.day() != weekStart.day()) {
+    const _dayBefore = firstDay.clone().subtract(1, "days");
+    weekCalendar.unshift(_dayBefore);
+    firstDay = _dayBefore;
   }
 
-  if (month == CONSTANTS.CALENDAR.MONTHS_INDEX.DECEMBER) {
-    nextMonth = getMonthCalendar(0, _year + 1);
-  } else {
-    nextMonth = getMonthCalendar(_month + 1, _year);
-  }
-
-  // pad first week
-  if (firstDay != CONSTANTS.CALENDAR.WEEKDAYS_INDEX.MONDAY) {
-    let i = 0;
-    while (firstDay > CONSTANTS.CALENDAR.WEEKDAYS_INDEX.MONDAY) {
-      const prevDay = prevMonth[prevMonth.length - 1 - i];
-      weekCalendar.unshift(prevDay);
-      i++;
-      firstDay--;
-    }
-  }
-
-  // pad last week
-  if (lastDay != CONSTANTS.CALENDAR.WEEKDAYS_INDEX.SUNDAY) {
-    let i = 0;
-    while (lastDay < CONSTANTS.CALENDAR.WEEKDAYS_INDEX.SUNDAY) {
-      const nextDay = nextMonth[i];
-      weekCalendar.push(nextDay);
-      i++;
-      lastDay++;
-    }
+  // pad end of the month
+  let lastDay = weekCalendar[weekCalendar.length - 1].clone();
+  let weekEnd = lastDay.clone().endOf("week");
+  while (lastDay.day() != weekEnd.day()) {
+    const _nextDay = lastDay.clone().add(1, "days");
+    weekCalendar.push(_nextDay);
+    lastDay = _nextDay;
   }
 
   return weekCalendar;
@@ -133,6 +108,25 @@ const getDateButtonText = (date) => {
   return btnDisplay;
 };
 
+const getWeek = (date) => {
+  const curDate = moment(date);
+
+  if (!curDate.isValid()) {
+    throw new TypeError("getWeek(): Invalid date supplied.");
+  }
+
+  const weekStart = curDate.clone().startOf("week");
+  const weekEnd = curDate.clone().endOf("week");
+  const week = [];
+  let _day = weekStart.clone();
+  while (_day.day() != weekEnd.day()) {
+    week.push(_day);
+    _day = _day.clone().add(1, "days");
+  }
+  week.push(weekEnd);
+  return week;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -140,4 +134,5 @@ export {
   getWeekDayName,
   getWeekCalendar,
   getDateButtonText,
+  getWeek,
 };

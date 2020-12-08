@@ -1,3 +1,4 @@
+import moment from "moment";
 import CONSTANTS from "./constants";
 
 const validateMonth = (month) => {
@@ -42,4 +43,8 @@ const validateWeekday = (weekday) => {
   }
 };
 
-export { validateMonth, validateYear, validateWeekday };
+const isDateEqual = (d1, d2) => {
+  return moment(d1).isSame(moment(d2));
+};
+
+export { validateMonth, validateYear, validateWeekday, isDateEqual };
