@@ -129,7 +129,7 @@ const getWeek = (date) => {
 
 const getTimeSlots = () => {
   const times = [];
-  for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY; i++) {
+  for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY - 1; i++) {
     const hourObj = moment().hour(i);
     const slot = {
       start: hourObj.format("hh A"),
