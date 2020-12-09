@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarHeader } from "./CalendarHeader";
 import { CalendarTimeStrip } from "./CalendarTimeStrip";
+import { CalendarWeek } from "./CalendarWeek";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -31,6 +32,7 @@ function CalendarContent(props) {
     <main className={classes.content}>
       <CalendarTimeStrip duration="week" topOffset={timeStripOffset} />
       <CalendarHeader setOffset={setTimeStripOffset} />
+      <CalendarWeek />
     </main>
   );
 }

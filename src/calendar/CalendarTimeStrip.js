@@ -13,7 +13,7 @@ const useStyles = (props) =>
     timeStrip: {
       position: "absolute",
       top: props.topOffset,
-      left: "10px",
+      left: theme.spacing(1),
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

@@ -4,6 +4,7 @@ import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   timeStripSlot: {
+    boxSizing: "border-box",
     position: "relative",
     display: "flex",
     justifyContent: "center",
@@ -20,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
   timeSlotDivider: {
     position: "absolute",
-    bottom: "-2px",
+    bottom: "0px",
     right: "-40%",
     width: "100%",
-    height: "2px",
+    height: "1px",
     backgroundColor: grey[300],
     content: " ",
   },
