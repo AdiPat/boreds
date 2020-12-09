@@ -2,7 +2,11 @@ import React from "react";
 import CalendarContext from "./CalendarContext";
 import moment from "moment";
 import { isDateEqual } from "../utils/util";
-import { getWeekCalendar, getWeek } from "../services/calendar";
+import {
+  getWeekCalendar,
+  getWeek,
+  getNextFourDays,
+} from "../services/calendar";
 
 class CalendarProvider extends React.PureComponent {
   constructor(props) {
@@ -18,6 +22,7 @@ class CalendarProvider extends React.PureComponent {
     this.setSelectedDate = this.setSelectedDate.bind(this);
     this.updateCalendar = this.updateCalendar.bind(this);
     this.getCurrentWeek = this.getCurrentWeek.bind(this);
+    this.getNextFourDays = this.getNextFourDays.bind(this);
   }
 
   forceProviderUpdate() {
@@ -30,6 +35,10 @@ class CalendarProvider extends React.PureComponent {
 
   getCurrentWeek() {
     return getWeek(this.state.selectedDate);
+  }
+
+  getFourDays() {
+    return getNextFourDays(this.state.selectedDate);
   }
 
   updateCalendar() {
@@ -58,6 +67,7 @@ class CalendarProvider extends React.PureComponent {
           selectedDate: this.state.selectedDate,
           setSelectedDate: this.setSelectedDate,
           getCurrentWeek: this.getCurrentWeek,
+          getFourDays: this.getFourDays,
           calendar: this.state.calendar,
         }}
       >
