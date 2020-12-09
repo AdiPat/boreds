@@ -25,12 +25,12 @@ let _constants = {
       year: "year",
       fourdays: "fourdays",
     },
-    TIME_OPTIONS: {
+    DURATIONS_TEXT: {
       day: "Day",
       week: "Week",
       month: "Month",
       year: "Year",
-      fourDays: "4 Days",
+      fourdays: "4 Days",
     },
     WEEKDAYS: [
       "Monday",

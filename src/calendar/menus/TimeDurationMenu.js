@@ -57,7 +57,7 @@ TimeDurationMenu.defaultProps = {
   anchorEl: null,
   handleClose: () => {},
   selectTime: () => {},
-  timeOptions: CONSTANTS.CALENDAR.TIME_OPTIONS,
+  timeOptions: CONSTANTS.CALENDAR.DURATIONS_TEXT,
 };
 
 export { TimeDurationMenu };

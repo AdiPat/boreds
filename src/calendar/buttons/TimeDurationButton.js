@@ -1,23 +1,31 @@
 import PropTypes from "prop-types";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { TimeDurationMenu } from "../menus/TimeDurationMenu";
 import CONSTANTS from "../../utils/constants";
+import CalendarContext from "../../providers/CalendarContext";
 
 function TimeDurationButton(props) {
   const theme = useTheme();
+  const { state, setCalendarDuration } = useContext(CalendarContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [timeOption, setTimeOption] = useState(
-    CONSTANTS.CALENDAR.TIME_OPTIONS.week
+    CONSTANTS.CALENDAR.DURATIONS_TEXT.week
   );
   const btnRef = useRef(null);
   const isLoggedIn = Boolean(props.userId);
 
   const selectTime = (timeId) => {
-    setTimeOption(CONSTANTS.CALENDAR.TIME_OPTIONS[timeId]);
+    const selectedDuration = CONSTANTS.CALENDAR.DURATIONS[timeId];
+    setCalendarDuration(selectedDuration);
   };
+
+  useEffect(() => {
+    const btnText = CONSTANTS.CALENDAR.DURATIONS_TEXT[state.duration];
+    setTimeOption(btnText);
+  }, [state.duration]);
 
   const openMenu = (e) => {
     setAnchorEl(btnRef.current);
@@ -44,7 +52,7 @@ function TimeDurationButton(props) {
         anchorEl={anchorEl}
         handleClose={closeMenu}
         selectTime={selectTime}
-        timeOptions={CONSTANTS.CALENDAR.TIME_OPTIONS}
+        timeOptions={CONSTANTS.CALENDAR.DURATIONS_TEXT}
       />
     </div>
   ) : null;
