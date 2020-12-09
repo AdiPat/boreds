@@ -14,6 +14,7 @@ let _constants = {
 
   CALENDAR: {
     HOURS_IN_DAY: 24,
+    DAYS_IN_WEEK: 7,
     IDS: {
       calendarHeader: "calendarHeader",
     },
@@ -41,7 +42,6 @@ let _constants = {
       "Sunday",
     ],
     WEEKDAYS_INDEX: {
-      SUNDAY: 0,
       MONDAY: 1,
       TUESDAY: 2,
       WEDNESDAY: 3,
