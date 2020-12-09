@@ -127,6 +127,22 @@ const getWeek = (date) => {
   return week;
 };
 
+const getNextFourDays = (date) => {
+  const firstDay = moment(date);
+
+  if (!firstDay.isValid()) {
+    throw new TypeError("getNextFourDays(): Invalid date supplied.");
+  }
+
+  const days = [];
+  for (let i = 0; i < 4; i++) {
+    const _day = firstDay.clone().add(i, "days");
+    days.push(_day);
+  }
+
+  return days;
+};
+
 const getTimeSlots = () => {
   const times = [];
   for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY - 1; i++) {
@@ -151,4 +167,5 @@ export {
   getDateButtonText,
   getWeek,
   getTimeSlots,
+  getNextFourDays,
 };
