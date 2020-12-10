@@ -26,6 +26,7 @@ class CalendarProvider extends React.PureComponent {
     this.getCurrentWeek = this.getCurrentWeek.bind(this);
     this.getFourDays = this.getFourDays.bind(this);
     this.setCalendarDuration = this.setCalendarDuration.bind(this);
+    this.selectDateNow = this.selectDateNow.bind(this);
   }
 
   forceProviderUpdate() {
@@ -47,6 +48,11 @@ class CalendarProvider extends React.PureComponent {
 
   setSelectedDate(date) {
     this.setState({ selectedDate: date });
+  }
+
+  selectDateNow() {
+    const now = moment();
+    this.setSelectedDate(now);
   }
 
   getCurrentWeek() {
@@ -82,6 +88,7 @@ class CalendarProvider extends React.PureComponent {
           state: this.state,
           selectedDate: this.state.selectedDate,
           setSelectedDate: this.setSelectedDate,
+          selectDateNow: this.selectDateNow,
           setCalendarDuration: this.setCalendarDuration,
           getCurrentWeek: this.getCurrentWeek,
           getFourDays: this.getFourDays,

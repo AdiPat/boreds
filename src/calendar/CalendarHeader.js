@@ -55,7 +55,7 @@ function CalendarHeader({ duration }) {
     // set dates
     const _dates = getDates(duration);
     setDates(_dates);
-  }, [duration]);
+  }, [duration, selectedDate]);
 
   const getDates = (_duration) => {
     let dates = [];
