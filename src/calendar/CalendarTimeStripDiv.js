@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
     flexDirection: "column",
     minHeight: theme.spacing(6),
     minWidth: theme.spacing(6),
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     position: "absolute",
     bottom: "0",
-    textAlign: "center",
+    textAlign: "right",
+    fontSize: "12px",
   },
   timeSlotDivider: {
     position: "absolute",

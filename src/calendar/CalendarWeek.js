@@ -4,8 +4,8 @@ import CONSTANTS from "../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   weekContainer: {
-    width: "calc(100% - 80px)",
     display: "flex",
+    width: "calc(100% - 80px)",
     flexDirection: "column",
     marginLeft: "auto",
     marginRight: theme.spacing(2),

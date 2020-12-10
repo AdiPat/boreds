@@ -5,25 +5,21 @@ import CONSTANTS from "../utils/constants";
 import { getTimeSlots } from "../services/calendar";
 import { CalendarTimeStripDiv } from "./CalendarTimeStripDiv";
 
-const useStyles = (props) =>
-  makeStyles((theme) => ({
-    hideStrip: {
-      display: "none",
-    },
-    timeStrip: {
-      position: "absolute",
-      top: props.topOffset,
-      left: theme.spacing(1),
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      paddingBottom: theme.spacing(4),
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  hideStrip: {
+    display: "none !important",
+  },
+  timeStrip: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    paddingBottom: theme.spacing(4),
+  },
+}));
 
-function CalendarTimeStrip({ duration, topOffset }) {
-  const classes = useStyles({ topOffset })();
+function CalendarTimeStrip({ duration }) {
+  const classes = useStyles();
   const isYear = duration === CONSTANTS.CALENDAR.DURATIONS.year;
   const isMonth = duration === CONSTANTS.CALENDAR.DURATIONS.month;
 

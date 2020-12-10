@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import clsx from 'clsx'; 
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CONSTANTS from "../utils/constants";
-import {getDurationFlags} from '../utils/util'; 
+import { getDurationFlags } from "../utils/util";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarHeader } from "./CalendarHeader";
 import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
-import {CalendarMonth} from './CalendarMonth'; 
+import { CalendarMonth } from "./CalendarMonth";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -25,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(7),
     },
   },
+  calendar: {
+    display: "flex",
+    width: "100%",
+  },
 }));
 
 function CalendarContent(props) {
@@ -34,9 +37,8 @@ function CalendarContent(props) {
   const {
     state: { duration },
   } = useContext(CalendarContext);
-  
-  const isDuration = getDurationFlags(duration); 
-  
+
+  const isDuration = getDurationFlags(duration);
 
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
@@ -45,10 +47,14 @@ function CalendarContent(props) {
 
   return (
     <main className={classes.content}>
-      <CalendarTimeStrip duration="week" topOffset={timeStripOffset} />
-      <CalendarHeader duration={duration} setOffset={setTimeStripOffset} />
-      {isDuration.day || isDuration.week || isDuration.fourdays ? <CalendarWeek numSlots={numSlots} />:null}
-      {isDuration.month?<CalendarMonth />:null}
+      <CalendarHeader duration={duration} />
+      <div className={classes.calendar}>
+        <CalendarTimeStrip duration={duration} />
+        {isDuration.day || isDuration.week || isDuration.fourdays ? (
+          <CalendarWeek numSlots={numSlots} />
+        ) : null}
+        {isDuration.month ? <CalendarMonth /> : null}
+      </div>
     </main>
   );
 }

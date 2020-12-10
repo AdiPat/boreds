@@ -40,11 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarHeader({ setOffset, duration }) {
+function CalendarHeader({ duration }) {
   const classes = useStyles();
   const [dates, setDates] = useState([]);
   const theme = useTheme();
-  const headerContainerRef = useRef(null);
 
   const {
     state: { selectedDate },
@@ -53,17 +52,17 @@ function CalendarHeader({ setOffset, duration }) {
   } = useContext(CalendarContext);
 
   useEffect(() => {
-    // set offset
-    const offsetHeight = headerContainerRef.current.offsetHeight;
-    setOffset(offsetHeight);
     // set dates
     const _dates = getDates(duration);
     setDates(_dates);
-  }, [duration, headerContainerRef.current]);
+  }, [duration]);
 
   const getDates = (_duration) => {
     let dates = [];
-    if (_duration === CONSTANTS.CALENDAR.DURATIONS.week || _duration === CONSTANTS.CALENDAR.DURATIONS.month) {
+    if (
+      _duration === CONSTANTS.CALENDAR.DURATIONS.week ||
+      _duration === CONSTANTS.CALENDAR.DURATIONS.month
+    ) {
       dates = getCurrentWeek();
     } else if (_duration === CONSTANTS.CALENDAR.DURATIONS.fourdays) {
       dates = getFourDays();
@@ -85,16 +84,18 @@ function CalendarHeader({ setOffset, duration }) {
             >
               {dt.format("ddd")}
             </Typography>
-           {duration !== CONSTANTS.CALENDAR.DURATIONS.month && duration !== CONSTANTS.CALENDAR.DURATIONS.year?
-           <React.Fragment>
-           {isDateSelected? (
-              <Avatar className={classes.avatarOrange}>
-                {dt.format("DD")}
-              </Avatar>
-            ) : (
-              <Typography variant="h6">{dt.format("DD")}</Typography>
-            )}
-           </React.Fragment>:null}
+            {duration !== CONSTANTS.CALENDAR.DURATIONS.month &&
+            duration !== CONSTANTS.CALENDAR.DURATIONS.year ? (
+              <React.Fragment>
+                {isDateSelected ? (
+                  <Avatar className={classes.avatarOrange}>
+                    {dt.format("DD")}
+                  </Avatar>
+                ) : (
+                  <Typography variant="h6">{dt.format("DD")}</Typography>
+                )}
+              </React.Fragment>
+            ) : null}
           </div>
         </div>
       );
@@ -106,7 +107,6 @@ function CalendarHeader({ setOffset, duration }) {
     <div
       id={CONSTANTS.CALENDAR.IDS.calendarHeader}
       className={classes.headerContainer}
-      ref={headerContainerRef}
     >
       {renderDates(dates)}
     </div>
