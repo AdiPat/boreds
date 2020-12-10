@@ -8,6 +8,7 @@ import { CalendarHeader } from "./CalendarHeader";
 import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
+import { CalendarYear } from "./CalendarYear";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -54,6 +55,7 @@ function CalendarContent(props) {
           <CalendarWeek numSlots={numSlots} />
         ) : null}
         {isDuration.month ? <CalendarMonth /> : null}
+        {isDuration.year ? <CalendarYear /> : null}
       </div>
     </main>
   );
