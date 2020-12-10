@@ -7,7 +7,11 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CalendarContext from "../providers/CalendarContext";
 
 function CalendarYearMonth({ month }) {
-  const { selectedDate } = useContext(CalendarContext);
+  const { selectedDate, setSelectedDate } = useContext(CalendarContext);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const _renderDayInPicker = (
     selectedDate,
@@ -49,7 +53,7 @@ function CalendarYearMonth({ month }) {
           value={month.start.clone()}
           renderDay={renderDayInPicker}
           disableToolbar
-          onChange={(d) => {}}
+          onChange={handleDateChange}
           leftArrowIcon={null}
           rightArrowIcon={null}
         />
