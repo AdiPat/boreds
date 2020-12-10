@@ -17,6 +17,7 @@ let _constants = {
     DAYS_IN_WEEK: 7,
     DAYS_IN_FOUR_DAYS: 4,
     NUM_DAYS: {
+      day: 1,
       week: 7,
       fourdays: 4,
     },

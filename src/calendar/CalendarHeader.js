@@ -66,6 +66,8 @@ function CalendarHeader({ setOffset, duration }) {
       dates = getCurrentWeek();
     } else if (_duration === CONSTANTS.CALENDAR.DURATIONS.fourdays) {
       dates = getFourDays();
+    } else if (_duration === CONSTANTS.CALENDAR.DURATIONS.day) {
+      dates = [selectedDate];
     }
     return dates;
   };
