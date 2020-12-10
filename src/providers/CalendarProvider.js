@@ -7,6 +7,7 @@ import {
   getWeekCalendar,
   getWeek,
   getNextFourDays,
+  getMonthsInYear,
 } from "../services/calendar";
 
 class CalendarProvider extends React.PureComponent {
@@ -18,6 +19,7 @@ class CalendarProvider extends React.PureComponent {
       remount: false,
       calendar: getWeekCalendar(now.month(), now.year()),
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
+      months: getMonthsInYear(now.year()),
     };
 
     this.forceUpdate = this.forceUpdate.bind(this);
@@ -27,6 +29,7 @@ class CalendarProvider extends React.PureComponent {
     this.getFourDays = this.getFourDays.bind(this);
     this.setCalendarDuration = this.setCalendarDuration.bind(this);
     this.selectDateNow = this.selectDateNow.bind(this);
+    this.updateMonths = this.updateMonths.bind(this);
   }
 
   forceProviderUpdate() {
@@ -71,13 +74,23 @@ class CalendarProvider extends React.PureComponent {
     this.setState({ calendar: weekCalendar });
   }
 
+  updateMonths() {
+    const months = getMonthsInYear(this.state.selectedDate.year());
+    this.setState({ months: months });
+  }
+
   componentDidMount() {
     this.updateCalendar();
+    this.updateMonths();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!isDateEqual(prevState.selectedDate, this.state.selectedDate)) {
       this.updateCalendar();
+    }
+
+    if (prevState.selectedDate.year() != this.state.selectedDate.year()) {
+      this.updateMonths();
     }
   }
 
@@ -93,6 +106,7 @@ class CalendarProvider extends React.PureComponent {
           getCurrentWeek: this.getCurrentWeek,
           getFourDays: this.getFourDays,
           calendar: this.state.calendar,
+          months: this.state.months,
         }}
       >
         {this.props.children}

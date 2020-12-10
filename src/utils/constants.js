@@ -16,6 +16,7 @@ let _constants = {
     HOURS_IN_DAY: 24,
     DAYS_IN_WEEK: 7,
     DAYS_IN_FOUR_DAYS: 4,
+    MONTHS_IN_YEAR: 12,
     NUM_DAYS: {
       day: 1,
       week: 7,

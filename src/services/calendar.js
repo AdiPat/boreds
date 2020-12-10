@@ -158,6 +158,29 @@ const getTimeSlots = () => {
   return times;
 };
 
+const getMonthsInYear = (year) => {
+  const curYear = moment().year(year);
+  const months = [];
+
+  if (!curYear.isValid()) {
+    throw new TypeError("getMonthsInYear(): Invalid year supplied.");
+  }
+
+  for (
+    let monthIdx = CONSTANTS.CALENDAR.MONTHS_INDEX.JANUARY;
+    monthIdx <= CONSTANTS.CALENDAR.MONTHS_INDEX.DECEMBER;
+    monthIdx++
+  ) {
+    const curMonth = curYear.clone().month(monthIdx);
+    const monthStart = curMonth.clone().startOf("month");
+    const monthEnd = curMonth.clone().endOf("month");
+
+    months.push({ start: monthStart, end: monthEnd });
+  }
+
+  return months;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -168,4 +191,5 @@ export {
   getWeek,
   getTimeSlots,
   getNextFourDays,
+  getMonthsInYear,
 };
