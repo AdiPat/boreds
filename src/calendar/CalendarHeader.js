@@ -41,17 +41,29 @@ const getHeaderHeight = () => {
 function CalendarHeader({ setOffset }) {
   const classes = useStyles();
   const theme = useTheme();
-  const context = useContext(CalendarContext);
-  const selectedDate = context.selectedDate;
+  const {
+    state: { selectedDate, duration },
+    getCurrentWeek,
+    getFourDays,
+  } = useContext(CalendarContext);
 
   useEffect(() => {
     const offsetHeight = getHeaderHeight();
     setOffset(offsetHeight);
   }, []);
 
-  const renderDates = () => {
-    const week = context.getCurrentWeek();
-    const weekJsx = week.map((dt) => {
+  const getDates = (_duration) => {
+    let dates = [];
+    if (_duration === CONSTANTS.CALENDAR.DURATIONS.week) {
+      dates = getCurrentWeek();
+    } else if (_duration === CONSTANTS.CALENDAR.DURATIONS.fourdays) {
+      dates = getFourDays();
+    }
+    return dates;
+  };
+
+  const renderDates = (dates) => {
+    const weekJsx = dates.map((dt) => {
       const isDateSelected = selectedDate.isSame(dt, "day");
       return (
         <div className={classes.headerItemContainer}>
@@ -76,12 +88,14 @@ function CalendarHeader({ setOffset }) {
     return weekJsx;
   };
 
+  const dates = getDates(duration);
+
   return (
     <div
       id={CONSTANTS.CALENDAR.IDS.calendarHeader}
       className={classes.headerContainer}
     >
-      {renderDates()}
+      {renderDates(dates)}
     </div>
   );
 }
