@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { deepOrange } from "@material-ui/core/colors";
+import { deepOrange, grey } from "@material-ui/core/colors";
 import { Grid, Typography, Avatar } from "@material-ui/core";
 import CalendarContext from "../providers/CalendarContext";
 import CONSTANTS from "../utils/constants";
@@ -19,7 +19,13 @@ const useStyles = makeStyles((theme) => ({
   headerItemContainer: {
     display: "flex",
     //minWidth: "120px",
-    border: "1px solid lightgrey",
+    borderWidth: "1px 1px 1px 0",
+    borderStyle: "solid",
+    borderColor: grey[300],
+    "&:first-of-type": {
+      border: "1px solid",
+      borderColor: grey[300],
+    },
     flexGrow: "1",
     flexBasis: "0",
     justifyContent: "center",
