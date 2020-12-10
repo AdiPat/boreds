@@ -48,14 +48,15 @@ function CalendarContent(props) {
 
   return (
     <main className={classes.content}>
-      <CalendarHeader duration={duration} />
+      <CalendarHeader duration={duration} isDuration={isDuration} />
       <div className={classes.calendar}>
-        <CalendarTimeStrip duration={duration} />
-        {isDuration.day || isDuration.week || isDuration.fourdays ? (
-          <CalendarWeek numSlots={numSlots} />
-        ) : null}
-        {isDuration.month ? <CalendarMonth /> : null}
-        {isDuration.year ? <CalendarYear /> : null}
+        <CalendarTimeStrip duration={duration} isDuration={isDuration} />
+        <CalendarWeek
+          show={isDuration.day || isDuration.week || isDuration.fourdays}
+          numSlots={numSlots}
+        />
+        <CalendarMonth show={isDuration.month} />
+        <CalendarYear show={isDuration.year} />
       </div>
     </main>
   );

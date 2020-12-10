@@ -1,10 +1,15 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarMonthWeek } from "./CalendarMonthWeek";
 import { splitMonthToWeeks } from "../utils/util";
 
 const useStyles = makeStyles((theme) => ({
+  hide: {
+    display: "none !important",
+  },
   monthContainer: {
     width: "calc(100% - 80px)",
     display: "flex",
@@ -14,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonth() {
+function CalendarMonth({ show }) {
   const classes = useStyles();
   const { calendar, selectedDate } = useContext(CalendarContext);
 
@@ -26,7 +31,19 @@ function CalendarMonth() {
     return weeksJsx;
   };
 
-  return <div className={classes.monthContainer}>{renderWeeks()}</div>;
+  return (
+    <div className={clsx(classes.monthContainer, { [classes.hide]: !show })}>
+      {renderWeeks()}
+    </div>
+  );
 }
+
+CalendarMonth.propTypes = {
+  show: PropTypes.bool.isRequired,
+};
+
+CalendarMonth.defaultProps = {
+  show: false,
+};
 
 export { CalendarMonth };

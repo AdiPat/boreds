@@ -1,8 +1,12 @@
 import { CalendarWeekTimeSlot } from "./CalendarWeekTimeSlot";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CONSTANTS from "../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
+  hide: {
+    display: "none !important",
+  },
   weekContainer: {
     display: "flex",
     width: "calc(100% - 80px)",
@@ -12,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeek({ numSlots }) {
+function CalendarWeek({ show, numSlots }) {
   const classes = useStyles();
 
   const renderTimeSlots = () => {
@@ -24,7 +28,11 @@ function CalendarWeek({ numSlots }) {
     return weekSlotsJsx;
   };
 
-  return <div className={classes.weekContainer}>{renderTimeSlots()}</div>;
+  return (
+    <div className={clsx(classes.weekContainer, { [classes.hide]: !show })}>
+      {renderTimeSlots()}
+    </div>
+  );
 }
 
 export { CalendarWeek };
