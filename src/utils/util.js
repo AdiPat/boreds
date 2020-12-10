@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { duration } from "moment";
 import CONSTANTS from "./constants";
 
 const validateMonth = (month) => {
@@ -47,4 +47,36 @@ const isDateEqual = (d1, d2) => {
   return moment(d1).isSame(moment(d2));
 };
 
-export { validateMonth, validateYear, validateWeekday, isDateEqual };
+const splitMonthToWeeks = (calendar) => {
+  let res = calendar;
+  const daysInWeek = CONSTANTS.CALENDAR.NUM_DAYS.week;
+  try {
+    res = [];
+    let start = 0;
+    let end = start + daysInWeek;
+    while (end <= calendar.length) {
+      const curWeek = calendar.slice(start, end);
+      res.push(curWeek);
+      start = end;
+      end = start + daysInWeek;
+    }
+  } catch (err) {
+    console.error("splitMonthIntoWeeks(): Failed to split calendar. ", err);
+  }
+  return res;
+};
+
+const getDurationFlags = (duration) => {
+  const flags = {};
+  Object.keys(CONSTANTS.CALENDAR.DURATIONS).forEach(key => flags[key] = (duration === key));
+  return flags;
+}
+
+export {
+  validateMonth,
+  validateYear,
+  validateWeekday,
+  isDateEqual,
+  splitMonthToWeeks,
+  getDurationFlags
+};

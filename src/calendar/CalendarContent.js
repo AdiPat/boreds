@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
+import clsx from 'clsx'; 
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CONSTANTS from "../utils/constants";
+import {getDurationFlags} from '../utils/util'; 
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarHeader } from "./CalendarHeader";
 import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
+import {CalendarMonth} from './CalendarMonth'; 
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -31,6 +34,9 @@ function CalendarContent(props) {
   const {
     state: { duration },
   } = useContext(CalendarContext);
+  
+  const isDuration = getDurationFlags(duration); 
+  
 
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
@@ -41,7 +47,8 @@ function CalendarContent(props) {
     <main className={classes.content}>
       <CalendarTimeStrip duration="week" topOffset={timeStripOffset} />
       <CalendarHeader duration={duration} setOffset={setTimeStripOffset} />
-      <CalendarWeek numSlots={numSlots} />
+      {isDuration.day || isDuration.week || isDuration.fourdays ? <CalendarWeek numSlots={numSlots} />:null}
+      {isDuration.month?<CalendarMonth />:null}
     </main>
   );
 }

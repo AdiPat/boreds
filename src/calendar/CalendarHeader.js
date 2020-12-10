@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { deepOrange, grey } from "@material-ui/core/colors";
 import { Grid, Typography, Avatar } from "@material-ui/core";
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     paddingBottom: theme.spacing(2),
   },
 }));
@@ -62,7 +63,7 @@ function CalendarHeader({ setOffset, duration }) {
 
   const getDates = (_duration) => {
     let dates = [];
-    if (_duration === CONSTANTS.CALENDAR.DURATIONS.week) {
+    if (_duration === CONSTANTS.CALENDAR.DURATIONS.week || _duration === CONSTANTS.CALENDAR.DURATIONS.month) {
       dates = getCurrentWeek();
     } else if (_duration === CONSTANTS.CALENDAR.DURATIONS.fourdays) {
       dates = getFourDays();
@@ -84,13 +85,16 @@ function CalendarHeader({ setOffset, duration }) {
             >
               {dt.format("ddd")}
             </Typography>
-            {isDateSelected ? (
+           {duration !== CONSTANTS.CALENDAR.DURATIONS.month && duration !== CONSTANTS.CALENDAR.DURATIONS.year?
+           <React.Fragment>
+           {isDateSelected? (
               <Avatar className={classes.avatarOrange}>
                 {dt.format("DD")}
               </Avatar>
             ) : (
               <Typography variant="h6">{dt.format("DD")}</Typography>
             )}
+           </React.Fragment>:null}
           </div>
         </div>
       );
