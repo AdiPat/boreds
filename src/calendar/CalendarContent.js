@@ -35,7 +35,7 @@ function CalendarContent(props) {
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
     setNumSlots(_numSlots);
-  }, [duration]);
+  }, [duration, timeStripOffset]);
 
   return (
     <main className={classes.content}>
