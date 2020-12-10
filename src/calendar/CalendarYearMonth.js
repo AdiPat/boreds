@@ -46,7 +46,7 @@ function CalendarYearMonth({ month }) {
   };
 
   return (
-    <Grid item xs={4} md={3}>
+    <Grid item md={4} lg={3}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <DatePicker
           variant="static"
