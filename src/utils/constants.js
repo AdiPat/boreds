@@ -15,6 +15,11 @@ let _constants = {
   CALENDAR: {
     HOURS_IN_DAY: 24,
     DAYS_IN_WEEK: 7,
+    DAYS_IN_FOUR_DAYS: 4,
+    NUM_DAYS: {
+      week: 7,
+      fourdays: 4,
+    },
     IDS: {
       calendarHeader: "calendarHeader",
     },
