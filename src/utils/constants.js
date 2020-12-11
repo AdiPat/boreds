@@ -1,4 +1,7 @@
 let _constants = {
+  SNACKBAR: {
+    defaultDuration: 3000, //ms
+  },
   POPOVER: {
     ALIGN_BOTTOM_CENTER: {
       anchorOrigin: {

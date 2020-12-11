@@ -2,6 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { SideMenuButton } from "./SideMenuButton";
 import TodayIcon from "@material-ui/icons/Today";
+import { CreateEventModal } from "../../modals/CreateEventModal";
 
 function AddEventButton(props) {
   const [openModal, setOpenModal] = useState(false);
@@ -29,11 +30,11 @@ function AddEventButton(props) {
         icon={<TodayIcon />}
         clickHandler={handleClick}
       />
-      {/* <CreateEventModal
+      <CreateEventModal
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
-        openModal={openModal}
-      ></CreateEventModal> */}
+        open={openModal}
+      />
     </div>
   );
 }
