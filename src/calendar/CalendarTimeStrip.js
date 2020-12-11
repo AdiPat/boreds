@@ -43,7 +43,6 @@ function CalendarTimeStrip({ duration }) {
 CalendarTimeStrip.propTypes = {
   duration: PropTypes.oneOfType(Object.values(CONSTANTS.CALENDAR.DURATIONS))
     .isRequired,
-  topOffset: PropTypes.string.isRequired,
 };
 
 export { CalendarTimeStrip };
