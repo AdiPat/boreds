@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Snackbar,
   Grid,
@@ -14,7 +15,34 @@ import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
 import CONSTANTS from "../../utils/constants";
 
+const useStyles = makeStyles((theme) => ({
+  modalContainer: {
+    width: theme.spacing(50),
+  },
+  modalTitle: {
+    marginBottom: theme.spacing(1),
+  },
+  eventTextFieldContainer: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    marginBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+  },
+  eventTextField: {
+    width: "100%",
+  },
+  actionContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginTop: theme.spacing(2),
+  },
+}));
+
 function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
+  const classes = useStyles();
+  const theme = useTheme();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [datePickerAnchorEl, setDatePickerAnchorEl] = useState(null);
   const [startTimePickerAnchorEl, setStartTimePickerAnchorEl] = useState(null);
@@ -43,24 +71,32 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
   return (
     <div>
       <SimpleModal openModal={open} handleCloseModal={handleCloseModal}>
-        <Typography variant="h3">Create Event</Typography>
-        <Divider />
-        <Grid container>
-          <Grid item xs={12}>
+        <div className={classes.modalContainer}>
+          <div className={classes.modalTitle}>
+            <Typography variant="h5" align="center">
+              Create Event
+            </Typography>
+            <Divider />
+          </div>
+          <div className={classes.eventTextFieldContainer}>
             <TextField
+              label="Event Title"
               value={eventTitle}
               placeholder="Add Title"
               onChange={handleTitleChange}
+              className={classes.eventTextField}
             />
-          </Grid>
-          <Grid item xs={12}>
+          </div>
+          <div className={classes.eventTextFieldContainer}>
             <TextField
+              label="Event Description"
               value={eventDescription}
               placeholder="Add Description"
               onChange={handleDescriptionChange}
+              className={classes.eventTextField}
             />
-          </Grid>
-          <Grid item xs={6}>
+          </div>
+          <div>
             <Button
               style={{ textTransform: "none" }}
               onClick={(e) => setDatePickerAnchorEl(e.currentTarget)}
@@ -69,8 +105,8 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
                 {eventDate.format("dddd , MMMM DD")}
               </Typography>
             </Button>
-          </Grid>
-          <Grid item xs={6}>
+          </div>
+          <div>
             <Button onClick={(e) => setStartTimePickerAnchorEl(e.target)}>
               <Typography variant="subtitle2">
                 {eventTimeStart.format("h:mm A")}
@@ -82,13 +118,24 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
                 {eventTimeEnd.format("h:mm A")}
               </Typography>
             </Button>
-          </Grid>
-          <Grid item xs={4} offset={8}>
-            <Button variant="contained" color="primary">
+          </div>
+          <div className={classes.actionContainer}>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ marginRight: theme.spacing(2) }}
+            >
               Save
             </Button>
-          </Grid>
-        </Grid>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCloseModal}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
       </SimpleModal>
       <Snackbar
         anchorOrigin={CONSTANTS.POPOVER.ALIGN_BOTTOM_CENTER.anchorOrigin}
@@ -102,6 +149,7 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
         closeMenu={() => setDatePickerAnchorEl(null)}
         selectedDate={eventDate}
         handleDateChange={setEventDate}
+        disableToolbar={true}
       />
       <TimePickerPopover
         anchorEl={startTimePickerAnchorEl}

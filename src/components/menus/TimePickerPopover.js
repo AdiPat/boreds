@@ -10,6 +10,7 @@ function TimePickerPopover({
   closeMenu,
   selectedTime,
   handleTimeChange,
+  disableToolbar,
 }) {
   return (
     <Popover
@@ -26,6 +27,7 @@ function TimePickerPopover({
             variant="static"
             value={selectedTime}
             onChange={handleTimeChange}
+            disableToolbar={disableToolbar}
           />
         </MuiPickersUtilsProvider>
       </div>
@@ -38,6 +40,7 @@ TimePickerPopover.propTypes = {
   closeMenu: PropTypes.func.isRequired,
   selectedDate: PropTypes.instanceOf(Date),
   handleDateChange: PropTypes.func.isRequired,
+  disableToolbar: PropTypes.bool,
 };
 
 TimePickerPopover.defaultProps = {
@@ -45,6 +48,7 @@ TimePickerPopover.defaultProps = {
   closeMenu: () => {},
   selectedDate: moment(),
   handleDateChange: () => {},
+  disableToolbar: false,
 };
 
 export { TimePickerPopover };

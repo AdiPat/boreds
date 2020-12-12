@@ -10,6 +10,7 @@ function DatePickerPopover({
   closeMenu,
   selectedDate,
   handleDateChange,
+  disableToolbar,
 }) {
   return (
     <Popover
@@ -26,6 +27,7 @@ function DatePickerPopover({
             variant="static"
             value={selectedDate}
             onChange={handleDateChange}
+            disableToolbar={disableToolbar}
           />
         </MuiPickersUtilsProvider>
       </div>
@@ -38,6 +40,7 @@ DatePickerPopover.propTypes = {
   closeMenu: PropTypes.func.isRequired,
   selectedDate: PropTypes.instanceOf(Date),
   handleDateChange: PropTypes.func.isRequired,
+  disableToolbar: PropTypes.bool,
 };
 
 DatePickerPopover.defaultProps = {
@@ -45,6 +48,7 @@ DatePickerPopover.defaultProps = {
   closeMenu: () => {},
   selectedDate: moment(),
   handleDateChange: () => {},
+  disableToolbar: false,
 };
 
 export { DatePickerPopover };
