@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarContent(props) {
   const classes = useStyles();
-  const [timeStripOffset, setTimeStripOffset] = useState(0);
   const [numSlots, setNumSlots] = useState(0);
   const {
     state: { duration },
@@ -45,7 +44,7 @@ function CalendarContent(props) {
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
     setNumSlots(_numSlots);
-  }, [duration, timeStripOffset]);
+  }, [duration]);
 
   return (
     <main className={classes.content}>
