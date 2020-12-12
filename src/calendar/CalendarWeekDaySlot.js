@@ -59,12 +59,10 @@ const useStyles = makeStyles((theme) => ({
 function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
   const classes = useStyles();
 
-  console.log("CalendarWeekDaySlot(): render()");
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
 
   if (isCurrent) {
     dividerFlags = getSlotDividerFlags(selectedDate, slotMoment);
-    console.log("debug(): ", dividerFlags);
   }
 
   return (
