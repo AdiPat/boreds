@@ -1,5 +1,7 @@
-import { CalendarWeekTimeSlot } from "./CalendarWeekTimeSlot";
+import PropTypes from "prop-types";
 import clsx from "clsx";
+import moment from "moment";
+import { CalendarWeekTimeSlot } from "./CalendarWeekTimeSlot";
 import { makeStyles } from "@material-ui/core/styles";
 import CONSTANTS from "../utils/constants";
 
@@ -16,13 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeek({ show, numSlots }) {
+function CalendarWeek({ show, numSlots, selectedDate }) {
   const classes = useStyles();
 
   const renderTimeSlots = () => {
     const weekSlotsJsx = [];
     for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY - 1; i++) {
-      const jsx = <CalendarWeekTimeSlot numSlots={numSlots} key={i} />;
+      const jsx = (
+        <CalendarWeekTimeSlot
+          numSlots={numSlots}
+          selectedDate={selectedDate}
+          key={i}
+          startHour={i}
+        />
+      );
       weekSlotsJsx.push(jsx);
     }
     return weekSlotsJsx;
@@ -34,5 +43,11 @@ function CalendarWeek({ show, numSlots }) {
     </div>
   );
 }
+
+CalendarWeek.propTypes = {
+  show: PropTypes.bool.isRequired,
+  numSlots: PropTypes.number.isRequired,
+  selectedDate: PropTypes.instanceOf(moment).isRequired,
+};
 
 export { CalendarWeek };

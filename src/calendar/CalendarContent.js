@@ -37,6 +37,7 @@ function CalendarContent(props) {
   const [numSlots, setNumSlots] = useState(0);
   const {
     state: { duration },
+    selectedDate,
   } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
@@ -54,6 +55,7 @@ function CalendarContent(props) {
         <CalendarWeek
           show={isDuration.day || isDuration.week || isDuration.fourdays}
           numSlots={numSlots}
+          selectedDate={selectedDate}
         />
         <CalendarMonth show={isDuration.month} />
         <CalendarYear show={isDuration.year} />

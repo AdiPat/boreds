@@ -181,6 +181,20 @@ const getMonthsInYear = (year) => {
   return months;
 };
 
+const getWeekDaySlotMoment = (selectedDate, startHour, day) => {
+  let dayDiff = selectedDate.day() - day;
+  let slotMoment = null;
+  if (dayDiff >= 0) {
+    slotMoment = selectedDate.clone().subtract(dayDiff, "days");
+  } else {
+    dayDiff = Math.abs(dayDiff);
+    slotMoment = selectedDate.clone().add(dayDiff, "days");
+  }
+  slotMoment = slotMoment.hour(startHour);
+  slotMoment = slotMoment.minute(0);
+  return slotMoment;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -192,4 +206,5 @@ export {
   getTimeSlots,
   getNextFourDays,
   getMonthsInYear,
+  getWeekDaySlotMoment,
 };
