@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -55,6 +55,12 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
   const [eventTimeEnd, setEventTimeEnd] = useState(
     timePreset.clone().add(30, "minutes")
   );
+
+  useEffect(() => {
+    setEventDate(datePreset);
+    setEventTimeStart(timePreset);
+    setEventTimeEnd(timePreset.clone().add(30, "minutes"));
+  }, [timePreset, datePreset]);
 
   const closeSnackbar = (event, reason) => {
     setOpenSnackbar(false);

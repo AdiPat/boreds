@@ -35,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
+function CalendarWeekDaySlot({
+  selectedDate,
+  isCurrent,
+  slotMoment,
+  openCreateEventModal,
+  setModalPreset,
+}) {
   const classes = useStyles();
 
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
@@ -44,8 +50,13 @@ function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
     dividerFlags = getSlotDividerFlags(selectedDate, slotMoment);
   }
 
+  const handleClick = (event) => {
+    setModalPreset(slotMoment);
+    openCreateEventModal();
+  };
+
   return (
-    <div className={clsx(classes.daySlot)}>
+    <div className={clsx(classes.daySlot)} onClick={handleClick}>
       {isCurrent ? (
         <CalendarSlotTimeIndicator dividerFlags={dividerFlags} />
       ) : null}
@@ -57,6 +68,8 @@ CalendarWeekDaySlot.propTypes = {
   slotMoment: PropTypes.instanceOf(moment).isRequired,
   isCurrent: PropTypes.bool.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
+  openCreateEventModal: PropTypes.func.isRequired,
+  setModalPreset: PropTypes.func.isRequired,
 };
 
 export { CalendarWeekDaySlot };

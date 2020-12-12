@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { getDurationFlags } from "../utils/util";
 import CalendarContext from "../providers/CalendarContext";
@@ -9,6 +10,7 @@ import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
 import { CalendarYear } from "./CalendarYear";
+import { CreateEventModal } from "../components/modals/CreateEventModal";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -33,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarContent(props) {
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false);
+  const [modalPreset, setModalPreset] = useState(moment());
   const [numSlots, setNumSlots] = useState(0);
   const {
     state: { duration },
@@ -40,6 +44,14 @@ function CalendarContent(props) {
   } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
@@ -55,10 +67,18 @@ function CalendarContent(props) {
           show={isDuration.day || isDuration.week || isDuration.fourdays}
           numSlots={numSlots}
           selectedDate={selectedDate}
+          openCreateEventModal={handleOpenModal}
+          setModalPreset={setModalPreset}
         />
         <CalendarMonth show={isDuration.month} />
         <CalendarYear show={isDuration.year} />
       </div>
+      <CreateEventModal
+        open={openModal}
+        handleCloseModal={handleCloseModal}
+        datePreset={modalPreset}
+        timePreset={modalPreset}
+      />
     </main>
   );
 }

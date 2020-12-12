@@ -18,7 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeek({ show, numSlots, selectedDate }) {
+function CalendarWeek({
+  show,
+  numSlots,
+  selectedDate,
+  openCreateEventModal,
+  setModalPreset,
+}) {
   const classes = useStyles();
 
   const renderTimeSlots = () => {
@@ -30,6 +36,8 @@ function CalendarWeek({ show, numSlots, selectedDate }) {
           selectedDate={selectedDate}
           key={i}
           startHour={i}
+          openCreateEventModal={openCreateEventModal}
+          setModalPreset={setModalPreset}
         />
       );
       weekSlotsJsx.push(jsx);
@@ -48,6 +56,8 @@ CalendarWeek.propTypes = {
   show: PropTypes.bool.isRequired,
   numSlots: PropTypes.number.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
+  openCreateEventModal: PropTypes.func.isRequired,
+  setModalPreset: PropTypes.func.isRequired,
 };
 
 export { CalendarWeek };
