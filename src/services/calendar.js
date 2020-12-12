@@ -195,6 +195,51 @@ const getWeekDaySlotMoment = (selectedDate, startHour, day) => {
   return slotMoment;
 };
 
+const isSelectedDateInSlot = (selectedDate, slotMoment) => {
+  if (!selectedDate.isValid() || !slotMoment.isValid()) {
+    return false;
+  }
+
+  const dmyFormat = "DD-MM-YYYY";
+  const hFormat = "hh";
+  const amPmFormat = "A";
+  const now = moment();
+  const selectedDateStr = selectedDate.format(dmyFormat);
+  const slotStr = slotMoment.format(dmyFormat);
+  const dateStr = now.format(dmyFormat);
+
+  const slotStartHour = parseInt(slotMoment.format(hFormat));
+  const dateStartHour = parseInt(now.format(hFormat));
+
+  const amPmCheck = now.format(amPmFormat) === slotMoment.format(amPmFormat);
+
+  return (
+    selectedDateStr === dateStr &&
+    slotStr === dateStr &&
+    slotStartHour === dateStartHour &&
+    amPmCheck
+  );
+};
+
+const getSlotDividerFlags = (selectedDate, slotMoment) => {
+  const inSlot = isSelectedDateInSlot(selectedDate, slotMoment);
+  const flags = Object.assign({}, CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS);
+  if (!inSlot) {
+    return flags; // all false by default
+  }
+
+  const now = moment();
+  const minutes = now.minutes();
+
+  const flagKeys = Object.keys(flags);
+  flagKeys.forEach((rangeKey) => {
+    const rangeCheck = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS_CHECK[rangeKey];
+    flags[rangeKey] = rangeCheck(minutes);
+  });
+
+  return flags;
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -207,4 +252,6 @@ export {
   getNextFourDays,
   getMonthsInYear,
   getWeekDaySlotMoment,
+  isSelectedDateInSlot,
+  getSlotDividerFlags,
 };

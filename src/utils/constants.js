@@ -1,3 +1,7 @@
+function _inRange(val, start, end) {
+  return val >= start && val < end;
+}
+
 let _constants = {
   SNACKBAR: {
     defaultDuration: 3000, //ms
@@ -16,6 +20,20 @@ let _constants = {
   },
 
   CALENDAR: {
+    DAY_TIME_SLOT_FLAGS: {
+      start: false,
+      quarter: false,
+      middle: false,
+      threeQuarter: false,
+      full: false,
+    },
+    DAY_TIME_SLOT_FLAGS_CHECK: {
+      start: (mins) => _inRange(mins, 0, 15),
+      quarter: (mins) => _inRange(mins, 15, 30),
+      middle: (mins) => _inRange(mins, 30, 40),
+      threeQuarter: (mins) => _inRange(mins, 40, 50),
+      full: (mins) => _inRange(mins, 50, 60),
+    },
     HOURS_IN_DAY: 24,
     DAYS_IN_WEEK: 7,
     DAYS_IN_FOUR_DAYS: 4,

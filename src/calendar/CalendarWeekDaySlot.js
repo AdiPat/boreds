@@ -1,11 +1,14 @@
 import { useState } from "react";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
-import { getWeekDaySlotMoment } from "../services/calendar";
+import CONSTANTS from "../utils/constants";
+import { getSlotDividerFlags } from "../services/calendar";
 
 const useStyles = makeStyles((theme) => ({
   daySlot: {
+    position: "relative",
     boxSizing: "border-box",
     display: "flex",
     borderBottom: "1px solid lightgrey",
@@ -19,21 +22,72 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     minHeight: theme.spacing(6),
   },
+  divider: {
+    position: "absolute",
+    height: "2px",
+    backgroundColor: "red",
+    width: "100%",
+    "&::before": {
+      position: "absolute",
+      display: "block",
+      content: '" "',
+      height: "10px",
+      width: "10px",
+      left: "-5px",
+      top: "-4px",
+      borderRadius: "100%",
+      backgroundColor: "red",
+    },
+  },
+  dividerStart: {
+    top: "5%",
+  },
+  dividerQuarter: {
+    top: "25%",
+  },
+  dividerMiddle: {
+    top: "50%",
+  },
+  dividerThreeQuarter: {
+    top: "75%",
+  },
+  dividerFull: {
+    top: "99%",
+  },
 }));
 
-function CalendarWeekDaySlot({ event, startHour, day, selectedDate }) {
+function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
   const classes = useStyles();
-  const [curMoment, setCurMoment] = useState(
-    getWeekDaySlotMoment(selectedDate, startHour, day)
-  );
 
-  return <div className={classes.daySlot}></div>;
+  console.log("CalendarWeekDaySlot(): render()");
+  let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
+
+  if (isCurrent) {
+    dividerFlags = getSlotDividerFlags(selectedDate, slotMoment);
+    console.log("debug(): ", dividerFlags);
+  }
+
+  return (
+    <div className={clsx(classes.daySlot)}>
+      <span
+        className={clsx({
+          [classes.divider]: isCurrent,
+          [classes.dividerStart]: dividerFlags.start,
+          [classes.dividerQuarter]: dividerFlags.quarter,
+          [classes.dividerMiddle]: dividerFlags.middle,
+          [classes.dividerThreeQuarter]: dividerFlags.threeQuarter,
+          [classes.dividerFull]: dividerFlags.full,
+        })}
+      >
+        {" "}
+      </span>
+    </div>
+  );
 }
 
 CalendarWeekDaySlot.propTypes = {
-  event: PropTypes.object.isRequired,
-  startHour: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
+  slotMoment: PropTypes.instanceOf(moment).isRequired,
+  isCurrent: PropTypes.bool.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
 };
 
