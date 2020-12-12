@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import PropTypes from "prop-types";
+import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
@@ -11,16 +12,26 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     boxSizing: "border-box",
     display: "flex",
-    borderBottom: "1px solid lightgrey",
-    borderRight: "1px solid lightgrey",
-    "&:first-child": {
-      borderLeft: "1px solid lightgrey",
-    },
+    borderRight: "1px",
+    borderRightStyle: "solid",
+    borderRightColor: grey[300],
+    borderBottom: "1px",
+    borderBottomStyle: "solid",
+    borderBottomColor: grey[300],
     flexGrow: "1",
     flexBasis: "0",
     justifyContent: "center",
     alignItems: "center",
     minHeight: theme.spacing(6),
+
+    "&:first-child": {
+      borderLeft: "1px solid lightgrey",
+    },
+
+    "&:hover": {
+      backgroundColor: grey[200],
+      cursor: "pointer",
+    },
   },
 }));
 
