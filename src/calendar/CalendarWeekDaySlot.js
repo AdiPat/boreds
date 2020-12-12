@@ -51,7 +51,16 @@ function CalendarWeekDaySlot({
   }
 
   const handleClick = (event) => {
-    setModalPreset(slotMoment);
+    const bounds = event.target.getBoundingClientRect();
+    const yOffset = event.clientY - bounds.top;
+    const divHeight = event.currentTarget.offsetHeight;
+    let _modalPreset = slotMoment;
+
+    if (yOffset > divHeight / 2) {
+      _modalPreset = slotMoment.clone().add(30, "minutes");
+    }
+
+    setModalPreset(_modalPreset);
     openCreateEventModal();
   };
 
