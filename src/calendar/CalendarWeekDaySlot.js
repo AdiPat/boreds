@@ -1,9 +1,9 @@
-import { useState } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
+import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
 import { getSlotDividerFlags } from "../services/calendar";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,38 +22,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     minHeight: theme.spacing(6),
   },
-  divider: {
-    position: "absolute",
-    height: "2px",
-    backgroundColor: "red",
-    width: "100%",
-    "&::before": {
-      position: "absolute",
-      display: "block",
-      content: '" "',
-      height: "10px",
-      width: "10px",
-      left: "-5px",
-      top: "-4px",
-      borderRadius: "100%",
-      backgroundColor: "red",
-    },
-  },
-  dividerStart: {
-    top: "5%",
-  },
-  dividerQuarter: {
-    top: "25%",
-  },
-  dividerMiddle: {
-    top: "50%",
-  },
-  dividerThreeQuarter: {
-    top: "75%",
-  },
-  dividerFull: {
-    top: "99%",
-  },
 }));
 
 function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
@@ -67,18 +35,9 @@ function CalendarWeekDaySlot({ selectedDate, isCurrent, slotMoment }) {
 
   return (
     <div className={clsx(classes.daySlot)}>
-      <span
-        className={clsx({
-          [classes.divider]: isCurrent,
-          [classes.dividerStart]: dividerFlags.start,
-          [classes.dividerQuarter]: dividerFlags.quarter,
-          [classes.dividerMiddle]: dividerFlags.middle,
-          [classes.dividerThreeQuarter]: dividerFlags.threeQuarter,
-          [classes.dividerFull]: dividerFlags.full,
-        })}
-      >
-        {" "}
-      </span>
+      {isCurrent ? (
+        <CalendarSlotTimeIndicator dividerFlags={dividerFlags} />
+      ) : null}
     </div>
   );
 }
