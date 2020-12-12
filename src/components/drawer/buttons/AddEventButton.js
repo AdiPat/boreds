@@ -30,11 +30,7 @@ function AddEventButton(props) {
         icon={<TodayIcon />}
         clickHandler={handleClick}
       />
-      <CreateEventModal
-        handleOpenModal={handleOpenModal}
-        handleCloseModal={handleCloseModal}
-        open={openModal}
-      />
+      <CreateEventModal handleCloseModal={handleCloseModal} open={openModal} />
     </div>
   );
 }
