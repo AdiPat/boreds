@@ -1,0 +1,34 @@
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const utils = require("../utils/utils");
+const calendarUtils = require("../utils/calendar-utils");
+
+exports.func = functions.https.onCall(async (data, context) => {
+  const store = admin.firestore();
+  const calendarEvent = data;
+
+  // auth check
+  utils.assertUserAuth(context);
+  // validate data
+  calendarUtils.validateCalendarEvent(calendarEvent);
+
+  const userId = context.auth.token.uid;
+  const calendarRef = store.collection(`calendarEvents/${userId}`);
+
+  let status = false;
+  try {
+    const res = await calendarRef.add(calendarEvent);
+    status = true;
+  } catch (err) {
+    const calendarEventStr = JSON.stringify(calendarEvent);
+    let errMsg = `addEvent(): Failed to add calendar event: ${calendarEventStr}`;
+    if (err) {
+      console.error(errMsg, err);
+      throw new functions.https.HttpsError("internal", errMsg);
+    }
+  }
+
+  return {
+    status,
+  };
+});

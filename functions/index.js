@@ -43,3 +43,6 @@ exports.addTaskActivity = taskFunctions.addTaskActivity;
 exports.deleteTaskActivity = taskFunctions.deleteTaskActivity;
 exports.setActivityPriority = taskFunctions.setActivityPriority;
 exports.getTaskVisibility = taskFunctions.getTaskVisibility;
+
+// calendar functions
+exports.addCalendarEvent = calendarFunctions.addCalendarEvent;
