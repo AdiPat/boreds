@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 const boardFunctions = require("./board/index");
 const inviteFunctions = require("./invite/index");
 const taskFunctions = require("./tasks/index");
+const calendarFunctions = require("./calendar/index");
 
 admin.initializeApp();
 
