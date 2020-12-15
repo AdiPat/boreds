@@ -63,6 +63,15 @@ const validateCalendarEventDescription = (description) => {
   }
 };
 
+const mapCalendarEventFields = (calendarEvent) => {
+  let _calendarEvent = {};
+  Object.keys(calendarEvent).forEach((field) => {
+    const localField = CONSTANTS.CALENDAR.EVENT.FIELDS[field].localField;
+    _calendarEvent[localField] = calendarEvent[field];
+  });
+  return _calendarEvent;
+};
+
 const validateCalendarEvent = (calendarEvent) => {
   const {
     eventTitle,
@@ -85,3 +94,4 @@ exports.validateCalendarEventDescription = validateCalendarEventDescription;
 exports.validateCalendarEventDate = validateCalendarEventDate;
 exports.validateCalendarEventStartTime = validateCalendarEventStartTime;
 exports.validateCalendarEventEndTime = validateCalendarEventEndTime;
+exports.mapCalendarEventFields = mapCalendarEventFields;

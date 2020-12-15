@@ -5,12 +5,13 @@ const calendarUtils = require("../utils/calendar-utils");
 
 exports.func = functions.https.onCall(async (data, context) => {
   const store = admin.firestore();
-  const calendarEvent = data;
+  const _calendarEvent = data;
 
   // auth check
   utils.assertUserAuth(context);
   // validate data
-  calendarUtils.validateCalendarEvent(calendarEvent);
+  calendarUtils.validateCalendarEvent(_calendarEvent);
+  const calendarEvent = calendarUtils.mapCalendarEventFields(_calendarEvent);
 
   const userId = context.auth.token.uid;
   const calendarRef = store

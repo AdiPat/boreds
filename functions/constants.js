@@ -19,22 +19,27 @@ exports.constants = {
       FIELDS: {
         eventTitle: {
           field: "eventTitle",
+          localField: "title",
           type: "string",
         },
         eventDescription: {
           field: "eventDescription",
+          localField: "description",
           type: "string",
         },
         eventStartTime: {
           field: "eventStartTime",
+          localField: "startTime",
           type: "string",
         },
         eventEndTime: {
           field: "eventEndTime",
+          localField: "endTime",
           type: "string",
         },
         eventDate: {
           field: "eventDate",
+          localField: "date",
           type: "string",
         },
       },
