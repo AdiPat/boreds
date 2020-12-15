@@ -14,6 +14,7 @@ import {
   firebaseApp,
   initializeAuthEmulator,
   initializeFunctionsEmulator,
+  initializeFirestoreEmulator,
 } from "./firebase/firebase";
 import "./App.css";
 import Profile from "./pages/ProfilePage";
@@ -22,6 +23,7 @@ function App() {
   useEffect(() => {
     initializeAuthEmulator();
     initializeFunctionsEmulator();
+    initializeFirestoreEmulator();
   });
 
   return (

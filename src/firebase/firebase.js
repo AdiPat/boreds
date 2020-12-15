@@ -35,4 +35,19 @@ export const initializeFunctionsEmulator = () => {
   }
 };
 
+export const initializeFirestoreEmulator = () => {
+  if (
+    process.env.REACT_APP_USE_FIRESTORE_EMULATOR === "true" &&
+    process.env.NODE_ENV === "development"
+  ) {
+    console.log(
+      "firestore emulator: ",
+      process.env.REACT_APP_FIRESTORE_EMULATOR_PORT
+    );
+    firebase
+      .firestore()
+      .useEmulator("localhost", process.env.REACT_APP_FIRESTORE_EMULATOR_PORT);
+  }
+};
+
 export const firebaseApp = firebase.initializeApp(config);
