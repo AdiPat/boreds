@@ -1,3 +1,4 @@
+import { useState, useEffect, useContext } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { grey } from "@material-ui/core/colors";
@@ -6,6 +7,7 @@ import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
 import { getSlotDividerFlags } from "../services/calendar";
+import CalendarContext from "../providers/CalendarContext";
 
 const useStyles = makeStyles((theme) => ({
   daySlot: {
@@ -43,12 +45,28 @@ function CalendarWeekDaySlot({
   setModalPreset,
 }) {
   const classes = useStyles();
-
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
 
   if (isCurrent) {
     dividerFlags = getSlotDividerFlags(selectedDate, slotMoment);
   }
+
+  // events
+  const [slotEvents, setSlotEvents] = useState([]);
+  const { events } = useContext(CalendarContext);
+
+  useEffect(() => {
+    const dateKey = slotMoment.format("DD-MM-YYYY");
+    const timeKey = slotMoment.format("HH");
+    try {
+      const _slotEvents = events[dateKey][timeKey];
+      if (_slotEvents) {
+        setSlotEvents(_slotEvents);
+      }
+    } catch (err) {
+      setSlotEvents([]);
+    }
+  }, [slotMoment]);
 
   const handleClick = (event) => {
     const bounds = event.target.getBoundingClientRect();

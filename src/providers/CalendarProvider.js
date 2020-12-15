@@ -43,8 +43,22 @@ class CalendarProvider extends React.PureComponent {
   setYearEventsInState(events, observer) {
     let calendarEvents = {};
     events.forEach((event) => {
-      const eventDate = moment(event.date); // convert to local time
-      calendarEvents[eventDate.format()] = event;
+      let updatedEvent = Object.assign({}, event);
+      updatedEvent.date = moment(event.date);
+      updatedEvent.startTime = moment(event.startTime);
+      updatedEvent.endTime = moment(event.endTime);
+
+      let dateKey = updatedEvent.date.format("DD-MM-YYYY");
+      let timeKey = updatedEvent.startTime.format("HH");
+
+      if (calendarEvents[dateKey] == undefined) {
+        calendarEvents[dateKey] = {};
+        calendarEvents[dateKey][timeKey] = [updatedEvent];
+      } else if (calendarEvents[dateKey][timeKey] == undefined) {
+        calendarEvents[dateKey][timeKey] = [updatedEvent];
+      } else {
+        calendarEvents[dateKey][timeKey].push(updatedEvent);
+      }
     });
     this.setState({ eventsObserver: observer, events: calendarEvents });
   }
@@ -132,6 +146,7 @@ class CalendarProvider extends React.PureComponent {
       <CalendarContext.Provider
         value={{
           state: this.state,
+          events: this.state.events,
           selectedDate: this.state.selectedDate,
           setSelectedDate: this.setSelectedDate,
           selectDateNow: this.selectDateNow,
