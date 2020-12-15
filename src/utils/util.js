@@ -44,7 +44,7 @@ const validateWeekday = (weekday) => {
 };
 
 const isDateEqual = (d1, d2) => {
-  return moment(d1).isSame(moment(d2));
+  return d1.format("DD MM YYYY") === d2.format("DD MM YYYY");
 };
 
 const splitMonthToWeeks = (calendar) => {
@@ -68,9 +68,11 @@ const splitMonthToWeeks = (calendar) => {
 
 const getDurationFlags = (duration) => {
   const flags = {};
-  Object.keys(CONSTANTS.CALENDAR.DURATIONS).forEach(key => flags[key] = (duration === key));
+  Object.keys(CONSTANTS.CALENDAR.DURATIONS).forEach(
+    (key) => (flags[key] = duration === key)
+  );
   return flags;
-}
+};
 
 export {
   validateMonth,
@@ -78,5 +80,5 @@ export {
   validateWeekday,
   isDateEqual,
   splitMonthToWeeks,
-  getDurationFlags
+  getDurationFlags,
 };
