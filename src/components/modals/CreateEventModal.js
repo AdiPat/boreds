@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import {
   Typography,
   Divider,
   Button,
+  Portal,
 } from "@material-ui/core";
 import { SimpleModal } from "./SimpleModal";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
@@ -167,13 +168,16 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
           </div>
         </div>
       </SimpleModal>
-      <Snackbar
-        anchorOrigin={CONSTANTS.POPOVER.ALIGN_BOTTOM_CENTER.anchorOrigin}
-        open={openSnackbar}
-        onClose={closeSnackbar}
-        autoHideDuration={CONSTANTS.SNACKBAR.defaultDuration}
-        message={snackbarMessage}
-      />
+      <Portal container={document.getElementById("root")}>
+        <Snackbar
+          anchorOrigin={CONSTANTS.POPOVER.ALIGN_BOTTOM_CENTER.anchorOrigin}
+          open={openSnackbar}
+          onClose={closeSnackbar}
+          autoHideDuration={CONSTANTS.SNACKBAR.defaultDuration}
+          message={snackbarMessage}
+        />
+      </Portal>
+
       <DatePickerPopover
         anchorEl={datePickerAnchorEl}
         closeMenu={() => setDatePickerAnchorEl(null)}
