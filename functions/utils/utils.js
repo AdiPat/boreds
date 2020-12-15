@@ -5,6 +5,7 @@ const assertTypeCheck = (field, fieldType, value) => {
   if (typeof value !== fieldType) {
     return new functions.https.HttpsError(
       "invalid-argument",
+      `${field} should be of type ${fieldType}`,
       `${field} should be of type ${fieldType}`
     );
   }
@@ -14,6 +15,7 @@ const assertUserAuth = (context) => {
   if (!context.auth) {
     return new functions.https.HttpsError(
       "unauthenticated",
+      "Function requires authentication.",
       "Function requires authentication."
     );
   }

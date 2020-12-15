@@ -9,17 +9,13 @@ const validateCalendarEventTitle = (title) => {
   utils.assertTypeCheck(fieldName, fieldType, title);
 
   if (title.length == 0) {
-    throw new functions.https.HttpsError(
-      "invalid-argument",
-      `${fieldName} cannot be empty.`
-    );
+    const errMsg = `${fieldName} cannot be empty.`;
+    throw new functions.https.HttpsError("invalid-argument", errMsg, errMsg);
   }
 
   if (title.length > CONSTANTS.CALENDAR.MAX_EVENT_TITLE_LENGTH) {
-    throw new functions.https.HttpsError(
-      "invalid-argument",
-      `${fieldName} should be less than ${CONSTANTS.CALENDAR.MAX_EVENT_TITLE_LENGTH} characters.`
-    );
+    const errMsg = `${fieldName} should be less than ${CONSTANTS.CALENDAR.MAX_EVENT_TITLE_LENGTH} characters.`;
+    throw new functions.https.HttpsError("invalid-argument", errMsg, errMsg);
   }
 };
 
@@ -29,10 +25,8 @@ const validateCalendarTimestamp = (timestamp, fieldName, fieldType) => {
   const isValid = utils.isTimestampISO8601(timestamp);
 
   if (!isValid) {
-    throw new functions.https.HttpsError(
-      "invalid-argument",
-      `${fieldName} should be a ISO8601 string.`
-    );
+    const errMsg = `${fieldName} should be a ISO8601 string.`;
+    throw new functions.https.HttpsError("invalid-argument", errMsg, errMsg);
   }
 };
 
@@ -64,10 +58,8 @@ const validateCalendarEventDescription = (description) => {
   utils.assertTypeCheck(fieldName, fieldType, description);
 
   if (description.length > CONSTANTS.CALENDAR.MAX_EVENT_DESCRIPTION_LENGTH) {
-    throw new functions.https.HttpsError(
-      "invalid-argument",
-      `${fieldName} should be less than ${CONSTANTS.CALENDAR.MAX_EVENT_DESCRIPTION_LENGTH} characters.`
-    );
+    const errMsg = `${fieldName} should be less than ${CONSTANTS.CALENDAR.MAX_EVENT_DESCRIPTION_LENGTH} characters.`;
+    throw new functions.https.HttpsError("invalid-argument", errMsg, errMsg);
   }
 };
 
