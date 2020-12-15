@@ -8,7 +8,7 @@ import CalendarProvider from "../providers/CalendarProvider";
 function CalendarContainer(props) {
   const userId = props.user.uid;
   return (
-    <CalendarProvider>
+    <CalendarProvider userId={userId}>
       <React.Fragment>
         <AppDrawer
           dashTitle="Calendar"
