@@ -13,11 +13,15 @@ exports.func = functions.https.onCall(async (data, context) => {
   calendarUtils.validateCalendarEvent(calendarEvent);
 
   const userId = context.auth.token.uid;
-  const calendarRef = store.collection(`calendarEvents/${userId}`);
+  const calendarRef = store
+    .collection("calendarEvents")
+    .doc(userId)
+    .collection("events");
 
   let status = false;
   try {
     const res = await calendarRef.add(calendarEvent);
+    console.log(`Successfully added event: [${res.id}]`);
     status = true;
   } catch (err) {
     const calendarEventStr = JSON.stringify(calendarEvent);

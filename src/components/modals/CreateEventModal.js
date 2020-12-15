@@ -13,6 +13,7 @@ import {
 import { SimpleModal } from "./SimpleModal";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
+import { addCalendarEvent } from "../../services/calendar-api";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,15 +52,15 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventDate, setEventDate] = useState(datePreset);
-  const [eventTimeStart, setEventTimeStart] = useState(timePreset);
-  const [eventTimeEnd, setEventTimeEnd] = useState(
+  const [eventStartTime, setEventStartTime] = useState(timePreset);
+  const [eventEndTime, setEventEndTime] = useState(
     timePreset.clone().add(30, "minutes")
   );
 
   useEffect(() => {
     setEventDate(datePreset);
-    setEventTimeStart(timePreset);
-    setEventTimeEnd(timePreset.clone().add(30, "minutes"));
+    setEventStartTime(timePreset);
+    setEventEndTime(timePreset.clone().add(30, "minutes"));
   }, [timePreset, datePreset]);
 
   const closeSnackbar = (event, reason) => {
@@ -72,6 +73,28 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
 
   const handleDescriptionChange = (event) => {
     setEventDescription(event.target.value);
+  };
+
+  const handleSaveEvent = () => {
+    const calendarEvent = {
+      eventTitle: eventTitle,
+      eventDescription: eventDescription,
+      eventDate: moment.utc(eventDate).format(),
+      eventStartTime: moment.utc(eventStartTime).format(),
+      eventEndTime: moment.utc(eventEndTime).format(),
+      //eventEndTime,
+    };
+    addCalendarEvent(calendarEvent).then((res) => {
+      console.log("addCalendarEvent: ", res);
+      if (res.status) {
+        handleCloseModal();
+        setSnackbarMessage("Event added.");
+        setOpenSnackbar(true);
+      } else {
+        setSnackbarMessage(res.details);
+        setOpenSnackbar(true);
+      }
+    });
   };
 
   return (
@@ -115,13 +138,13 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
           <div>
             <Button onClick={(e) => setStartTimePickerAnchorEl(e.target)}>
               <Typography variant="subtitle2">
-                {eventTimeStart.format("h:mm A")}
+                {eventStartTime.format("h:mm A")}
               </Typography>
             </Button>
             {" - "}
             <Button onClick={(e) => setEndTimePickerAnchorEl(e.target)}>
               <Typography variant="subtitle2">
-                {eventTimeEnd.format("h:mm A")}
+                {eventEndTime.format("h:mm A")}
               </Typography>
             </Button>
           </div>
@@ -130,6 +153,7 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
               variant="contained"
               color="primary"
               style={{ marginRight: theme.spacing(2) }}
+              onClick={handleSaveEvent}
             >
               Save
             </Button>
@@ -160,14 +184,14 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
       <TimePickerPopover
         anchorEl={startTimePickerAnchorEl}
         closeMenu={() => setStartTimePickerAnchorEl(null)}
-        selectedTime={eventTimeStart}
-        handleTimeChange={setEventTimeStart}
+        selectedTime={eventStartTime}
+        handleTimeChange={setEventStartTime}
       />
       <TimePickerPopover
         anchorEl={endTimePickerAnchorEl}
         closeMenu={() => setEndTimePickerAnchorEl(null)}
-        selectedTime={eventTimeEnd}
-        handleTimeChange={setEventTimeEnd}
+        selectedTime={eventEndTime}
+        handleTimeChange={setEventEndTime}
       />
     </div>
   );
