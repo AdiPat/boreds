@@ -1,5 +1,6 @@
+import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import {Typography} from '@material-ui/core';
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   monthSlot: {
@@ -14,15 +15,22 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: "0",
     justifyContent: "center",
     minHeight: theme.spacing(16),
+
+    "&:hover": {
+      backgroundColor: grey[200],
+      cursor: "pointer",
+    },
   },
 }));
 
 function CalendarMonthSlot({ day }) {
   const classes = useStyles();
 
-  return <div className={classes.monthSlot}>
+  return (
+    <div className={classes.monthSlot}>
       <Typography variant="subtitle1">{day.format("DD")}</Typography>
-  </div>;
+    </div>
+  );
 }
 
 export { CalendarMonthSlot };
