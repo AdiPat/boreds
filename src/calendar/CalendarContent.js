@@ -58,6 +58,8 @@ function CalendarContent(props) {
     setNumSlots(_numSlots);
   }, [duration]);
 
+  console.log("CalendarContent.render(): ");
+
   return (
     <main className={classes.content}>
       <CalendarHeader duration={duration} isDuration={isDuration} />
@@ -70,8 +72,8 @@ function CalendarContent(props) {
           openCreateEventModal={handleOpenModal}
           setModalPreset={setModalPreset}
         />
-        <CalendarMonth show={isDuration.month} />
-        <CalendarYear show={isDuration.year} />
+        <CalendarMonth selectedDate={selectedDate} show={isDuration.month} />
+        <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
       </div>
       <CreateEventModal
         open={openModal}

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Grid } from "@material-ui/core";
-import CalendarContext from "../providers/CalendarContext";
+import { getMonthsInYear } from "../services/calendar";
 import { CalendarYearMonth } from "./CalendarYearMonth";
 
 const useStyles = makeStyles((theme) => ({
@@ -12,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarYear({ show }) {
+function CalendarYear({ selectedDate, show }) {
   const classes = useStyles();
-  const { months } = useContext(CalendarContext);
 
   const renderMonths = () => {
+    const months = getMonthsInYear(selectedDate.year());
     let monthsJsx = months.map((month) => <CalendarYearMonth month={month} />);
     return monthsJsx;
   };
@@ -29,10 +30,12 @@ function CalendarYear({ show }) {
 }
 
 CalendarYear.propTypes = {
+  selectedDate: PropTypes.instanceOf(moment).isRequired,
   show: PropTypes.bool.isRequired,
 };
 
 CalendarYear.defaultProps = {
+  selectedDate: moment(),
   show: false,
 };
 

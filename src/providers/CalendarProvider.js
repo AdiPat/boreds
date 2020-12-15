@@ -1,14 +1,8 @@
 import React from "react";
 import CalendarContext from "./CalendarContext";
 import moment from "moment";
-import { isDateEqual } from "../utils/util";
 import CONSTANTS from "../utils/constants";
-import {
-  getWeekCalendar,
-  getWeek,
-  getNextFourDays,
-  getMonthsInYear,
-} from "../services/calendar";
+import { getWeek, getNextFourDays } from "../services/calendar";
 import {
   attachCalendarEventsListener,
   detachCalendarEventsListener,
@@ -20,22 +14,16 @@ class CalendarProvider extends React.PureComponent {
     super(props);
     this.state = {
       selectedDate: now,
-      remount: false,
-      calendar: getWeekCalendar(now.month(), now.year()),
       events: {},
       eventsObserver: null,
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
-      months: getMonthsInYear(now.year()),
     };
 
-    this.forceUpdate = this.forceUpdate.bind(this);
     this.setSelectedDate = this.setSelectedDate.bind(this);
-    this.updateCalendar = this.updateCalendar.bind(this);
     this.getCurrentWeek = this.getCurrentWeek.bind(this);
     this.getFourDays = this.getFourDays.bind(this);
     this.setCalendarDuration = this.setCalendarDuration.bind(this);
     this.selectDateNow = this.selectDateNow.bind(this);
-    this.updateMonths = this.updateMonths.bind(this);
     this.setYearEventsInState = this.setYearEventsInState.bind(this);
     this.updateYearEvents = this.updateYearEvents.bind(this);
   }
@@ -63,10 +51,6 @@ class CalendarProvider extends React.PureComponent {
     this.setState({ eventsObserver: observer, events: calendarEvents });
   }
 
-  forceProviderUpdate() {
-    this.setState({ remount: !this.state.remount });
-  }
-
   setCalendarDuration(duration) {
     const foundDuration = Object.values(CONSTANTS.CALENDAR.DURATIONS).find(
       (_duration) => _duration === duration
@@ -81,7 +65,10 @@ class CalendarProvider extends React.PureComponent {
   }
 
   setSelectedDate(date) {
-    this.setState({ selectedDate: date });
+    const updatedDate = moment(date);
+    if (updatedDate.isValid()) {
+      this.setState({ selectedDate: updatedDate });
+    }
   }
 
   selectDateNow() {
@@ -97,15 +84,7 @@ class CalendarProvider extends React.PureComponent {
     return getNextFourDays(this.state.selectedDate);
   }
 
-  updateCalendar() {
-    const weekCalendar = getWeekCalendar(
-      this.state.selectedDate.month(),
-      this.state.selectedDate.year()
-    );
-    this.setState({ calendar: weekCalendar });
-  }
-
-  updateYearEvents() {
+  async updateYearEvents() {
     attachCalendarEventsListener(
       this.state.selectedDate.year(),
       this.props.userId,
@@ -113,25 +92,16 @@ class CalendarProvider extends React.PureComponent {
     );
   }
 
-  updateMonths() {
-    const months = getMonthsInYear(this.state.selectedDate.year());
-    this.setState({ months: months });
-  }
-
   componentDidMount() {
-    this.updateCalendar();
-    this.updateMonths();
     this.updateYearEvents();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!isDateEqual(prevState.selectedDate, this.state.selectedDate)) {
-      this.updateCalendar();
-    }
-
     if (prevState.selectedDate.year() !== this.state.selectedDate.year()) {
-      this.updateMonths();
-      this.updateYearEvents();
+      if (this.state.eventsObserver) {
+        detachCalendarEventsListener(this.state.eventsObserver);
+        this.updateYearEvents();
+      }
     }
   }
 
@@ -153,8 +123,6 @@ class CalendarProvider extends React.PureComponent {
           setCalendarDuration: this.setCalendarDuration,
           getCurrentWeek: this.getCurrentWeek,
           getFourDays: this.getFourDays,
-          calendar: this.state.calendar,
-          months: this.state.months,
         }}
       >
         {this.props.children}
