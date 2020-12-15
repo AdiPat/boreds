@@ -8,6 +8,7 @@ import CONSTANTS from "../utils/constants";
 import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
 import { getSlotDividerFlags } from "../services/calendar";
 import CalendarContext from "../providers/CalendarContext";
+import { CalendarEventChip } from "./CalendarEventChip";
 
 const useStyles = makeStyles((theme) => ({
   daySlot: {
@@ -68,6 +69,26 @@ function CalendarWeekDaySlot({
     }
   }, [slotMoment]);
 
+  const renderEventChips = () => {
+    const numChips = slotEvents.length;
+    const chipsJsx = slotEvents.map((_event, i) => {
+      const jsx = (
+        <CalendarEventChip
+          style={{
+            position: "absolute",
+            top: 0,
+            left: `calc(${i} * (100% / ${numChips}))`,
+            maxWidth: `calc(100% / ${numChips})`,
+          }}
+          key={i}
+          title={_event.title}
+        />
+      );
+      return jsx;
+    });
+    return chipsJsx;
+  };
+
   const handleClick = (event) => {
     const bounds = event.target.getBoundingClientRect();
     const yOffset = event.clientY - bounds.top;
@@ -84,6 +105,7 @@ function CalendarWeekDaySlot({
 
   return (
     <div className={clsx(classes.daySlot)} onClick={handleClick}>
+      {renderEventChips()}
       {isCurrent ? (
         <CalendarSlotTimeIndicator dividerFlags={dividerFlags} />
       ) : null}
