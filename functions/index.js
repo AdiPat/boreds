@@ -1,10 +1,14 @@
 const admin = require("firebase-admin");
+const userFunctions = require("./user/index");
 const boardFunctions = require("./board/index");
 const inviteFunctions = require("./invite/index");
 const taskFunctions = require("./tasks/index");
 const calendarFunctions = require("./calendar/index");
 
 admin.initializeApp();
+
+// user functions
+exports.userCreateTrigger = userFunctions.userCreateTrigger;
 
 // board functions
 exports.updatePublicBoards = boardFunctions.updatePublicBoards;
