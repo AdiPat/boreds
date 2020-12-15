@@ -2,19 +2,19 @@ import React from "react";
 import CalendarContext from "./CalendarContext";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
-import { getWeek, getNextFourDays } from "../services/calendar";
 import {
   attachCalendarEventsListener,
   detachCalendarEventsListener,
 } from "../services/calendar-api";
 
-class CalendarProvider extends React.PureComponent {
+class CalendarProvider extends React.Component {
   constructor(props) {
     const now = moment(new Date());
     super(props);
     this.state = {
       selectedDate: now,
       events: {},
+      eventsCount: 0,
       eventsObserver: null,
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
     };
@@ -28,7 +28,8 @@ class CalendarProvider extends React.PureComponent {
 
   setYearEventsInState(eventDocs, observer) {
     let calendarEvents = {};
-    eventDocs.forEach((eventDocSnapshot) => {
+    let numEvents = 0;
+    eventDocs.forEach((eventDocSnapshot, i) => {
       const event = eventDocSnapshot.data();
       let updatedEvent = Object.assign({}, event);
       updatedEvent.date = moment(event.date);
@@ -46,8 +47,13 @@ class CalendarProvider extends React.PureComponent {
       } else {
         calendarEvents[dateKey][timeKey].push(updatedEvent);
       }
+      numEvents += 1;
     });
-    this.setState({ eventsObserver: observer, events: calendarEvents });
+    this.setState({
+      eventsObserver: observer,
+      events: calendarEvents,
+      eventsCount: numEvents,
+    });
   }
 
   setCalendarDuration(duration) {
@@ -81,6 +87,29 @@ class CalendarProvider extends React.PureComponent {
       this.props.userId,
       this.setYearEventsInState
     );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    let shouldUpdate = false;
+    if (
+      nextState.selectedDate.format("DD-MM-YYYY") !==
+      this.state.selectedDate.format("DD-MM-YYYY")
+    ) {
+      shouldUpdate = true;
+    }
+
+    if (nextState.duration !== this.state.duration) {
+      shouldUpdate = true;
+    }
+
+    if (
+      nextState.eventsCount !== this.state.eventsCount ||
+      nextState.selectedDate.year() !== this.state.selectedDate.year()
+    ) {
+      shouldUpdate = true;
+    }
+
+    return shouldUpdate;
   }
 
   componentDidMount() {
