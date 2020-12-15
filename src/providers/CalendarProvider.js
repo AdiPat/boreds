@@ -9,6 +9,10 @@ import {
   getNextFourDays,
   getMonthsInYear,
 } from "../services/calendar";
+import {
+  attachCalendarEventsListener,
+  detachCalendarEventsListener,
+} from "../services/calendar-api";
 
 class CalendarProvider extends React.PureComponent {
   constructor(props) {
@@ -18,6 +22,8 @@ class CalendarProvider extends React.PureComponent {
       selectedDate: now,
       remount: false,
       calendar: getWeekCalendar(now.month(), now.year()),
+      events: {},
+      eventsObserver: null,
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
       months: getMonthsInYear(now.year()),
     };
@@ -30,6 +36,17 @@ class CalendarProvider extends React.PureComponent {
     this.setCalendarDuration = this.setCalendarDuration.bind(this);
     this.selectDateNow = this.selectDateNow.bind(this);
     this.updateMonths = this.updateMonths.bind(this);
+    this.setYearEventsInState = this.setYearEventsInState.bind(this);
+    this.updateYearEvents = this.updateYearEvents.bind(this);
+  }
+
+  setYearEventsInState(events, observer) {
+    let calendarEvents = {};
+    events.forEach((event) => {
+      const eventDate = moment(event.date); // convert to local time
+      calendarEvents[eventDate.format()] = event;
+    });
+    this.setState({ eventsObserver: observer, events: calendarEvents });
   }
 
   forceProviderUpdate() {
@@ -74,6 +91,14 @@ class CalendarProvider extends React.PureComponent {
     this.setState({ calendar: weekCalendar });
   }
 
+  updateYearEvents() {
+    attachCalendarEventsListener(
+      this.state.selectedDate.year(),
+      this.props.userId,
+      this.setYearEventsInState
+    );
+  }
+
   updateMonths() {
     const months = getMonthsInYear(this.state.selectedDate.year());
     this.setState({ months: months });
@@ -82,6 +107,7 @@ class CalendarProvider extends React.PureComponent {
   componentDidMount() {
     this.updateCalendar();
     this.updateMonths();
+    this.updateYearEvents();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -89,8 +115,15 @@ class CalendarProvider extends React.PureComponent {
       this.updateCalendar();
     }
 
-    if (prevState.selectedDate.year() != this.state.selectedDate.year()) {
+    if (prevState.selectedDate.year() !== this.state.selectedDate.year()) {
       this.updateMonths();
+      this.updateYearEvents();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.state.eventsObserver) {
+      detachCalendarEventsListener(this.state.eventsObserver);
     }
   }
 
