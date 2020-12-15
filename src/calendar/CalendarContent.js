@@ -62,7 +62,11 @@ function CalendarContent(props) {
 
   return (
     <main className={classes.content}>
-      <CalendarHeader duration={duration} isDuration={isDuration} />
+      <CalendarHeader
+        selectedDate={selectedDate}
+        duration={duration}
+        isDuration={isDuration}
+      />
       <div className={classes.calendar}>
         <CalendarTimeStrip duration={duration} isDuration={isDuration} />
         <CalendarWeek

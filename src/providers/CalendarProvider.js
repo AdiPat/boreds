@@ -20,8 +20,6 @@ class CalendarProvider extends React.PureComponent {
     };
 
     this.setSelectedDate = this.setSelectedDate.bind(this);
-    this.getCurrentWeek = this.getCurrentWeek.bind(this);
-    this.getFourDays = this.getFourDays.bind(this);
     this.setCalendarDuration = this.setCalendarDuration.bind(this);
     this.selectDateNow = this.selectDateNow.bind(this);
     this.setYearEventsInState = this.setYearEventsInState.bind(this);
@@ -77,14 +75,6 @@ class CalendarProvider extends React.PureComponent {
     this.setSelectedDate(now);
   }
 
-  getCurrentWeek() {
-    return getWeek(this.state.selectedDate);
-  }
-
-  getFourDays() {
-    return getNextFourDays(this.state.selectedDate);
-  }
-
   async updateYearEvents() {
     attachCalendarEventsListener(
       this.state.selectedDate.year(),
@@ -122,8 +112,6 @@ class CalendarProvider extends React.PureComponent {
           setSelectedDate: this.setSelectedDate,
           selectDateNow: this.selectDateNow,
           setCalendarDuration: this.setCalendarDuration,
-          getCurrentWeek: this.getCurrentWeek,
-          getFourDays: this.getFourDays,
         }}
       >
         {this.props.children}

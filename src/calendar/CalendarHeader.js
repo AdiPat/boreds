@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import CalendarContext from "../providers/CalendarContext";
 import CONSTANTS from "../utils/constants";
 import { CalendarHeaderItem } from "./CalendarHeaderItem";
+import { getWeek, getNextFourDays } from "../services/calendar";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -13,16 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarHeader({ duration, isDuration }) {
+function CalendarHeader({ selectedDate, duration, isDuration }) {
   const classes = useStyles();
   const [dates, setDates] = useState([]);
   const theme = useTheme();
-
-  const {
-    state: { selectedDate },
-    getCurrentWeek,
-    getFourDays,
-  } = useContext(CalendarContext);
 
   useEffect(() => {
     // set dates
@@ -33,9 +27,9 @@ function CalendarHeader({ duration, isDuration }) {
   const getDates = (_duration) => {
     let dates = [];
     if (isDuration.week || isDuration.month) {
-      dates = getCurrentWeek();
+      dates = getWeek(selectedDate);
     } else if (isDuration.fourdays) {
-      dates = getFourDays();
+      dates = getNextFourDays(selectedDate);
     } else if (isDuration.day) {
       dates = [selectedDate];
     }
