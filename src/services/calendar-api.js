@@ -30,7 +30,7 @@ const attachCalendarEventsListener = async (year, userId, setEventsInState) => {
 
   const observer = query.onSnapshot(
     (querySnapshot) => {
-      const docs = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+      const docs = querySnapshot.docs;
       setEventsInState(docs, observer);
     },
     (err) => {

@@ -28,9 +28,10 @@ class CalendarProvider extends React.PureComponent {
     this.updateYearEvents = this.updateYearEvents.bind(this);
   }
 
-  setYearEventsInState(events, observer) {
+  setYearEventsInState(eventDocs, observer) {
     let calendarEvents = {};
-    events.forEach((event) => {
+    eventDocs.forEach((eventDocSnapshot) => {
+      const event = eventDocSnapshot.data();
       let updatedEvent = Object.assign({}, event);
       updatedEvent.date = moment(event.date);
       updatedEvent.startTime = moment(event.startTime);
