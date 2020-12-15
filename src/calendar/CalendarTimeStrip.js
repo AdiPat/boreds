@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   timeStrip: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     flexDirection: "column",
     paddingBottom: theme.spacing(4),
   },

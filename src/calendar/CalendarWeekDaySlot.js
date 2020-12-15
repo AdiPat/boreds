@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: grey[300],
     flexGrow: "1",
     flexBasis: "0",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: theme.spacing(6),
+    // justifyContent: "center",
+    // alignItems: "center",
+    minHeight: CONSTANTS.CALENDAR.DAY_SLOT_HEIGHT(theme),
 
     "&:first-child": {
       borderLeft: "1px solid lightgrey",

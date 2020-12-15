@@ -20,6 +20,7 @@ let _constants = {
   },
 
   CALENDAR: {
+    DAY_SLOT_HEIGHT: (theme) => theme.spacing(8),
     DAY_TIME_SLOT_FLAGS: {
       start: false,
       quarter: false,
