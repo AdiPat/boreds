@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  getFourDaySlotMoment,
   getWeekDaySlotMoment,
   isSelectedDateInSlot,
 } from "../services/calendar";
 import { CalendarWeekDaySlot } from "./CalendarWeekDaySlot";
+import CONSTANTS from "../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {
@@ -24,12 +26,25 @@ function CalendarWeekTimeSlot({
 }) {
   const classes = useStyles();
 
+  const getSlotMoment = (day) => {
+    let slotMoment = null;
+    if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.day) {
+      slotMoment = selectedDate.clone().hour(startHour).startOf("hour");
+    } else if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.week) {
+      slotMoment = getWeekDaySlotMoment(selectedDate, startHour, day);
+    } else if (numSlots == CONSTANTS.CALENDAR.NUM_DAYS.fourdays) {
+      slotMoment = getFourDaySlotMoment(selectedDate, startHour, day);
+    }
+    return slotMoment;
+  };
+
   const renderSlots = () => {
     const slotsJsx = [];
 
     for (let i = 0; i < numSlots; i++) {
       const day = i;
-      const slotMoment = getWeekDaySlotMoment(selectedDate, startHour, day);
+      let slotMoment = getSlotMoment(day);
+
       const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
       const jsx = (
         <CalendarWeekDaySlot

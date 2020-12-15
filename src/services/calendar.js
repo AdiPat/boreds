@@ -195,6 +195,13 @@ const getWeekDaySlotMoment = (selectedDate, startHour, day) => {
   return slotMoment;
 };
 
+const getFourDaySlotMoment = (selectedDate, startHour, day) => {
+  let slotMoment = selectedDate.clone().add(day, "days");
+  slotMoment = slotMoment.hour(startHour);
+  slotMoment = slotMoment.minute(0);
+  return slotMoment;
+};
+
 const isSelectedDateInSlot = (selectedDate, slotMoment) => {
   if (!selectedDate.isValid() || !slotMoment.isValid()) {
     return false;
@@ -252,6 +259,7 @@ export {
   getNextFourDays,
   getMonthsInYear,
   getWeekDaySlotMoment,
+  getFourDaySlotMoment,
   isSelectedDateInSlot,
   getSlotDividerFlags,
 };
