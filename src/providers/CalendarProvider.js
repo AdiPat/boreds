@@ -113,17 +113,16 @@ class CalendarProvider extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount():");
     this.updateYearEvents();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate(): ", prevState, this.state);
     if (prevState.selectedDate.year() !== this.state.selectedDate.year()) {
-      console.log("componentDidUpdate(): year changed. ");
       if (this.state.eventsObserver) {
-        console.log("componentDidUpdate(): attaching new events observer.");
         detachCalendarEventsListener(this.state.eventsObserver);
+      }
+      if (prevState.eventsObserver) {
+        detachCalendarEventsListener(prevState.eventsObserver);
       }
       this.updateYearEvents();
     }
