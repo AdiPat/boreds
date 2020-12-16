@@ -1,22 +1,27 @@
 import PropTypes from "prop-types";
-import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Paper } from "@material-ui/core";
+import CONSTANTS from "../utils/constants";
 
-const useStyles = makeStyles((theme) => ({
-  eventChipPaper: {
-    padding: theme.spacing(1),
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    "&:hover": {
-      backgroundColor: grey[300],
-      cursor: "pointer",
+const useStyles = ({ chipColor }) =>
+  makeStyles((theme) => ({
+    eventChipPaper: {
+      padding: theme.spacing(1),
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      "&:hover": {
+        backgroundColor: chipColor.hover,
+        cursor: "pointer",
+      },
+      backgroundColor: chipColor.backgroundColor,
+      color: chipColor.fontColor,
+      fontWeight: "bold",
+      fontSize: 12,
     },
-  },
-}));
+  }));
 
-function CalendarEventChip({ title, style }) {
-  const classes = useStyles();
+function CalendarEventChip({ title, style, chipColor }) {
+  const classes = useStyles({ chipColor })();
 
   return (
     <Tooltip title={title} aria-label="event-info">
@@ -31,6 +36,11 @@ function CalendarEventChip({ title, style }) {
 
 CalendarEventChip.propTypes = {
   title: PropTypes.string.isRequired,
+  chipColor: PropTypes.object,
+};
+
+CalendarEventChip.defaultProps = {
+  chipColor: CONSTANTS.CALENDAR.EVENT.colors.teal,
 };
 
 export { CalendarEventChip };

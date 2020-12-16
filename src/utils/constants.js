@@ -1,3 +1,5 @@
+import { teal, amber, pink, blue, grey } from "@material-ui/core/colors";
+
 function _inRange(val, start, end) {
   return val >= start && val < end;
 }
@@ -106,6 +108,19 @@ let _constants = {
       OCTOBER: 9,
       NOVEMBER: 10,
       DECEMBER: 11,
+    },
+
+    EVENT: {
+      colors: {
+        teal: {
+          backgroundColor: teal["A700"],
+          fontColor: "white",
+          hover: teal["A400"],
+        },
+        blue: { backgroundColor: blue[500], fontColor: "white" },
+        amber: { backgroundColor: amber[500], fontColor: "white" },
+        pink: { backgroundColor: pink[500], fontColor: "white" },
+      },
     },
   },
 };
