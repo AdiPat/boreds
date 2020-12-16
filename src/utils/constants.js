@@ -4,21 +4,34 @@ function _inRange(val, start, end) {
   return val >= start && val < end;
 }
 
+function _getAnchor(
+  anchorOriginVertical,
+  anchorOriginHorizontal,
+  transformOriginVertical,
+  transformOriginHorizontal
+) {
+  // top, bottom, left, right, center
+  return {
+    anchorOrigin: {
+      vertical: anchorOriginVertical,
+      horizontal: anchorOriginHorizontal,
+    },
+    transformOrigin: {
+      vertical: transformOriginVertical,
+      horizontal: transformOriginHorizontal,
+    },
+  };
+}
+
 let _constants = {
   SNACKBAR: {
     defaultDuration: 3000, //ms
   },
   POPOVER: {
-    ALIGN_BOTTOM_CENTER: {
-      anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "center",
-      },
-      transformOrigin: {
-        vertical: "top",
-        horizontal: "center",
-      },
-    },
+    ALIGN_BOTTOM_CENTER: _getAnchor("bottom", "center", "top", "center"),
+    ALIGN_CENTER_RIGHT: _getAnchor("center", "right", "center", "left"),
+    ALIGN_TOP_CENTER: _getAnchor("top", "center", "bottom", "center"),
+    ALIGN_CENTER_LEFT: _getAnchor("center", "left", "center", "right"),
   },
 
   CALENDAR: {

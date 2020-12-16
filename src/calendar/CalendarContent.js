@@ -11,6 +11,7 @@ import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
 import { CalendarYear } from "./CalendarYear";
 import { CreateEventModal } from "../components/modals/CreateEventModal";
+import { CalendarEventPopover } from "./menus/CalendarEventPopover";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarContent({ userId, extras }) {
   const classes = useStyles();
+  // event popover
+  const [eventAnchorEl, setEventAnchorEl] = useState(null);
+  const [curEvent, setCurEvent] = useState({});
+  //
   const [openModal, setOpenModal] = useState(false);
   const [modalPreset, setModalPreset] = useState(moment());
   const [numSlots, setNumSlots] = useState(0);
@@ -46,6 +51,17 @@ function CalendarContent({ userId, extras }) {
   } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
+
+  const handleOpenEventPopover = (e, calendarEvent) => {
+    console.log("handleOpenEventPopover(): ");
+    e.stopPropagation();
+    setCurEvent(calendarEvent);
+    setEventAnchorEl(e.currentTarget);
+  };
+
+  const handleCloseEventPopover = () => {
+    setEventAnchorEl(null);
+  };
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -87,6 +103,11 @@ function CalendarContent({ userId, extras }) {
           selectedDate={selectedDate}
           openCreateEventModal={handleOpenModal}
           setModalPreset={setModalPreset}
+          eventPopover={{
+            anchorEl: eventAnchorEl,
+            handleOpen: handleOpenEventPopover,
+            handleClose: handleCloseEventPopover,
+          }}
         />
         <CalendarMonth selectedDate={selectedDate} show={isDuration.month} />
         <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
@@ -96,6 +117,11 @@ function CalendarContent({ userId, extras }) {
         handleCloseModal={handleCloseModal}
         datePreset={modalPreset}
         timePreset={modalPreset}
+      />
+      <CalendarEventPopover
+        anchorEl={eventAnchorEl}
+        handleClose={handleCloseEventPopover}
+        event={curEvent}
       />
     </main>
   );

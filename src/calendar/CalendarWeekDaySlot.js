@@ -44,6 +44,7 @@ function CalendarWeekDaySlot({
   slotMoment,
   openCreateEventModal,
   setModalPreset,
+  eventPopover,
 }) {
   const classes = useStyles();
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
@@ -81,7 +82,9 @@ function CalendarWeekDaySlot({
             maxWidth: `calc(100% / ${numChips})`,
           }}
           key={i}
+          event={_event}
           title={_event.title}
+          eventPopover={eventPopover}
         />
       );
       return jsx;
@@ -119,6 +122,7 @@ CalendarWeekDaySlot.propTypes = {
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   openCreateEventModal: PropTypes.func.isRequired,
   setModalPreset: PropTypes.func.isRequired,
+  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarWeekDaySlot };

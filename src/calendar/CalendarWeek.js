@@ -24,6 +24,7 @@ function CalendarWeek({
   selectedDate,
   openCreateEventModal,
   setModalPreset,
+  eventPopover,
 }) {
   const classes = useStyles();
 
@@ -38,6 +39,7 @@ function CalendarWeek({
           startHour={i}
           openCreateEventModal={openCreateEventModal}
           setModalPreset={setModalPreset}
+          eventPopover={eventPopover}
         />
       );
       weekSlotsJsx.push(jsx);
@@ -58,6 +60,7 @@ CalendarWeek.propTypes = {
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   openCreateEventModal: PropTypes.func.isRequired,
   setModalPreset: PropTypes.func.isRequired,
+  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarWeek };

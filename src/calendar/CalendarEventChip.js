@@ -20,12 +20,15 @@ const useStyles = ({ chipColor }) =>
     },
   }));
 
-function CalendarEventChip({ title, style, chipColor }) {
+function CalendarEventChip({ title, style, chipColor, event, eventPopover }) {
   const classes = useStyles({ chipColor })();
 
   return (
     <Tooltip title={title} aria-label="event-info">
-      <div style={{ margin: 0, boxSizing: "border-box", ...style }}>
+      <div
+        style={{ margin: 0, boxSizing: "border-box", ...style }}
+        onClick={(e) => eventPopover.handleOpen(e, event)}
+      >
         <Paper className={classes.eventChipPaper} elevation={2}>
           {title}
         </Paper>
