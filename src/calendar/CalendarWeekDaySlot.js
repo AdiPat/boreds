@@ -59,13 +59,13 @@ function CalendarWeekDaySlot({
   useEffect(() => {
     const dateKey = slotMoment.format("DD-MM-YYYY");
     const timeKey = slotMoment.format("HH");
+    let _slotEvents = undefined;
     try {
-      const _slotEvents = events[dateKey][timeKey];
-      if (_slotEvents) {
-        setSlotEvents(_slotEvents);
-      }
+      _slotEvents = events[dateKey][timeKey];
     } catch (err) {
-      setSlotEvents([]);
+      _slotEvents = [];
+    } finally {
+      setSlotEvents(_slotEvents ? _slotEvents : []);
     }
   }, [slotMoment]);
 
