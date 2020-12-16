@@ -27,6 +27,19 @@ function CalendarEventPopover({ anchorEl, handleClose, event }) {
   const classes = useStyles();
   let popoverAlignment = CONSTANTS.POPOVER.ALIGN_CENTER_RIGHT;
 
+  let formattedDate = "";
+  let formattedInterval = "";
+
+  if (event.date) {
+    formattedDate = event.date.format("dddd, MMMM DD, YYYY");
+  }
+
+  if (event.startTime && event.endTime) {
+    const startTime = event.startTime.format("hh:mm A");
+    const endTime = event.endTime.format("hh:mm A");
+    formattedInterval = `${startTime} to ${endTime}`;
+  }
+
   return (
     <div>
       <Popover
@@ -40,14 +53,8 @@ function CalendarEventPopover({ anchorEl, handleClose, event }) {
           <div className={classes.popoverHeader}>
             <Typography variant="h6">{event.title}</Typography>
             <div>
-              <Typography variant="subtitle2">
-                {event.date.format("dddd, MMMM DD, YYYY")}
-              </Typography>
-              <Typography variant="subtitle2">
-                {event.startTime.format("hh:mm A") +
-                  " to " +
-                  event.endTime.format("hh:mm A")}
-              </Typography>
+              <Typography variant="subtitle2">{formattedDate}</Typography>
+              <Typography variant="subtitle2">{formattedInterval}</Typography>
             </div>
           </div>
           <Divider />
@@ -67,7 +74,9 @@ CalendarEventPopover.propTypes = {
 };
 
 CalendarEventPopover.defaultProps = {
+  anchorEl: null,
   event: {},
+  onClose: () => {},
 };
 
 export { CalendarEventPopover };
