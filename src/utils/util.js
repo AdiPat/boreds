@@ -1,4 +1,4 @@
-import moment, { duration } from "moment";
+import moment from "moment";
 import CONSTANTS from "./constants";
 
 const validateMonth = (month) => {
@@ -74,6 +74,29 @@ const getDurationFlags = (duration) => {
   return flags;
 };
 
+const parseCalendarExtras = (extraString) => {
+  const extras = extraString
+    .split("/")
+    .filter((t) => t !== "" && t !== "calendar");
+  let [duration, year, month, day] = extras;
+  let extraProps = {};
+
+  if (Object.values(CONSTANTS.CALENDAR.DURATIONS).includes(duration)) {
+    extraProps.duration = duration;
+  }
+
+  if (extraProps.duration && year !== undefined) {
+    const _date = moment([year, parseInt(month) - 1, day]);
+    if (_date.isValid()) {
+      extraProps.selectedDate = _date;
+    } else {
+      extraProps.invalidDate = true;
+    }
+  }
+
+  return extraProps;
+};
+
 export {
   validateMonth,
   validateYear,
@@ -81,4 +104,5 @@ export {
   isDateEqual,
   splitMonthToWeeks,
   getDurationFlags,
+  parseCalendarExtras,
 };

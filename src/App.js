@@ -53,9 +53,7 @@ function App() {
             <TasksPage />
           </Route>
           <Route path="/tasks/:taskId" component={TasksPage} />
-          <Route exact path="/calendar">
-            <CalendarPage />
-          </Route>
+          <Route path="/calendar" component={CalendarPage} />
         </Switch>
       </Router>
     </AppProvider>

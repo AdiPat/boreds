@@ -5,8 +5,11 @@ import { CalendarContent } from "./CalendarContent";
 import { CalendarTopBar } from "./CalendarTopBar";
 import CalendarProvider from "../providers/CalendarProvider";
 
-function CalendarContainer(props) {
-  const userId = props.user.uid;
+function CalendarContainer({ user, extras }) {
+  const userId = user.uid;
+
+  // console.log("CalendarContainer: ", extras);
+
   return (
     <CalendarProvider userId={userId}>
       <React.Fragment>
@@ -15,7 +18,7 @@ function CalendarContainer(props) {
           userId={userId}
           topButtons={<CalendarTopBar userId={userId} />}
         />
-        <CalendarContent userId={userId} />
+        <CalendarContent userId={userId} extras={extras} />
       </React.Fragment>
     </CalendarProvider>
   );
@@ -23,10 +26,12 @@ function CalendarContainer(props) {
 
 CalendarContainer.propTypes = {
   user: PropTypes.object.isRequired,
+  extras: PropTypes.array,
 };
 
 CalendarContainer.defaultProps = {
   userId: null,
+  extras: [],
 };
 
 export { CalendarContainer };

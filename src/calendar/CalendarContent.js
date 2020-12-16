@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarContent(props) {
+function CalendarContent({ userId, extras }) {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   const [modalPreset, setModalPreset] = useState(moment());
@@ -41,6 +41,8 @@ function CalendarContent(props) {
   const {
     state: { duration },
     selectedDate,
+    setSelectedDate,
+    setCalendarDuration,
   } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
@@ -52,6 +54,16 @@ function CalendarContent(props) {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  useEffect(() => {
+    if (!extras.invalidDate && extras.selectedDate) {
+      setSelectedDate(extras.selectedDate);
+    }
+
+    if (extras.duration) {
+      setCalendarDuration(extras.duration);
+    }
+  }, [extras]);
 
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
