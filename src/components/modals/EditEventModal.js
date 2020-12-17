@@ -111,6 +111,7 @@ function EditEventModal({
 
     // updated event with local format of field names
     const updatedEventLocal = mapCalendarEventFields(updatedEvent);
+    updatedEventLocal.id = eventId;
 
     let areEventsEqual = compareCalendarEvents(updatedEventLocal, curEvent);
 
@@ -128,9 +129,15 @@ function EditEventModal({
         setSnackbarMessage("Event updated.");
         setOpenSnackbar(true);
         resetEventPopover(eventId, updatedEventLocal);
+        handleCloseModal();
       } else {
-        setSnackbarMessage(res.details);
+        let errMsg = res.details;
+        if (!errMsg || errMsg.length == 0) {
+          errMsg = "Failed to update event. Try again later.";
+        }
+        setSnackbarMessage(errMsg);
         setOpenSnackbar(true);
+        handleCloseModal();
       }
     });
   };
