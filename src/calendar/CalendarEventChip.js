@@ -7,8 +7,9 @@ const useStyles = ({ chipColor }) =>
   makeStyles((theme) => ({
     eventChipPaper: {
       padding: theme.spacing(1),
-      overflow: "hidden",
+      textOverflow: "ellipsis",
       whiteSpace: "nowrap",
+      overflow: "hidden",
       "&:hover": {
         backgroundColor: chipColor.hover,
         cursor: "pointer",
