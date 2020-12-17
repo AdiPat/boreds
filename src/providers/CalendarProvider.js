@@ -62,17 +62,25 @@ class CalendarProvider extends React.Component {
     );
 
     // set default
-    if (!foundDuration) {
-      this.setState({ duration: CONSTANTS.CALENDAR.DURATIONS.week });
-    } else {
-      this.setState({ duration: duration });
+    if (foundDuration && duration !== this.state.duration) {
+      this.setState({ duration: duration }, () => {
+        this.props.history.push(
+          `/calendar/${duration}/${this.state.selectedDate.format(
+            "YYYY/MM/DD"
+          )}`
+        );
+      });
     }
   }
 
   setSelectedDate(date) {
     const updatedDate = moment(date);
     if (updatedDate.isValid()) {
-      this.setState({ selectedDate: updatedDate });
+      this.setState({ selectedDate: updatedDate }, () => {
+        this.props.history.push(
+          `/calendar/${this.state.duration}/${updatedDate.format("YYYY/MM/DD")}`
+        );
+      });
     }
   }
 

@@ -71,15 +71,15 @@ function CalendarContent({ userId, extras }) {
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    if (!extras.invalidDate && extras.selectedDate) {
-      setSelectedDate(extras.selectedDate);
-    }
+  // useEffect(() => {
+  //   if (!extras.invalidDate && extras.selectedDate) {
+  //     setSelectedDate(extras.selectedDate);
+  //   }
 
-    if (extras.duration) {
-      setCalendarDuration(extras.duration);
-    }
-  }, [extras]);
+  //   if (extras.duration) {
+  //     setCalendarDuration(extras.duration);
+  //   }
+  // }, [extras]);
 
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
