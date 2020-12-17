@@ -120,7 +120,7 @@ const getUTCString = (momentDate) => {
     throw new TypeError("Invalid date supplied. ");
   }
 
-  return momentDate.clone().utc().format();
+  return moment.utc(momentDate).format();
 };
 
 export {
