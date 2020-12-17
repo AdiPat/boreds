@@ -54,42 +54,61 @@ function CalendarWeekDaySlot({
   }
 
   // events
-  const [slotEvents, setSlotEvents] = useState([]);
+  const [slotEvents, setSlotEvents] = useState([[], [], []]);
   const { events } = useContext(CalendarContext);
 
   useEffect(() => {
+    const timeSlots = CONSTANTS.CALENDAR.DAY_TIME_SLOT;
     const dateKey = slotMoment.format("DD-MM-YYYY");
     const timeKey = slotMoment.format("HH");
-    let _slotEvents = undefined;
+    let _slotEventList = undefined;
+    let _slotEvents = [[], [], []];
     try {
-      _slotEvents = events[dateKey][timeKey];
+      _slotEventList = events[dateKey][timeKey];
     } catch (err) {
-      _slotEvents = [];
+      _slotEventList = [];
     } finally {
-      setSlotEvents(_slotEvents ? _slotEvents : []);
+      if (_slotEventList) {
+        _slotEventList.forEach((slot) => {
+          const startMinutes = slot.startTime.minutes();
+
+          if (startMinutes < timeSlots.start.max) {
+            _slotEvents[0].push(slot);
+          } else if (
+            startMinutes >= timeSlots.quarter.min &&
+            startMinutes < timeSlots.quarter.max
+          ) {
+            _slotEvents[1].push(slot);
+          } else if (startMinutes >= timeSlots.middle.min) {
+            _slotEvents[2].push(slot);
+          }
+        });
+        setSlotEvents(_slotEvents);
+      }
     }
   }, [slotMoment]);
 
   const renderEventChips = () => {
-    const numChips = slotEvents.length;
-    const chipsJsx = slotEvents.map((_event, i) => {
-      const jsx = (
-        <CalendarEventChip
-          style={{
-            position: "absolute",
-            top: 0,
-            left: `calc(${i} * (100% / ${numChips}))`,
-            maxWidth: `calc(100% / ${numChips})`,
-          }}
-          key={i}
-          event={_event}
-          title={_event.title}
-          eventPopover={eventPopover}
-        />
-      );
-      return jsx;
+    const _chipsJsx = slotEvents.map((row, topIdx) => {
+      return row.map((_event, i) => {
+        const jsx = (
+          <CalendarEventChip
+            style={{
+              position: "absolute",
+              top: `calc(${topIdx} * 100%/3)`,
+              left: `calc(${i} * (100% / ${row.length}))`,
+              maxWidth: `calc(100% / ${row.length})`,
+            }}
+            key={i}
+            event={_event}
+            title={_event.title}
+            eventPopover={eventPopover}
+          />
+        );
+        return jsx;
+      });
     });
-    return chipsJsx;
+    return _chipsJsx.flat();
   };
 
   const handleClick = (event) => {

@@ -35,13 +35,20 @@ let _constants = {
   },
 
   CALENDAR: {
-    DAY_SLOT_HEIGHT: (theme) => theme.spacing(8),
+    DAY_SLOT_HEIGHT: (theme) => theme.spacing(15),
     DAY_TIME_SLOT_FLAGS: {
       start: false,
       quarter: false,
       middle: false,
       threeQuarter: false,
       full: false,
+    },
+    DAY_TIME_SLOT: {
+      start: { min: 0, max: 15 },
+      quarter: { min: 15, max: 30 },
+      middle: { min: 30, max: 40 },
+      threeQuarter: { min: 40, max: 50 },
+      full: { min: 50, max: 60 },
     },
     DAY_TIME_SLOT_FLAGS_CHECK: {
       start: (mins) => _inRange(mins, 0, 15),
