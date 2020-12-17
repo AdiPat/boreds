@@ -16,6 +16,12 @@ const addCalendarEvent = async (calendarEvent) => {
     }));
 };
 
+const editCalendarEvent = async (updatedEvent) => {
+  return {
+    status: true,
+  };
+};
+
 const attachCalendarEventsListener = async (year, userId, setEventsInState) => {
   const momentDate = moment().year(year);
   const startDate = momentDate.clone().startOf("year");
@@ -49,6 +55,7 @@ const detachCalendarEventsListener = (observer) => {
 
 export {
   addCalendarEvent,
+  editCalendarEvent,
   attachCalendarEventsListener,
   detachCalendarEventsListener,
 };

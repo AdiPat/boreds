@@ -32,6 +32,7 @@ class CalendarProvider extends React.Component {
     eventDocs.forEach((eventDocSnapshot, i) => {
       const event = eventDocSnapshot.data();
       let updatedEvent = Object.assign({}, event);
+      updatedEvent.id = eventDocSnapshot.id;
       updatedEvent.date = moment(event.date);
       updatedEvent.startTime = moment(event.startTime);
       updatedEvent.endTime = moment(event.endTime);

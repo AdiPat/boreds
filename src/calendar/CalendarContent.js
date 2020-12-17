@@ -10,6 +10,7 @@ import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
 import { CalendarYear } from "./CalendarYear";
+import { EditEventModal } from "../components/modals/EditEventModal";
 import { CreateEventModal } from "../components/modals/CreateEventModal";
 import { CalendarEventPopover } from "./menus/CalendarEventPopover";
 
@@ -39,16 +40,14 @@ function CalendarContent({ userId, extras }) {
   // event popover
   const [eventAnchorEl, setEventAnchorEl] = useState(null);
   const [curEvent, setCurEvent] = useState({});
-  //
-  const [openModal, setOpenModal] = useState(false);
+  // edit event modal
+  const [openEditEventModal, setOpenEditEventModal] = useState(false);
+  // create event modal
+  const [openCreateEventModal, setOpenCreateEventModal] = useState(false);
   const [modalPreset, setModalPreset] = useState(moment());
+  // header and days rendering
   const [numSlots, setNumSlots] = useState(0);
-  const {
-    state: { duration },
-    selectedDate,
-    setSelectedDate,
-    setCalendarDuration,
-  } = useContext(CalendarContext);
+  const { duration, selectedDate } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
 
@@ -63,12 +62,20 @@ function CalendarContent({ userId, extras }) {
     setEventAnchorEl(null);
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
+  const handleOpenCreateEventModal = () => {
+    setOpenCreateEventModal(true);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseCreateEventModal = () => {
+    setOpenCreateEventModal(false);
+  };
+
+  const handleOpenEditEventModal = () => {
+    setOpenEditEventModal(true);
+  };
+
+  const handleCloseEditEventModal = () => {
+    setOpenEditEventModal(false);
   };
 
   // useEffect(() => {
@@ -101,7 +108,7 @@ function CalendarContent({ userId, extras }) {
           show={isDuration.day || isDuration.week || isDuration.fourdays}
           numSlots={numSlots}
           selectedDate={selectedDate}
-          openCreateEventModal={handleOpenModal}
+          openCreateEventModal={handleOpenCreateEventModal}
           setModalPreset={setModalPreset}
           eventPopover={{
             anchorEl: eventAnchorEl,
@@ -113,15 +120,21 @@ function CalendarContent({ userId, extras }) {
         <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
       </div>
       <CreateEventModal
-        open={openModal}
-        handleCloseModal={handleCloseModal}
+        open={openCreateEventModal}
+        handleCloseModal={handleCloseCreateEventModal}
         datePreset={modalPreset}
         timePreset={modalPreset}
+      />
+      <EditEventModal
+        open={openEditEventModal}
+        handleCloseModal={handleCloseEditEventModal}
+        curEvent={curEvent}
       />
       <CalendarEventPopover
         anchorEl={eventAnchorEl}
         handleClose={handleCloseEventPopover}
         event={curEvent}
+        openEditEventModal={handleOpenEditEventModal}
       />
     </main>
   );

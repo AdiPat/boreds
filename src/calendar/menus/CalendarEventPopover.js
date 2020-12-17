@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Popover,
   Typography,
-  Grid,
+  Button,
   Divider,
   IconButton,
   Tooltip,
@@ -12,6 +13,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
+  hide: {
+    display: "none",
+  },
   popoverContainer: {
     boxSizing: "border-box",
     display: "flex",
@@ -37,7 +41,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventPopover({ anchorEl, handleClose, event }) {
+function CalendarEventPopover({
+  anchorEl,
+  handleClose,
+  event,
+  openEditEventModal,
+}) {
   const classes = useStyles();
   let popoverAlignment = CONSTANTS.POPOVER.ALIGN_CENTER_RIGHT;
 
@@ -68,7 +77,11 @@ function CalendarEventPopover({ anchorEl, handleClose, event }) {
             <div className={classes.popoverHeaderMain}>
               <Typography variant="h6">{event.title}</Typography>
               <Tooltip title="Edit" aria-label="edit-event-tooltip">
-                <IconButton size="medium" aria-label="edit-event">
+                <IconButton
+                  size="medium"
+                  aria-label="edit-event"
+                  onClick={openEditEventModal}
+                >
                   <EditIcon />
                 </IconButton>
               </Tooltip>
@@ -81,6 +94,16 @@ function CalendarEventPopover({ anchorEl, handleClose, event }) {
           <Divider />
           <div className={classes.popoverDescription}>
             <Typography variant="subtitle1">{event.description}</Typography>
+            <Button
+              onClick={openEditEventModal}
+              className={clsx({
+                [classes.hide]: event.description
+                  ? event.description.length
+                  : false,
+              })}
+            >
+              Add Description
+            </Button>
           </div>
         </div>
       </Popover>
