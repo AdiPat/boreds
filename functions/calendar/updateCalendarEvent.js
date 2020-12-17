@@ -8,8 +8,6 @@ exports.func = functions.https.onCall(async (data, context) => {
   const eventId = data.eventId;
   const _updatedCalendarEvent = data.event;
 
-  console.log("updateCalendarEvent: ", _updatedCalendarEvent);
-
   utils.assertUserAuth(context);
 
   utils.assertTypeCheck("eventId", "string", eventId);
