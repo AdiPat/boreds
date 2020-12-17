@@ -1,5 +1,6 @@
 import moment from "moment";
 import CONSTANTS from "./constants";
+import hash from "object-hash";
 
 const validateMonth = (month) => {
   const _month = parseInt(month);
@@ -97,6 +98,19 @@ const parseCalendarExtras = (extraString) => {
   return extraProps;
 };
 
+const hashEventId = (eventId) => {
+  return hash({ eventId });
+};
+
+const mapCalendarEventFields = (calendarEvent) => {
+  let _calendarEvent = {};
+  Object.keys(calendarEvent).forEach((field) => {
+    const localField = CONSTANTS.CALENDAR.EVENT.FIELDS[field].localField;
+    _calendarEvent[localField] = calendarEvent[field];
+  });
+  return _calendarEvent;
+};
+
 export {
   validateMonth,
   validateYear,
@@ -105,4 +119,6 @@ export {
   splitMonthToWeeks,
   getDurationFlags,
   parseCalendarExtras,
+  hashEventId,
+  mapCalendarEventFields,
 };
