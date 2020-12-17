@@ -22,19 +22,19 @@ const useStyles = ({ chipColor }) =>
     },
   }));
 
-function CalendarEventChip({ title, style, chipColor, event, eventPopover }) {
+function CalendarEventChip({ style, chipColor, event, eventPopover }) {
   const classes = useStyles({ chipColor })();
   const btnId = hashEventId(event.id);
 
   return (
-    <Tooltip title={title} aria-label="event-info">
+    <Tooltip title={event.title} aria-label="event-info">
       <div
         style={{ margin: 0, boxSizing: "border-box", ...style }}
         onClick={(e) => eventPopover.handleOpen(e, event)}
         id={btnId}
       >
         <Paper className={classes.eventChipPaper} elevation={2}>
-          {title}
+          {event.title}
         </Paper>
       </div>
     </Tooltip>
@@ -42,7 +42,8 @@ function CalendarEventChip({ title, style, chipColor, event, eventPopover }) {
 }
 
 CalendarEventChip.propTypes = {
-  title: PropTypes.string.isRequired,
+  event: PropTypes.object.isRequired,
+  eventPopover: PropTypes.object.isRequired,
   chipColor: PropTypes.object,
 };
 

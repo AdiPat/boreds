@@ -101,7 +101,6 @@ function CalendarWeekDaySlot({
             }}
             key={i}
             event={_event}
-            title={_event.title}
             eventPopover={eventPopover}
           />
         );
