@@ -108,7 +108,8 @@ function CalendarWeekDaySlot({
         return jsx;
       });
     });
-    return _chipsJsx.flat();
+    const chipsJsx = _chipsJsx.flat();
+    return chipsJsx;
   };
 
   const handleClick = (event) => {
