@@ -1,6 +1,14 @@
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Popover, Typography, Grid, Divider } from "@material-ui/core";
+import {
+  Popover,
+  Typography,
+  Grid,
+  Divider,
+  IconButton,
+  Tooltip,
+} from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   popoverHeader: {
     display: "flex",
     padding: theme.spacing(2),
+    flexDirection: "column",
+    justifyContent: "space-between",
+    // alignItems: "center",
+  },
+  popoverHeaderMain: {
+    display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -51,7 +65,14 @@ function CalendarEventPopover({ anchorEl, handleClose, event }) {
       >
         <div className={classes.popoverContainer}>
           <div className={classes.popoverHeader}>
-            <Typography variant="h6">{event.title}</Typography>
+            <div className={classes.popoverHeaderMain}>
+              <Typography variant="h6">{event.title}</Typography>
+              <Tooltip title="Edit" aria-label="edit-event-tooltip">
+                <IconButton size="medium" aria-label="edit-event">
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
             <div>
               <Typography variant="subtitle2">{formattedDate}</Typography>
               <Typography variant="subtitle2">{formattedInterval}</Typography>
