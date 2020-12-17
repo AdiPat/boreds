@@ -125,7 +125,6 @@ function EditEventModal({
 
     updateCalendarEvent(eventId, updatedEvent).then((res) => {
       if (res.status) {
-        handleCloseModal();
         setSnackbarMessage("Event updated.");
         setOpenSnackbar(true);
         resetEventPopover(eventId, updatedEventLocal);
