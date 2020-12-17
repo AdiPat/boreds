@@ -14,7 +14,8 @@ import {
 import { SimpleModal } from "./SimpleModal";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
-import { editCalendarEvent } from "../../services/calendar-api";
+import { updateCalendarEvent } from "../../services/calendar-api";
+import { compareCalendarEvents } from "../../services/calendar";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -90,6 +91,25 @@ function EditEventModal({
   }, [curEvent]);
 
   const handleSaveEvent = () => {
+    let areEventsEqual = compareCalendarEvents(
+      {
+        title: eventTitle,
+        description: eventDescription,
+        date: eventDate,
+        startTime: eventStartTime,
+        endTime: eventEndTime,
+      },
+      curEvent
+    );
+
+    if (areEventsEqual) {
+      handleCloseModal();
+      console.log("Event unchanged.");
+      setSnackbarMessage("Event unchanged.");
+      setOpenSnackbar(true);
+      return;
+    }
+
     const calendarEvent = {
       eventTitle: eventTitle,
       eventDescription: eventDescription,
@@ -98,11 +118,12 @@ function EditEventModal({
       eventEndTime: moment.utc(eventEndTime).format(),
       //eventEndTime,
     };
-    editCalendarEvent(calendarEvent).then((res) => {
-      console.log("addCalendarEvent: ", res);
+
+    updateCalendarEvent(curEvent.id, calendarEvent).then((res) => {
+      console.log("updateCalendarEvent: ", res);
       if (res.status) {
         handleCloseModal();
-        setSnackbarMessage("Event added.");
+        setSnackbarMessage("Event updated.");
         setOpenSnackbar(true);
       } else {
         setSnackbarMessage(res.details);

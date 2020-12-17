@@ -247,6 +247,16 @@ const getSlotDividerFlags = (selectedDate, slotMoment) => {
   return flags;
 };
 
+const compareCalendarEvents = (e1, e2) => {
+  return (
+    e1.title === e2.title &&
+    e1.description === e2.description &&
+    e1.date.format("DD-MM-YYYY") === e2.date.format("DD-MM-YYYY") &&
+    e1.startTime.format("hh:mm A") === e2.startTime.format("hh:mm A") &&
+    e1.endTime.format("hh:mm A") === e2.endTime.format("hh:mm A")
+  );
+};
+
 export {
   getDaysInMonth,
   getMonthName,
@@ -262,4 +272,5 @@ export {
   getFourDaySlotMoment,
   isSelectedDateInSlot,
   getSlotDividerFlags,
+  compareCalendarEvents,
 };
