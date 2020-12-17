@@ -1,5 +1,7 @@
 import { useState, useRef, useContext } from "react";
 import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import moment from "moment";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useTheme } from "@material-ui/core/styles";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
@@ -9,12 +11,15 @@ import { getDateButtonText } from "../../services/calendar";
 function DateButton() {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
   const btnRef = useRef(null);
-  const context = useContext(CalendarContext);
+  const { setSelectedDate, duration, selectedDate } = useContext(
+    CalendarContext
+  );
   const open = Boolean(anchorEl);
 
   // formatted btn display
-  const btnText = getDateButtonText(context.selectedDate);
+  const btnText = getDateButtonText(selectedDate);
 
   const openMenu = (e) => {
     setAnchorEl(e.currentTarget);
@@ -25,7 +30,9 @@ function DateButton() {
   };
 
   const handleDateChange = (date) => {
-    context.setSelectedDate(date);
+    const momentDate = moment(date);
+    setSelectedDate(date);
+    history.push(`/calendar/${duration}/${momentDate.format("YYYY/MM/DD")}`);
   };
 
   return (
@@ -45,7 +52,7 @@ function DateButton() {
       </Button>
       <DatePickerPopover
         handleDateChange={handleDateChange}
-        selectedDate={context.selectedDate}
+        selectedDate={selectedDate}
         anchorEl={anchorEl}
         closeMenu={closeMenu}
       />
