@@ -16,6 +16,7 @@ class CalendarProvider extends React.Component {
       events: {},
       eventsCount: 0,
       eventsObserver: null,
+      eventsLastUpdated: -1,
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
     };
 
@@ -54,6 +55,7 @@ class CalendarProvider extends React.Component {
       eventsObserver: observer,
       events: calendarEvents,
       eventsCount: numEvents,
+      eventsLastUpdated: moment().valueOf(),
     });
   }
 
@@ -115,6 +117,10 @@ class CalendarProvider extends React.Component {
       nextState.eventsCount !== this.state.eventsCount ||
       nextState.selectedDate.year() !== this.state.selectedDate.year()
     ) {
+      shouldUpdate = true;
+    }
+
+    if (nextState.eventsLastUpdated > this.state.eventsLastUpdated) {
       shouldUpdate = true;
     }
 

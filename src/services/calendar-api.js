@@ -17,11 +17,16 @@ const addCalendarEvent = async (calendarEvent) => {
 };
 
 const updateCalendarEvent = async (eventId, updatedEvent) => {
+  let _updatedEvent = Object.assign({}, updatedEvent);
+  _updatedEvent.eventDate = _updatedEvent.eventDate.utc().format();
+  _updatedEvent.eventStartTime = _updatedEvent.eventStartTime.utc().format();
+  _updatedEvent.eventEndTime = _updatedEvent.eventEndTime.utc().format();
+
   const _updateCalendarEvent = firebase
     .functions()
     .httpsCallable("updateCalendarEvent");
 
-  return _updateCalendarEvent({ eventId: eventId, event: updatedEvent })
+  return _updateCalendarEvent({ eventId: eventId, event: _updatedEvent })
     .then((res) => res.data)
     .catch((err) => ({
       status: false,

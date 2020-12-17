@@ -16,6 +16,7 @@ import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
 import { updateCalendarEvent } from "../../services/calendar-api";
 import { compareCalendarEvents } from "../../services/calendar";
+import { hashEventId, mapCalendarEventFields } from "../../utils/util";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,8 +48,7 @@ function EditEventModal({
   open,
   handleCloseModal,
   curEvent,
-  datePreset,
-  timePreset,
+  openEventPopover,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -86,21 +86,33 @@ function EditEventModal({
     setEventEndTime(curEvent.endTime);
   };
 
+  // hack to update popover data
+  const resetEventPopover = (eventId, updatedEvent) => {
+    const btnId = hashEventId(eventId);
+    const currentTarget = document.getElementById(btnId);
+    const stopPropagation = () => {};
+    openEventPopover({ currentTarget, stopPropagation }, updatedEvent);
+  };
+
   useEffect(() => {
     resetParams();
   }, [curEvent]);
 
   const handleSaveEvent = () => {
-    let areEventsEqual = compareCalendarEvents(
-      {
-        title: eventTitle,
-        description: eventDescription,
-        date: eventDate,
-        startTime: eventStartTime,
-        endTime: eventEndTime,
-      },
-      curEvent
-    );
+    const eventId = curEvent.id;
+
+    const updatedEvent = {
+      eventTitle,
+      eventDescription,
+      eventDate,
+      eventStartTime,
+      eventEndTime,
+    };
+
+    // updated event with local format of field names
+    const updatedEventLocal = mapCalendarEventFields(updatedEvent);
+
+    let areEventsEqual = compareCalendarEvents(updatedEventLocal, curEvent);
 
     if (areEventsEqual) {
       handleCloseModal();
@@ -110,21 +122,12 @@ function EditEventModal({
       return;
     }
 
-    const calendarEvent = {
-      eventTitle: eventTitle,
-      eventDescription: eventDescription,
-      eventDate: moment.utc(eventDate).format(),
-      eventStartTime: moment.utc(eventStartTime).format(),
-      eventEndTime: moment.utc(eventEndTime).format(),
-      //eventEndTime,
-    };
-
-    updateCalendarEvent(curEvent.id, calendarEvent).then((res) => {
-      console.log("updateCalendarEvent: ", res);
+    updateCalendarEvent(eventId, updatedEvent).then((res) => {
       if (res.status) {
         handleCloseModal();
         setSnackbarMessage("Event updated.");
         setOpenSnackbar(true);
+        resetEventPopover(eventId, updatedEventLocal);
       } else {
         setSnackbarMessage(res.details);
         setOpenSnackbar(true);
@@ -251,6 +254,7 @@ EditEventModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
   curEvent: PropTypes.object.isRequired,
+  openEventPopover: PropTypes.func.isRequired,
 };
 
 EditEventModal.defaultProps = {

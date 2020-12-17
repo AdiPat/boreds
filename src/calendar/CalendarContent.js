@@ -129,6 +129,7 @@ function CalendarContent({ userId, extras }) {
         open={openEditEventModal}
         handleCloseModal={handleCloseEditEventModal}
         curEvent={curEvent}
+        openEventPopover={handleOpenEventPopover}
       />
       <CalendarEventPopover
         anchorEl={eventAnchorEl}
