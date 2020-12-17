@@ -50,3 +50,4 @@ exports.getTaskVisibility = taskFunctions.getTaskVisibility;
 
 // calendar functions
 exports.addCalendarEvent = calendarFunctions.addCalendarEvent;
+exports.updateCalendarEvent = calendarFunctions.updateCalendarEvent;

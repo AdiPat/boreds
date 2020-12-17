@@ -16,10 +16,17 @@ const addCalendarEvent = async (calendarEvent) => {
     }));
 };
 
-const editCalendarEvent = async (updatedEvent) => {
-  return {
-    status: true,
-  };
+const updateCalendarEvent = async (eventId, updatedEvent) => {
+  const _updateCalendarEvent = firebase
+    .functions()
+    .httpsCallable("updateCalendarEvent");
+
+  return _updateCalendarEvent({ eventId: eventId, event: updatedEvent })
+    .then((res) => res.data)
+    .catch((err) => ({
+      status: false,
+      ...err,
+    }));
 };
 
 const attachCalendarEventsListener = async (year, userId, setEventsInState) => {
@@ -55,7 +62,7 @@ const detachCalendarEventsListener = (observer) => {
 
 export {
   addCalendarEvent,
-  editCalendarEvent,
+  updateCalendarEvent,
   attachCalendarEventsListener,
   detachCalendarEventsListener,
 };
