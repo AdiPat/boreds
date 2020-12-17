@@ -15,6 +15,7 @@ import { SimpleModal } from "./SimpleModal";
 import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
 import { addCalendarEvent } from "../../services/calendar-api";
+import { getUTCString } from "../../utils/util";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -80,9 +81,9 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
     const calendarEvent = {
       eventTitle: eventTitle,
       eventDescription: eventDescription,
-      eventDate: moment.utc(eventDate).format(),
-      eventStartTime: moment.utc(eventStartTime).format(),
-      eventEndTime: moment.utc(eventEndTime).format(),
+      eventDate: getUTCString(eventDate),
+      eventStartTime: getUTCString(eventStartTime),
+      eventEndTime: getUTCString(eventEndTime),
       //eventEndTime,
     };
     addCalendarEvent(calendarEvent).then((res) => {

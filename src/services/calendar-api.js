@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import moment from "moment";
+import { getUTCString } from "../utils/util";
 
 const addCalendarEvent = async (calendarEvent) => {
   const _addCalendarEvent = firebase
@@ -18,9 +19,9 @@ const addCalendarEvent = async (calendarEvent) => {
 
 const updateCalendarEvent = async (eventId, updatedEvent) => {
   let _updatedEvent = Object.assign({}, updatedEvent);
-  _updatedEvent.eventDate = _updatedEvent.eventDate.utc().format();
-  _updatedEvent.eventStartTime = _updatedEvent.eventStartTime.utc().format();
-  _updatedEvent.eventEndTime = _updatedEvent.eventEndTime.utc().format();
+  _updatedEvent.eventDate = getUTCString(_updatedEvent.eventDate);
+  _updatedEvent.eventStartTime = getUTCString(_updatedEvent.eventStartTime);
+  _updatedEvent.eventEndTime = getUTCString(_updatedEvent.eventEndTime);
 
   const _updateCalendarEvent = firebase
     .functions()
@@ -43,8 +44,8 @@ const attachCalendarEventsListener = async (year, userId, setEventsInState) => {
     .collection("calendarEvents")
     .doc(userId)
     .collection("events")
-    .where("date", ">=", startDate.utc().format())
-    .where("date", "<=", endDate.utc().format());
+    .where("date", ">=", getUTCString(startDate))
+    .where("date", "<=", getUTCString(endDate));
 
   const observer = query.onSnapshot(
     (querySnapshot) => {

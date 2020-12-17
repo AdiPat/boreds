@@ -111,6 +111,18 @@ const mapCalendarEventFields = (calendarEvent) => {
   return _calendarEvent;
 };
 
+const getUTCString = (momentDate) => {
+  if (!(momentDate instanceof moment)) {
+    throw new TypeError("Date should be of type moment");
+  }
+
+  if (!momentDate.isValid()) {
+    throw new TypeError("Invalid date supplied. ");
+  }
+
+  return momentDate.clone().utc().format();
+};
+
 export {
   validateMonth,
   validateYear,
@@ -121,4 +133,5 @@ export {
   parseCalendarExtras,
   hashEventId,
   mapCalendarEventFields,
+  getUTCString,
 };
