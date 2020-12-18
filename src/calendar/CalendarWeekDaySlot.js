@@ -58,7 +58,7 @@ function CalendarWeekDaySlot({
 
   // events
   const [slotEvents, setSlotEvents] = useState([[], [], []]);
-  const { events } = useContext(CalendarContext);
+  const { events, eventsLastUpdated } = useContext(CalendarContext);
 
   useEffect(() => {
     const timeSlots = CONSTANTS.CALENDAR.DAY_TIME_SLOT;
@@ -89,7 +89,7 @@ function CalendarWeekDaySlot({
         setSlotEvents(_slotEvents);
       }
     }
-  }, [slotMoment]);
+  }, [slotMoment, eventsLastUpdated]);
 
   const renderEventChips = () => {
     const _chipsJsx = slotEvents.map((row, topIdx) => {

@@ -155,6 +155,7 @@ class CalendarProvider extends React.Component {
         value={{
           state: this.state,
           events: this.state.events,
+          eventsLastUpdated: this.state.eventsLastUpdated,
           selectedDate: this.state.selectedDate,
           duration: this.state.duration,
           setSelectedDate: this.setSelectedDate,
