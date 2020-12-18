@@ -33,6 +33,10 @@ class CalendarProvider extends React.Component {
     // snackbar
     this.showSnackbar = this.showSnackbar.bind(this);
     this.closeSnackbar = this.closeSnackbar.bind(this);
+    this.getCalendarEvents = this.getCalendarEvents.bind(this);
+    this.getTimeDividedCalendarEvents = this.getTimeDividedCalendarEvents.bind(
+      this
+    );
   }
 
   // snackbar
@@ -117,6 +121,44 @@ class CalendarProvider extends React.Component {
     );
   }
 
+  getCalendarEvents(date) {
+    let slotEvents = [];
+    try {
+      const dateKey = date.format("DD-MM-YYYY");
+      const timeKey = date.format("HH");
+      slotEvents = this.state.events[dateKey][timeKey];
+    } catch (err) {
+      slotEvents = [];
+    } finally {
+      if (!slotEvents) {
+        slotEvents = [];
+      }
+    }
+    return slotEvents;
+  }
+
+  getTimeDividedCalendarEvents(date) {
+    const timeSlots = CONSTANTS.CALENDAR.DAY_TIME_SLOT;
+    let slotEventList = this.getCalendarEvents(date);
+    let timeDividedEvents = [[], [], []];
+
+    slotEventList.forEach((slot) => {
+      const startMinutes = slot.startTime.minutes();
+
+      if (startMinutes < timeSlots.start.max) {
+        timeDividedEvents[0].push(slot);
+      } else if (
+        startMinutes >= timeSlots.quarter.min &&
+        startMinutes < timeSlots.quarter.max
+      ) {
+        timeDividedEvents[1].push(slot);
+      } else if (startMinutes >= timeSlots.middle.min) {
+        timeDividedEvents[2].push(slot);
+      }
+    });
+    return timeDividedEvents;
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     let shouldUpdate = false;
     if (
@@ -178,6 +220,8 @@ class CalendarProvider extends React.Component {
           setSelectedDate: this.setSelectedDate,
           selectDateNow: this.selectDateNow,
           setCalendarDuration: this.setCalendarDuration,
+          getCalendarEvents: this.getCalendarEvents,
+          getTimeDividedCalendarEvents: this.getTimeDividedCalendarEvents,
           showSnackbar: this.showSnackbar,
           closeSnackbar: this.closeSnackbar,
         }}

@@ -59,37 +59,13 @@ function CalendarWeekDaySlot({
 
   // events
   const [slotEvents, setSlotEvents] = useState([[], [], []]);
-  const { events, eventsLastUpdated } = useContext(CalendarContext);
+  const { getTimeDividedCalendarEvents, eventsLastUpdated } = useContext(
+    CalendarContext
+  );
 
   useEffect(() => {
-    const timeSlots = CONSTANTS.CALENDAR.DAY_TIME_SLOT;
-    const dateKey = slotMoment.format("DD-MM-YYYY");
-    const timeKey = slotMoment.format("HH");
-    let _slotEventList = undefined;
-    let _slotEvents = [[], [], []];
-    try {
-      _slotEventList = events[dateKey][timeKey];
-    } catch (err) {
-      _slotEventList = [];
-    } finally {
-      if (_slotEventList) {
-        _slotEventList.forEach((slot) => {
-          const startMinutes = slot.startTime.minutes();
-
-          if (startMinutes < timeSlots.start.max) {
-            _slotEvents[0].push(slot);
-          } else if (
-            startMinutes >= timeSlots.quarter.min &&
-            startMinutes < timeSlots.quarter.max
-          ) {
-            _slotEvents[1].push(slot);
-          } else if (startMinutes >= timeSlots.middle.min) {
-            _slotEvents[2].push(slot);
-          }
-        });
-        setSlotEvents(_slotEvents);
-      }
-    }
+    let _slotEvents = getTimeDividedCalendarEvents(slotMoment);
+    setSlotEvents(_slotEvents);
   }, [slotMoment, eventsLastUpdated]);
 
   const renderEventChips = () => {
