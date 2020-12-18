@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import moment from "moment";
 import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider } from "@material-ui/core";
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthSlot({ date }) {
+function CalendarMonthSlot({ date, eventPopover }) {
   const classes = useStyles();
 
   return (
@@ -43,10 +45,15 @@ function CalendarMonthSlot({ date }) {
       </div>
       <Divider />
       <div className={classes.monthSlotBody}>
-        <CalendarEventList date={date} />
+        <CalendarEventList date={date} eventPopover={eventPopover} />
       </div>
     </div>
   );
 }
+
+CalendarMonthSlot.propTypes = {
+  date: PropTypes.instanceOf(moment).isRequired,
+  eventPopover: PropTypes.object.isRequired,
+};
 
 export { CalendarMonthSlot };

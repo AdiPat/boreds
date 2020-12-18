@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventList({ date }) {
+function CalendarEventList({ date, eventPopover }) {
   const classes = useStyles();
   const { getCalendarEvents } = useContext(CalendarContext);
 
@@ -32,7 +32,11 @@ function CalendarEventList({ date }) {
   const renderEvents = () => {
     let slotsJsx = slotEvents.map((event, i) => {
       return i < MAX_LIST_ITEMS ? (
-        <CalendarEventListItem event={event} key={i} />
+        <CalendarEventListItem
+          event={event}
+          key={i}
+          eventPopover={eventPopover}
+        />
       ) : null;
     });
 
@@ -54,6 +58,7 @@ function CalendarEventList({ date }) {
 
 CalendarEventList.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
+  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarEventList };

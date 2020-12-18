@@ -16,11 +16,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventListItem({ event, key }) {
+function CalendarEventListItem({ event, key, eventPopover }) {
   const classes = useStyles();
 
   return (
-    <ListItem key={key} button className={classes.eventListItem}>
+    <ListItem
+      key={key}
+      button
+      className={classes.eventListItem}
+      onClick={(e) => eventPopover.handleOpen(e, event)}
+      disableTouchRipple
+    >
       <ListItemText
         disableTypography
         primary={
@@ -36,6 +42,7 @@ function CalendarEventListItem({ event, key }) {
 CalendarEventListItem.propTypes = {
   event: PropTypes.object.isRequired,
   key: PropTypes.number.isRequired,
+  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarEventListItem };

@@ -95,6 +95,12 @@ function CalendarContent({ userId, extras }) {
 
   console.log("CalendarContent.render(): ");
 
+  const eventPopover = {
+    anchorEl: eventAnchorEl,
+    handleOpen: handleOpenEventPopover,
+    handleClose: handleCloseEventPopover,
+  };
+
   return (
     <main className={classes.content}>
       <CalendarHeader
@@ -110,13 +116,13 @@ function CalendarContent({ userId, extras }) {
           selectedDate={selectedDate}
           openCreateEventModal={handleOpenCreateEventModal}
           setModalPreset={setModalPreset}
-          eventPopover={{
-            anchorEl: eventAnchorEl,
-            handleOpen: handleOpenEventPopover,
-            handleClose: handleCloseEventPopover,
-          }}
+          eventPopover={eventPopover}
         />
-        <CalendarMonth selectedDate={selectedDate} show={isDuration.month} />
+        <CalendarMonth
+          selectedDate={selectedDate}
+          show={isDuration.month}
+          eventPopover={eventPopover}
+        />
         <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
       </div>
       <CreateEventModal
