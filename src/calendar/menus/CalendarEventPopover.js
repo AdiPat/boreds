@@ -67,7 +67,10 @@ function CalendarEventPopover({
             <div className={classes.popoverHeaderMain}>
               <Typography variant="h6">{event.title}</Typography>
               <EventPopoverEditButton onClick={openEditEventModal} />
-              <EventPopoverDeleteButton onClick={() => {}} />
+              <EventPopoverDeleteButton
+                eventId={event.id}
+                closePopover={handleClose}
+              />
             </div>
             <div>
               <Typography variant="subtitle2">{formattedDate}</Typography>
