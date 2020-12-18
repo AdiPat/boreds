@@ -1,23 +1,12 @@
-import { useState } from "react";
+import { useContext } from "react";
 import PropTypes from "prop-types";
-import { Tooltip, IconButton, Portal, Snackbar } from "@material-ui/core";
+import { Tooltip, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import CONSTANTS from "../../utils/constants";
+import CalendarContext from "../../providers/CalendarContext";
 import { deleteCalendarEvent } from "../../services/calendar-api";
 
 function EventPopoverDeleteButton({ eventId, closePopover }) {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-
-  const showSnackbar = (msg) => {
-    setSnackbarMessage(msg);
-    setOpenSnackbar(true);
-  };
-
-  const closeSnackbar = () => {
-    setSnackbarMessage("");
-    setOpenSnackbar(false);
-  };
+  const { showSnackbar } = useContext(CalendarContext);
 
   const handleDeleteEvent = (e) => {
     deleteCalendarEvent(eventId).then((res) => {
@@ -30,7 +19,6 @@ function EventPopoverDeleteButton({ eventId, closePopover }) {
         }
         showSnackbar(errMsg);
       }
-
       closePopover();
     });
   };
@@ -46,15 +34,6 @@ function EventPopoverDeleteButton({ eventId, closePopover }) {
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      <Portal container={document.getElementById("root")}>
-        <Snackbar
-          anchorOrigin={CONSTANTS.POPOVER.ALIGN_BOTTOM_CENTER.anchorOrigin}
-          open={openSnackbar}
-          onClose={closeSnackbar}
-          autoHideDuration={CONSTANTS.SNACKBAR.defaultDuration}
-          message={snackbarMessage}
-        />
-      </Portal>
     </div>
   );
 }
