@@ -9,6 +9,7 @@ import { DashButton } from "./buttons/DashButton";
 import { ProfileButton } from "./buttons/ProfileButton";
 import { LogoutButton } from "./buttons/LogoutButton";
 import { OpenDrawerButton } from "./buttons/OpenDrawerButton";
+import { CalendarButton } from "./buttons/CalendarButton";
 import { DrawerNotificationsButton } from "./buttons/DrawerNotificationButton";
 import { TasksButton } from "./buttons/TasksButton";
 import { GeneralAddButton } from "./buttons/GeneralAddButton";
@@ -16,6 +17,7 @@ import { GeneralAddButton } from "./buttons/GeneralAddButton";
 function AppDrawer(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isLoggedIn = props.userId != null;
+  const hasTopButtons = props.topButtons !== null;
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -34,9 +36,11 @@ function AppDrawer(props) {
           openDrawer={openDrawer}
         />
         <DrawerAppBarTitle dashTitle={props.dashTitle} />
+        {props.topButtons}
         <DrawerNotificationsButton
           isLoggedIn={isLoggedIn}
           userId={props.userId}
+          hasTopButtons={hasTopButtons}
         />
       </DrawerAppBar>
       <SideMenu
@@ -49,6 +53,7 @@ function AppDrawer(props) {
         <GeneralAddButton />
         <DashButton />
         <TasksButton />
+        <CalendarButton />
         <ProfileButton />
         <LogoutButton />
       </SideMenu>
@@ -59,6 +64,13 @@ function AppDrawer(props) {
 AppDrawer.propTypes = {
   dashTitle: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
+  topButtons: PropTypes.array,
+};
+
+AppDrawer.defaultProps = {
+  dashTitle: "",
+  userId: undefined,
+  topButtons: null,
 };
 
 export { AppDrawer };

@@ -8,11 +8,13 @@ import { DashPage } from "./pages/DashPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { BoardPage } from "./pages/BoardPage";
 import { TasksPage } from "./pages/TasksPage";
+import { CalendarPage } from "./pages/CalendarPage";
 import AppProvider from "./providers/AppProvider";
 import {
   firebaseApp,
   initializeAuthEmulator,
   initializeFunctionsEmulator,
+  initializeFirestoreEmulator,
 } from "./firebase/firebase";
 import "./App.css";
 import Profile from "./pages/ProfilePage";
@@ -21,6 +23,7 @@ function App() {
   useEffect(() => {
     initializeAuthEmulator();
     initializeFunctionsEmulator();
+    initializeFirestoreEmulator();
   });
 
   return (
@@ -50,6 +53,7 @@ function App() {
             <TasksPage />
           </Route>
           <Route path="/tasks/:taskId" component={TasksPage} />
+          <Route path="/calendar" component={CalendarPage} />
         </Switch>
       </Router>
     </AppProvider>

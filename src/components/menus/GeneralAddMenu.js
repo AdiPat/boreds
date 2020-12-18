@@ -3,6 +3,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { StyledMenu } from "./StyledMenu";
 import { AddBoardButton } from "../drawer/buttons/AddBoardButton";
 import { AddTaskButton } from "../drawer/buttons/AddTaskButton";
+import { AddEventButton } from "../drawer/buttons/AddEventButton";
 
 function GeneralAddMenu(props) {
   const theme = useTheme();
@@ -27,6 +28,7 @@ function GeneralAddMenu(props) {
       >
         <AddBoardButton />
         <AddTaskButton handleCloseMenu={props.handleClose} />
+        <AddEventButton handleCloseMenu={props.handleClose} />
       </StyledMenu>
     </div>
   );
