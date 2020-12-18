@@ -1,6 +1,6 @@
 import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { SlotDateSelectButton } from "./buttons/SlotDateSelectButton";
 import { CalendarEventList } from "./CalendarEventList";
 
@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
     },
     flexGrow: "1",
     flexBasis: "0",
-    minHeight: theme.spacing(20),
+    maxWidth: "calc(100%/7)",
+    height: theme.spacing(22),
+    //maxHeight: theme.spacing(20),
   },
   monthSlotHeader: {
     textAlign: "center",
@@ -39,6 +41,7 @@ function CalendarMonthSlot({ date }) {
       <div className={classes.monthSlotHeader}>
         <SlotDateSelectButton date={date} size="small" />
       </div>
+      <Divider />
       <div className={classes.monthSlotBody}>
         <CalendarEventList date={date} />
       </div>
