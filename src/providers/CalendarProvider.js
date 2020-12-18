@@ -121,12 +121,27 @@ class CalendarProvider extends React.Component {
     );
   }
 
-  getCalendarEvents(date) {
+  getCalendarEvents(date, by = "time") {
     let slotEvents = [];
+    let dayEvents = {};
     try {
       const dateKey = date.format("DD-MM-YYYY");
       const timeKey = date.format("HH");
-      slotEvents = this.state.events[dateKey][timeKey];
+      if (by === "time") {
+        slotEvents = this.state.events[dateKey][timeKey];
+      } else if (by === "day") {
+        dayEvents = this.state.events[dateKey];
+        if (dayEvents) {
+          Object.keys(dayEvents).forEach((timeSlot) => {
+            const slot = dayEvents[timeSlot];
+            if (slot) {
+              let curSlot = dayEvents[timeSlot];
+              slotEvents.push(curSlot);
+            }
+          });
+          slotEvents = slotEvents.flat();
+        }
+      }
     } catch (err) {
       slotEvents = [];
     } finally {

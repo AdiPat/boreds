@@ -2,6 +2,7 @@ import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { SlotDateSelectButton } from "./buttons/SlotDateSelectButton";
+import { CalendarEventList } from "./CalendarEventList";
 
 const useStyles = makeStyles((theme) => ({
   monthSlot: {
@@ -38,7 +39,9 @@ function CalendarMonthSlot({ date }) {
       <div className={classes.monthSlotHeader}>
         <SlotDateSelectButton date={date} size="small" />
       </div>
-      <div className={classes.monthSlotBody}> </div>
+      <div className={classes.monthSlotBody}>
+        <CalendarEventList date={date} />
+      </div>
     </div>
   );
 }
