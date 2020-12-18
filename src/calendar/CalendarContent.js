@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { getDurationFlags } from "../utils/util";
+import { CalendarUIProvider } from "./CalendarUIProvider";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarHeader } from "./CalendarHeader";
 import { CalendarTimeStrip } from "./CalendarTimeStrip";
@@ -102,48 +103,50 @@ function CalendarContent({ userId, extras }) {
   };
 
   return (
-    <main className={classes.content}>
-      <CalendarHeader
-        selectedDate={selectedDate}
-        duration={duration}
-        isDuration={isDuration}
-      />
-      <div className={classes.calendar}>
-        <CalendarTimeStrip duration={duration} isDuration={isDuration} />
-        <CalendarWeek
-          show={isDuration.day || isDuration.week || isDuration.fourdays}
-          numSlots={numSlots}
+    <CalendarUIProvider>
+      <main className={classes.content}>
+        <CalendarHeader
           selectedDate={selectedDate}
-          openCreateEventModal={handleOpenCreateEventModal}
-          setModalPreset={setModalPreset}
-          eventPopover={eventPopover}
+          duration={duration}
+          isDuration={isDuration}
         />
-        <CalendarMonth
-          selectedDate={selectedDate}
-          show={isDuration.month}
-          eventPopover={eventPopover}
+        <div className={classes.calendar}>
+          <CalendarTimeStrip duration={duration} isDuration={isDuration} />
+          <CalendarWeek
+            show={isDuration.day || isDuration.week || isDuration.fourdays}
+            numSlots={numSlots}
+            selectedDate={selectedDate}
+            openCreateEventModal={handleOpenCreateEventModal}
+            setModalPreset={setModalPreset}
+            eventPopover={eventPopover}
+          />
+          <CalendarMonth
+            selectedDate={selectedDate}
+            show={isDuration.month}
+            eventPopover={eventPopover}
+          />
+          <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
+        </div>
+        <CreateEventModal
+          open={openCreateEventModal}
+          handleCloseModal={handleCloseCreateEventModal}
+          datePreset={modalPreset}
+          timePreset={modalPreset}
         />
-        <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
-      </div>
-      <CreateEventModal
-        open={openCreateEventModal}
-        handleCloseModal={handleCloseCreateEventModal}
-        datePreset={modalPreset}
-        timePreset={modalPreset}
-      />
-      <EditEventModal
-        open={openEditEventModal}
-        handleCloseModal={handleCloseEditEventModal}
-        curEvent={curEvent}
-        openEventPopover={handleOpenEventPopover}
-      />
-      <CalendarEventPopover
-        anchorEl={eventAnchorEl}
-        handleClose={handleCloseEventPopover}
-        event={curEvent}
-        openEditEventModal={handleOpenEditEventModal}
-      />
-    </main>
+        <EditEventModal
+          open={openEditEventModal}
+          handleCloseModal={handleCloseEditEventModal}
+          curEvent={curEvent}
+          openEventPopover={handleOpenEventPopover}
+        />
+        <CalendarEventPopover
+          anchorEl={eventAnchorEl}
+          handleClose={handleCloseEventPopover}
+          event={curEvent}
+          openEditEventModal={handleOpenEditEventModal}
+        />
+      </main>
+    </CalendarUIProvider>
   );
 }
 

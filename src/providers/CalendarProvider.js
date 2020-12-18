@@ -19,10 +19,6 @@ class CalendarProvider extends React.Component {
       eventsObserver: null,
       eventsLastUpdated: -1,
       duration: CONSTANTS.CALENDAR.DURATIONS.week,
-      snackbar: {
-        open: false,
-        message: "",
-      },
     };
 
     this.setSelectedDate = this.setSelectedDate.bind(this);
@@ -31,21 +27,10 @@ class CalendarProvider extends React.Component {
     this.setYearEventsInState = this.setYearEventsInState.bind(this);
     this.updateYearEvents = this.updateYearEvents.bind(this);
     // snackbar
-    this.showSnackbar = this.showSnackbar.bind(this);
-    this.closeSnackbar = this.closeSnackbar.bind(this);
     this.getCalendarEvents = this.getCalendarEvents.bind(this);
     this.getTimeDividedCalendarEvents = this.getTimeDividedCalendarEvents.bind(
       this
     );
-  }
-
-  // snackbar
-  showSnackbar(msg) {
-    this.setState({ snackbar: { open: true, message: msg } });
-  }
-
-  closeSnackbar() {
-    this.setState({ snackbar: { open: false, message: "" } });
   }
 
   setYearEventsInState(eventDocs, observer) {
@@ -237,18 +222,9 @@ class CalendarProvider extends React.Component {
           setCalendarDuration: this.setCalendarDuration,
           getCalendarEvents: this.getCalendarEvents,
           getTimeDividedCalendarEvents: this.getTimeDividedCalendarEvents,
-          showSnackbar: this.showSnackbar,
-          closeSnackbar: this.closeSnackbar,
         }}
       >
         {this.props.children}
-        <Snackbar
-          anchorOrigin={CONSTANTS.POPOVER.ALIGN_BOTTOM_CENTER.anchorOrigin}
-          open={this.state.snackbar.open}
-          onClose={this.closeSnackbar}
-          autoHideDuration={CONSTANTS.SNACKBAR.defaultDuration}
-          message={this.state.snackbar.message}
-        />
       </CalendarContext.Provider>
     );
   }

@@ -2,22 +2,22 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { Tooltip, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import CalendarContext from "../../providers/CalendarContext";
+import { CalendarUIContext } from "../CalendarUIContext";
 import { deleteCalendarEvent } from "../../services/calendar-api";
 
 function EventPopoverDeleteButton({ eventId, closePopover }) {
-  const { showSnackbar } = useContext(CalendarContext);
+  const { calendarSnackbar } = useContext(CalendarUIContext);
 
   const handleDeleteEvent = (e) => {
     deleteCalendarEvent(eventId).then((res) => {
       if (res.status) {
-        showSnackbar("Deleted event. ");
+        calendarSnackbar.show("Deleted event. ");
       } else {
         let errMsg = res.details;
         if (!errMsg || errMsg.length == 0) {
           errMsg = "Failed to delete event. Try again later.";
         }
-        showSnackbar(errMsg);
+        calendarSnackbar.show(errMsg);
       }
       closePopover();
     });
