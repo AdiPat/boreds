@@ -1,11 +1,13 @@
 import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
+import { SlotDateSelectButton } from "./buttons/SlotDateSelectButton";
 
 const useStyles = makeStyles((theme) => ({
   monthSlot: {
     boxSizing: "border-box",
     display: "flex",
+    flexDirection: "column",
     borderBottom: "1px solid lightgrey",
     borderRight: "1px solid lightgrey",
     "&:first-child": {
@@ -13,9 +15,14 @@ const useStyles = makeStyles((theme) => ({
     },
     flexGrow: "1",
     flexBasis: "0",
-    justifyContent: "center",
     minHeight: theme.spacing(16),
+  },
+  monthSlotHeader: {
+    textAlign: "center",
+  },
 
+  monthSlotBody: {
+    flex: "1",
     "&:hover": {
       backgroundColor: grey[200],
       cursor: "pointer",
@@ -23,12 +30,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthSlot({ day }) {
+function CalendarMonthSlot({ date }) {
   const classes = useStyles();
 
   return (
     <div className={classes.monthSlot}>
-      <Typography variant="subtitle1">{day.format("DD")}</Typography>
+      <div className={classes.monthSlotHeader}>
+        <SlotDateSelectButton date={date} size="small" />
+      </div>
+      <div className={classes.monthSlotBody}> </div>
     </div>
   );
 }

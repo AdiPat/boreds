@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {CalendarMonthSlot} from './CalendarMonthSlot'; 
+import { CalendarMonthSlot } from "./CalendarMonthSlot";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {
@@ -13,8 +13,8 @@ function CalendarMonthWeek({ week }) {
   const classes = useStyles();
 
   const renderWeek = () => {
-    const slotsJsx = week.map((day) => {
-      return <CalendarMonthSlot day={day}/>;
+    const slotsJsx = week.map((date) => {
+      return <CalendarMonthSlot date={date} />;
     });
     return slotsJsx;
   };

@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "white",
     },
   },
+  avatarSmall: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    fontSize: 16,
+  },
   animateAvatar: {
     transition: "all 0.3s linear",
   },
@@ -32,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SlotDateSelectButton({ date }) {
+function SlotDateSelectButton({ date, size }) {
   const classes = useStyles();
 
   const { selectedDate, setSelectedDate } = useContext(CalendarContext);
@@ -52,6 +57,7 @@ function SlotDateSelectButton({ date }) {
     >
       <Avatar
         className={clsx(classes.animateAvatar, {
+          [classes.avatarSmall]: size === "small",
           [classes.avatarOrange]: isDateSelected,
           [classes.avatarWhite]: !isDateSelected,
         })}
@@ -63,8 +69,13 @@ function SlotDateSelectButton({ date }) {
 }
 
 SlotDateSelectButton.propTypes = {
+  size: PropTypes.string,
   date: PropTypes.instanceOf(moment).isRequired,
   isDateSelected: PropTypes.bool.isRequired,
+};
+
+SlotDateSelectButton.defaultProps = {
+  size: "",
 };
 
 export { SlotDateSelectButton };
