@@ -35,6 +35,19 @@ const updateCalendarEvent = async (eventId, updatedEvent) => {
     }));
 };
 
+const deleteCalendarEvent = async (eventId) => {
+  let _deleteCalendarEvent = firebase
+    .functions()
+    .httpsCallable("deleteCalendarEvent");
+
+  return _deleteCalendarEvent({ eventId })
+    .then((res) => res.data)
+    .catch((err) => ({
+      status: false,
+      ...err,
+    }));
+};
+
 const attachCalendarEventsListener = async (year, userId, setEventsInState) => {
   const momentDate = moment().year(year);
   const startDate = momentDate.clone().startOf("year");
@@ -69,6 +82,7 @@ const detachCalendarEventsListener = (observer) => {
 export {
   addCalendarEvent,
   updateCalendarEvent,
+  deleteCalendarEvent,
   attachCalendarEventsListener,
   detachCalendarEventsListener,
 };
