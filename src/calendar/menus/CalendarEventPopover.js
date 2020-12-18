@@ -1,21 +1,12 @@
 import PropTypes from "prop-types";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Popover,
-  Typography,
-  Button,
-  Divider,
-  IconButton,
-  Tooltip,
-} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import { Popover, Typography, Button, Divider } from "@material-ui/core";
 import CONSTANTS from "../../utils/constants";
+import { EventPopoverEditButton } from "../buttons/EventPopoverEditButton";
+import { EventPopoverDeleteButton } from "../buttons/EventPopoverDeleteButton";
+import { EventPopoverAddDescriptionButton } from "../buttons/EventPopoverAddDescriptionButton";
 
 const useStyles = makeStyles((theme) => ({
-  hide: {
-    display: "none",
-  },
   popoverContainer: {
     boxSizing: "border-box",
     display: "flex",
@@ -33,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   popoverHeaderMain: {
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
   },
   popoverDescription: {
@@ -76,15 +66,8 @@ function CalendarEventPopover({
           <div className={classes.popoverHeader}>
             <div className={classes.popoverHeaderMain}>
               <Typography variant="h6">{event.title}</Typography>
-              <Tooltip title="Edit" aria-label="edit-event-tooltip">
-                <IconButton
-                  size="medium"
-                  aria-label="edit-event"
-                  onClick={openEditEventModal}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
+              <EventPopoverEditButton onClick={openEditEventModal} />
+              <EventPopoverDeleteButton onClick={() => {}} />
             </div>
             <div>
               <Typography variant="subtitle2">{formattedDate}</Typography>
@@ -94,16 +77,10 @@ function CalendarEventPopover({
           <Divider />
           <div className={classes.popoverDescription}>
             <Typography variant="subtitle1">{event.description}</Typography>
-            <Button
+            <EventPopoverAddDescriptionButton
               onClick={openEditEventModal}
-              className={clsx({
-                [classes.hide]: event.description
-                  ? event.description.length
-                  : false,
-              })}
-            >
-              Add Description
-            </Button>
+              show={event.description ? event.description.length : false}
+            />
           </div>
         </div>
       </Popover>
