@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   getFourDaySlotMoment,
   getWeekDaySlotMoment,
-  isSelectedDateInSlot,
 } from "../services/calendar";
 import { CalendarWeekDaySlot } from "./CalendarWeekDaySlot";
 import CONSTANTS from "../utils/constants";
@@ -46,12 +45,10 @@ function CalendarWeekTimeSlot({
       const day = i;
       let slotMoment = getSlotMoment(day);
 
-      const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
       const jsx = (
         <CalendarWeekDaySlot
           selectedDate={selectedDate}
           slotMoment={slotMoment}
-          isCurrent={isCurrent}
           key={i}
           openCreateEventModal={openCreateEventModal}
           setModalPreset={setModalPreset}

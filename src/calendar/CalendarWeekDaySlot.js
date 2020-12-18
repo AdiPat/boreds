@@ -6,7 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
-import { getSlotDividerFlags } from "../services/calendar";
+import {
+  getSlotDividerFlags,
+  isSelectedDateInSlot,
+} from "../services/calendar";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarEventChip } from "./CalendarEventChip";
 
@@ -40,13 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarWeekDaySlot({
   selectedDate,
-  isCurrent,
   slotMoment,
   openCreateEventModal,
   setModalPreset,
   eventPopover,
 }) {
   const classes = useStyles();
+  const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
 
   if (isCurrent) {
@@ -137,7 +140,6 @@ function CalendarWeekDaySlot({
 
 CalendarWeekDaySlot.propTypes = {
   slotMoment: PropTypes.instanceOf(moment).isRequired,
-  isCurrent: PropTypes.bool.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   openCreateEventModal: PropTypes.func.isRequired,
   setModalPreset: PropTypes.func.isRequired,
