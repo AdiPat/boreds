@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
     flexGrow: "1",
     flexBasis: "0",
-    minHeight: theme.spacing(16),
+    minHeight: theme.spacing(20),
   },
   monthSlotHeader: {
     textAlign: "center",
