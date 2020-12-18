@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { grey } from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
@@ -48,6 +48,7 @@ function CalendarWeekDaySlot({
   setModalPreset,
   eventPopover,
 }) {
+  const theme = useTheme();
   const classes = useStyles();
   const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
@@ -93,14 +94,15 @@ function CalendarWeekDaySlot({
 
   const renderEventChips = () => {
     const _chipsJsx = slotEvents.map((row, topIdx) => {
-      return row.map((_event, i) => {
+      return row.map((_event, i, arr) => {
+        const endOffset = i == arr.length - 1 ? theme.spacing(2) : 0;
         const jsx = (
           <CalendarEventChip
             style={{
               position: "absolute",
               top: `calc(${topIdx} * 100%/3)`,
               left: `calc(${i} * (100% / ${row.length}))`,
-              maxWidth: `calc(100% / ${row.length})`,
+              width: `calc((100% / ${row.length}) - ${endOffset}px)`,
             }}
             key={i}
             event={_event}
