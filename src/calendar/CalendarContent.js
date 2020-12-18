@@ -79,16 +79,6 @@ function CalendarContent({ userId, extras }) {
     setOpenEditEventModal(false);
   };
 
-  // useEffect(() => {
-  //   if (!extras.invalidDate && extras.selectedDate) {
-  //     setSelectedDate(extras.selectedDate);
-  //   }
-
-  //   if (extras.duration) {
-  //     setCalendarDuration(extras.duration);
-  //   }
-  // }, [extras]);
-
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
     setNumSlots(_numSlots);
