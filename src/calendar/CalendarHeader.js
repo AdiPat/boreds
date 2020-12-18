@@ -38,14 +38,7 @@ function CalendarHeader({ selectedDate, duration, isDuration }) {
 
   const renderDates = (dates) => {
     const weekJsx = dates.map((dt) => {
-      const isDateSelected = selectedDate.isSame(dt, "day");
-      return (
-        <CalendarHeaderItem
-          date={dt}
-          isDateSelected={isDateSelected}
-          isDuration={isDuration}
-        />
-      );
+      return <CalendarHeaderItem date={dt} isDuration={isDuration} />;
     });
     return weekJsx;
   };

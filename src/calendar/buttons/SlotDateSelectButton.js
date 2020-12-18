@@ -32,10 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SlotDateSelectButton({ date, isDateSelected }) {
+function SlotDateSelectButton({ date }) {
   const classes = useStyles();
 
-  const { setSelectedDate } = useContext(CalendarContext);
+  const { selectedDate, setSelectedDate } = useContext(CalendarContext);
+
+  const isDateSelected =
+    selectedDate.format("DD-MM-YYYY") === date.format("DD-MM-YYYY");
 
   const handleSelectDate = () => {
     setSelectedDate(date);

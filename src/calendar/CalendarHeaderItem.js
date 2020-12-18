@@ -37,17 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarHeaderItem({ date, isDateSelected, isDuration }) {
+function CalendarHeaderItem({ date, isDuration }) {
   const classes = useStyles();
   return (
     <div className={classes.headerItemContainer}>
       <div className={classes.headerItem}>
         <CalenderHeaderItemTitle title={date.format("ddd")} />
-        <CalendarHeaderItemBody
-          date={date}
-          isDateSelected={isDateSelected}
-          isDuration={isDuration}
-        />
+        <CalendarHeaderItemBody date={date} isDuration={isDuration} />
       </div>
     </div>
   );

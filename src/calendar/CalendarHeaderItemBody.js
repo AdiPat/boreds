@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarHeaderItemBody({ date, isDuration, isDateSelected }) {
+function CalendarHeaderItemBody({ date, isDuration }) {
   const classes = useStyles();
 
   return (
@@ -20,7 +20,7 @@ function CalendarHeaderItemBody({ date, isDuration, isDateSelected }) {
         [classes.hide]: isDuration.year || isDuration.month,
       })}
     >
-      <SlotDateSelectButton date={date} isDateSelected={isDateSelected} />
+      <SlotDateSelectButton date={date} />
     </div>
   );
 }
