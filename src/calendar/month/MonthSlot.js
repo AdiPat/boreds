@@ -46,12 +46,12 @@ function MonthSlot({ date }) {
   };
 
   return (
-    <div className={classes.monthSlot} onClick={handleClick}>
+    <div className={classes.monthSlot}>
       <div className={classes.monthSlotHeader}>
         <SlotDateSelectButton date={date} size="small" />
       </div>
       <Divider />
-      <div className={classes.monthSlotBody}>
+      <div className={classes.monthSlotBody} onClick={handleClick}>
         <EventList date={date} />
       </div>
     </div>
