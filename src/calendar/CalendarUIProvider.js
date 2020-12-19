@@ -106,7 +106,12 @@ class CalendarUIProvider extends React.PureComponent {
   }
 
   closeCreateEventModal() {
-    this.setState({ createEventModal: { open: false } });
+    this.setState((prevState) => ({
+      createEventModal: {
+        open: false,
+        preset: prevState.createEventModal.preset,
+      },
+    }));
   }
 
   render() {
