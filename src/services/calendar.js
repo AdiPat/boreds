@@ -1,5 +1,9 @@
 import moment from "moment";
-import { validateMonth, validateYear, validateWeekday } from "../utils/util";
+import {
+  validateMonth,
+  validateYear,
+  validateWeekday,
+} from "../utils/calendar-utils";
 import CONSTANTS from "../utils/constants";
 
 // gets no. of days in a month, uses 0 indexing

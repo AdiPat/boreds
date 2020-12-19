@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
 import { Grid } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";

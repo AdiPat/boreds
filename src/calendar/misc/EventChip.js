@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Paper } from "@material-ui/core";
 import CONSTANTS from "../../utils/constants";
-import { hashEventId } from "../../utils/util";
+import { hashEventId } from "../../utils/calendar-utils";
 import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = ({ chipColor }) =>

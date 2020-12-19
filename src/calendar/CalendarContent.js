@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CONSTANTS from "../utils/constants";
-import { getDurationFlags } from "../utils/util";
+import { getDurationFlags } from "../utils/calendar-utils";
 import { CalendarUIProvider } from "./CalendarUIProvider";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarHeader } from "./header/Header";
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarContent({ userId, extras }) {
   const classes = useStyles();
-  // header and days rendering
   const [numSlots, setNumSlots] = useState(0);
   const { duration, selectedDate } = useContext(CalendarContext);
 

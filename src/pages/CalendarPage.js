@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { CircularLoader } from "../components/CircularLoader";
 import AppContext from "../providers/AppContext";
 import { CalendarContainer } from "../calendar/CalendarContainer";
-import { parseCalendarExtras } from "../utils/util";
+import { parseCalendarExtras } from "../utils/calendar-utils";
 
 function CalendarPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import { MonthWeek } from "./MonthWeek";
 import { getWeekCalendar } from "../../services/calendar";
-import { splitMonthToWeeks } from "../../utils/util";
+import { splitMonthToWeeks } from "../../utils/calendar-utils";
 
 const useStyles = makeStyles((theme) => ({
   hide: {

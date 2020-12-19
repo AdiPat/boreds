@@ -16,7 +16,10 @@ import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
 import { updateCalendarEvent } from "../../services/calendar-api";
 import { compareCalendarEvents } from "../../services/calendar";
-import { hashEventId, mapCalendarEventFields } from "../../utils/util";
+import {
+  hashEventId,
+  mapCalendarEventFields,
+} from "../../utils/calendar-utils";
 import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({

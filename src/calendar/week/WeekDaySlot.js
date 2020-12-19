@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 function WeekDaySlot({ selectedDate, slotMoment }) {
   const theme = useTheme();
   const classes = useStyles();
+
   const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
 

@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import moment from "moment";
-import { getUTCString } from "../utils/util";
+import { getUTCString } from "../utils/calendar-utils";
 
 const addCalendarEvent = async (calendarEvent) => {
   const _addCalendarEvent = firebase
