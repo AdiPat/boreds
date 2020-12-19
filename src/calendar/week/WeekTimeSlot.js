@@ -25,7 +25,7 @@ function WeekTimeSlot({ selectedDate, numSlots, startHour }) {
       slotMoment = selectedDate.clone().hour(startHour).startOf("hour");
     } else if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.week) {
       slotMoment = getWeekDaySlotMoment(selectedDate, startHour, day);
-    } else if (numSlots == CONSTANTS.CALENDAR.NUM_DAYS.fourdays) {
+    } else if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.fourdays) {
       slotMoment = getFourDaySlotMoment(selectedDate, startHour, day);
     }
     return slotMoment;

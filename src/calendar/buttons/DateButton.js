@@ -10,10 +10,7 @@ function DateButton() {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const btnRef = useRef(null);
-  const { setSelectedDate, duration, selectedDate } = useContext(
-    CalendarContext
-  );
-  const open = Boolean(anchorEl);
+  const { setSelectedDate, selectedDate } = useContext(CalendarContext);
 
   // formatted btn display
   const btnText = getDateButtonText(selectedDate);

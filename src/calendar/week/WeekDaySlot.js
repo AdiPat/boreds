@@ -68,7 +68,7 @@ function WeekDaySlot({ selectedDate, slotMoment }) {
   const renderEventChips = () => {
     const _chipsJsx = slotEvents.map((row, topIdx) => {
       return row.map((_event, i, arr) => {
-        const endOffset = i == arr.length - 1 ? theme.spacing(2) : 0;
+        const endOffset = i === arr.length - 1 ? theme.spacing(2) : 0;
         const jsx = (
           <EventChip
             style={{
