@@ -40,7 +40,7 @@ function EventListPopover({ anchorEl, handleClose, date }) {
         <div className={classes.popoverContainer}>
           <div className={classes.popoverHeader}>
             <Typography variant="body1">
-              Events on {date.format("dddd, do MMMM, YYYY")}
+              Events on {date.format("dddd, Do MMMM, YYYY")}
             </Typography>
           </div>
           <Divider />
