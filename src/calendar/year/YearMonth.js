@@ -4,11 +4,14 @@ import { Grid } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CalendarContext from "../../providers/CalendarContext";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 function YearMonth({ month }) {
   const { selectedDate, setSelectedDate } = useContext(CalendarContext);
+  const { eventListPopover } = useContext(CalendarUIContext);
 
-  const handleDateChange = (date) => {
+  const handleClick = (e, date) => {
+    eventListPopover.show(e, date);
     setSelectedDate(date);
   };
 
@@ -23,8 +26,8 @@ function YearMonth({ month }) {
     newProps.hidden = false;
     newProps.current = false;
     newProps.selected =
-      dayInCurrentMonth &&
       selectedDate.format("DD-MM-YYYY") === day.format("DD-MM-YYYY");
+    newProps.onClick = (e) => handleClick(e, day);
     const _dayComponent = React.cloneElement(dayComponent, newProps);
     return _dayComponent;
   };
@@ -52,7 +55,6 @@ function YearMonth({ month }) {
           value={month.start.clone()}
           renderDay={renderDayInPicker}
           disableToolbar
-          onChange={handleDateChange}
           leftArrowIcon={null}
           rightArrowIcon={null}
         />
