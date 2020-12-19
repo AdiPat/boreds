@@ -44,7 +44,12 @@ function EventListPopover({ anchorEl, handleClose, date }) {
             </Typography>
           </div>
           <Divider />
-          <EventList date={date} shouldLimit={false} wrapText={false} />
+          <EventList
+            date={date}
+            shouldLimit={false}
+            wrapText={false}
+            showAddButton
+          />
         </div>
       </Popover>
     </div>
