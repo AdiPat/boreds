@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, ListItem, ListItemText, Button } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = makeStyles((theme) => ({
   emptyListItem: {
@@ -15,8 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EventListAddButton() {
+function EventListAddButton({ date }) {
   const classes = useStyles();
+  const { createEventModal } = useContext(CalendarUIContext);
+
+  const handleClick = () => {
+    createEventModal.show(date);
+  };
 
   return (
     <React.Fragment>
@@ -30,6 +38,7 @@ function EventListAddButton() {
           variant="contained"
           color="secondary"
           endIcon={<AddCircleOutlineIcon />}
+          onClick={handleClick}
         >
           Add Event
         </Button>
@@ -37,5 +46,9 @@ function EventListAddButton() {
     </React.Fragment>
   );
 }
+
+EventListAddButton.propTypes = {
+  date: PropTypes.instanceOf(moment).isRequired,
+};
 
 export { EventListAddButton };

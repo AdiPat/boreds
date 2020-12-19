@@ -35,7 +35,7 @@ function EventList({ date, maxItems, shouldLimit, wrapText, showAddButton }) {
     }
 
     if (slotEvents.length == 0 && showAddButton) {
-      slotsJsx.push(<EventListAddButton />);
+      slotsJsx.push(<EventListAddButton date={date} />);
     }
 
     return slotsJsx;
