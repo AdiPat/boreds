@@ -1,7 +1,7 @@
 import React from "react";
 import CalendarContext from "./CalendarContext";
 import moment from "moment";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../utils/constants";
 import {
   attachCalendarEventsListener,
   detachCalendarEventsListener,

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../utils/constants";
 import { getDurationFlags } from "../utils/calendar-utils";
 import { CalendarUIProvider } from "./CalendarUIProvider";
 import CalendarContext from "../providers/CalendarContext";

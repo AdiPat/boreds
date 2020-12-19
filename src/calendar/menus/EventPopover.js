@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Popover, Typography, Button, Divider } from "@material-ui/core";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 import { EventPopoverEditButton } from "../buttons/EventPopoverEditButton";
 import { EventPopoverDeleteButton } from "../buttons/EventPopoverDeleteButton";
 import { EventPopoverAddDescriptionButton } from "../buttons/EventPopoverAddDescriptionButton";

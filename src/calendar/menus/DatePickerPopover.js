@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Popover } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 function DatePickerPopover(props) {
   return (

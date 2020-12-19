@@ -15,7 +15,7 @@ import { DatePickerPopover } from "../menus/DatePickerPopover";
 import { TimePickerPopover } from "../menus/TimePickerPopover";
 import { addCalendarEvent } from "../../services/calendar-api";
 import { getUTCString } from "../../utils/calendar-utils";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   modalContainer: {

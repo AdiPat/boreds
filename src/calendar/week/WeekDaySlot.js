@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { grey } from "@material-ui/core/colors";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import moment from "moment";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 import { SlotTimeIndicator } from "../misc/SlotTimeIndicator";
 import {
   getSlotDividerFlags,

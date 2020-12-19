@@ -6,7 +6,7 @@ import {
   getWeekDaySlotMoment,
 } from "../../services/calendar";
 import { WeekDaySlot } from "./WeekDaySlot";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {

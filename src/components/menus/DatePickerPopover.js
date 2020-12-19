@@ -3,7 +3,7 @@ import { Popover } from "@material-ui/core";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 function DatePickerPopover({
   anchorEl,

@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../utils/constants";
 import { Snackbar } from "@material-ui/core";
 import { CreateEventModal } from "../components/modals/CreateEventModal";
 import { EditEventModal } from "../components/modals/EditEventModal";

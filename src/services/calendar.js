@@ -4,7 +4,7 @@ import {
   validateYear,
   validateWeekday,
 } from "../utils/calendar-utils";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../utils/constants";
 
 // gets no. of days in a month, uses 0 indexing
 const getDaysInMonth = (month, year) => {

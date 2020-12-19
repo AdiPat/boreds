@@ -172,4 +172,6 @@ let _constants = {
   },
 };
 
-export default _constants;
+const CONSTANTS = _constants;
+
+export { CONSTANTS };

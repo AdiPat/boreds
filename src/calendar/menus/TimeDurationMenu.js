@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { ListItemText } from "@material-ui/core";
 import { StyledMenu } from "../../components/menus/StyledMenu";
 import { StyledMenuItem } from "../../components/menus/StyledMenuItem";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 function TimeDurationMenu(props) {
   let renderMenu = () => {

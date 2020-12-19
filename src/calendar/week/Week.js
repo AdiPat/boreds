@@ -3,7 +3,7 @@ import clsx from "clsx";
 import moment from "moment";
 import { WeekTimeSlot } from "./WeekTimeSlot";
 import { makeStyles } from "@material-ui/core/styles";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   hide: {
