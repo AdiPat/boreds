@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import CONSTANTS from "../utils/constants";
+import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   timeStripSlot: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarTimeStripDiv({ slot }) {
+function TimeStripDiv({ slot }) {
   const classes = useStyles();
   return (
     <div key={slot.start + "-" + slot.end} className={classes.timeStripSlot}>
@@ -42,8 +42,8 @@ function CalendarTimeStripDiv({ slot }) {
   );
 }
 
-CalendarTimeStripDiv.propTypes = {
+TimeStripDiv.propTypes = {
   slot: PropTypes.object.isRequired,
 };
 
-export { CalendarTimeStripDiv };
+export { TimeStripDiv };

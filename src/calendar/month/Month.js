@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
-import { CalendarMonthWeek } from "./CalendarMonthWeek";
-import { getWeekCalendar } from "../services/calendar";
-import { splitMonthToWeeks } from "../utils/util";
+import { MonthWeek } from "./MonthWeek";
+import { getWeekCalendar } from "../../services/calendar";
+import { splitMonthToWeeks } from "../../utils/util";
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonth({ selectedDate, show }) {
+function Month({ selectedDate, show }) {
   const classes = useStyles();
 
   const renderWeeks = () => {
     const calendar = getWeekCalendar(selectedDate.month(), selectedDate.year());
     const weeks = splitMonthToWeeks(calendar);
     const weeksJsx = weeks.map((week) => {
-      return <CalendarMonthWeek week={week} />;
+      return <MonthWeek week={week} />;
     });
     return weeksJsx;
   };
@@ -39,14 +39,14 @@ function CalendarMonth({ selectedDate, show }) {
   );
 }
 
-CalendarMonth.propTypes = {
+Month.propTypes = {
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   show: PropTypes.bool.isRequired,
 };
 
-CalendarMonth.defaultProps = {
+Month.defaultProps = {
   selectedDate: moment(),
   show: false,
 };
 
-export { CalendarMonth };
+export { Month };

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, ListItem, ListItemText, Typography } from "@material-ui/core";
-import CalendarContext from "../providers/CalendarContext";
-import { CalendarEventListItem } from "./CalendarEventListItem";
-import { ListMoreEventsButton } from "./buttons/ListMoreEventsButton";
+import CalendarContext from "../../providers/CalendarContext";
+import { EventListItem } from "./EventListItem";
+import { ListMoreEventsButton } from "../buttons/ListMoreEventsButton";
 
 const MAX_LIST_ITEMS = 3;
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventList({ date }) {
+function EventList({ date }) {
   const classes = useStyles();
   const { getCalendarEvents } = useContext(CalendarContext);
 
@@ -32,7 +32,7 @@ function CalendarEventList({ date }) {
   const renderEvents = () => {
     let slotsJsx = slotEvents.map((event, i) => {
       return i < MAX_LIST_ITEMS ? (
-        <CalendarEventListItem event={event} key={i} />
+        <EventListItem event={event} key={i} />
       ) : null;
     });
 
@@ -52,8 +52,8 @@ function CalendarEventList({ date }) {
   return <List>{renderEvents()}</List>;
 }
 
-CalendarEventList.propTypes = {
+EventList.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
 };
 
-export { CalendarEventList };
+export { EventList };

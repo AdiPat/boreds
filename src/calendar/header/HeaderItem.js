@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { grey, deepOrange } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import { CalenderHeaderItemTitle } from "./CalendarHeaderItemTitle";
-import { CalendarHeaderItemBody } from "./CalendarHeaderItemBody";
+import { CalenderHeaderItemTitle } from "./HeaderItemTitle";
+import { CalendarHeaderItemBody } from "./HeaderItemBody";
 
 const useStyles = makeStyles((theme) => ({
   hide: {

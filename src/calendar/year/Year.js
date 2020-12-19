@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Grid } from "@material-ui/core";
-import { getMonthsInYear } from "../services/calendar";
-import { CalendarYearMonth } from "./CalendarYearMonth";
+import { getMonthsInYear } from "../../services/calendar";
+import { YearMonth } from "./YearMonth";
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarYear({ selectedDate, show }) {
+function Year({ selectedDate, show }) {
   const classes = useStyles();
 
   const renderMonths = () => {
     const months = getMonthsInYear(selectedDate.year());
-    let monthsJsx = months.map((month) => <CalendarYearMonth month={month} />);
+    let monthsJsx = months.map((month) => <YearMonth month={month} />);
     return monthsJsx;
   };
 
@@ -29,14 +29,14 @@ function CalendarYear({ selectedDate, show }) {
   );
 }
 
-CalendarYear.propTypes = {
+Year.propTypes = {
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   show: PropTypes.bool.isRequired,
 };
 
-CalendarYear.defaultProps = {
+Year.defaultProps = {
   selectedDate: moment(),
   show: false,
 };
 
-export { CalendarYear };
+export { Year };

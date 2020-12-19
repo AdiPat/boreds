@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   getFourDaySlotMoment,
   getWeekDaySlotMoment,
-} from "../services/calendar";
-import { CalendarWeekDaySlot } from "./CalendarWeekDaySlot";
-import CONSTANTS from "../utils/constants";
+} from "../../services/calendar";
+import { WeekDaySlot } from "./WeekDaySlot";
+import CONSTANTS from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekTimeSlot({ selectedDate, numSlots, startHour }) {
+function WeekTimeSlot({ selectedDate, numSlots, startHour }) {
   const classes = useStyles();
 
   const getSlotMoment = (day) => {
@@ -39,7 +39,7 @@ function CalendarWeekTimeSlot({ selectedDate, numSlots, startHour }) {
       let slotMoment = getSlotMoment(day);
 
       const jsx = (
-        <CalendarWeekDaySlot
+        <WeekDaySlot
           selectedDate={selectedDate}
           slotMoment={slotMoment}
           key={i}
@@ -53,10 +53,10 @@ function CalendarWeekTimeSlot({ selectedDate, numSlots, startHour }) {
   return <div className={classes.weekSlotContainer}>{renderSlots()}</div>;
 }
 
-CalendarWeekTimeSlot.propTypes = {
+WeekTimeSlot.propTypes = {
   numSlots: PropTypes.number.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   startHour: PropTypes.number.isRequired,
 };
 
-export { CalendarWeekTimeSlot };
+export { WeekTimeSlot };

@@ -4,9 +4,9 @@ import moment from "moment";
 import { Grid } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import CalendarContext from "../providers/CalendarContext";
+import CalendarContext from "../../providers/CalendarContext";
 
-function CalendarYearMonth({ month }) {
+function YearMonth({ month }) {
   const { selectedDate, setSelectedDate } = useContext(CalendarContext);
 
   const handleDateChange = (date) => {
@@ -62,8 +62,8 @@ function CalendarYearMonth({ month }) {
   );
 }
 
-CalendarYearMonth.propTypes = {
+YearMonth.propTypes = {
   month: PropTypes.array.isRequired,
 };
 
-export { CalendarYearMonth };
+export { YearMonth };

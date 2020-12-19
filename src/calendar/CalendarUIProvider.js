@@ -4,7 +4,7 @@ import CONSTANTS from "../utils/constants";
 import { Snackbar } from "@material-ui/core";
 import { CreateEventModal } from "../components/modals/CreateEventModal";
 import { EditEventModal } from "../components/modals/EditEventModal";
-import { CalendarEventPopover } from "./menus/CalendarEventPopover";
+import { CalendarEventPopover } from "./menus/EventPopover";
 import { CalendarUIContext } from "./CalendarUIContext";
 
 class CalendarUIProvider extends React.PureComponent {

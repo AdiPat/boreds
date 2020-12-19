@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { grey } from "@material-ui/core/colors";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import moment from "moment";
-import CONSTANTS from "../utils/constants";
-import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
+import CONSTANTS from "../../utils/constants";
+import { SlotTimeIndicator } from "../misc/SlotTimeIndicator";
 import {
   getSlotDividerFlags,
   isSelectedDateInSlot,
-} from "../services/calendar";
-import { CalendarUIContext } from "./CalendarUIContext";
-import CalendarContext from "../providers/CalendarContext";
-import { CalendarEventChip } from "./CalendarEventChip";
+} from "../../services/calendar";
+import { CalendarUIContext } from "../CalendarUIContext";
+import CalendarContext from "../../providers/CalendarContext";
+import { EventChip } from "../misc/EventChip";
 
 const useStyles = makeStyles((theme) => ({
   daySlot: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekDaySlot({ selectedDate, slotMoment }) {
+function WeekDaySlot({ selectedDate, slotMoment }) {
   const theme = useTheme();
   const classes = useStyles();
   const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
@@ -69,7 +69,7 @@ function CalendarWeekDaySlot({ selectedDate, slotMoment }) {
       return row.map((_event, i, arr) => {
         const endOffset = i == arr.length - 1 ? theme.spacing(2) : 0;
         const jsx = (
-          <CalendarEventChip
+          <EventChip
             style={{
               position: "absolute",
               top: `calc(${topIdx} * 100%/3)`,
@@ -103,16 +103,14 @@ function CalendarWeekDaySlot({ selectedDate, slotMoment }) {
   return (
     <div className={clsx(classes.daySlot)} onClick={handleClick}>
       {renderEventChips()}
-      {isCurrent ? (
-        <CalendarSlotTimeIndicator dividerFlags={dividerFlags} />
-      ) : null}
+      {isCurrent ? <SlotTimeIndicator dividerFlags={dividerFlags} /> : null}
     </div>
   );
 }
 
-CalendarWeekDaySlot.propTypes = {
+WeekDaySlot.propTypes = {
   slotMoment: PropTypes.instanceOf(moment).isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
 };
 
-export { CalendarWeekDaySlot };
+export { WeekDaySlot };

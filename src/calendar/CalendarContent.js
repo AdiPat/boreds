@@ -5,11 +5,11 @@ import CONSTANTS from "../utils/constants";
 import { getDurationFlags } from "../utils/util";
 import { CalendarUIProvider } from "./CalendarUIProvider";
 import CalendarContext from "../providers/CalendarContext";
-import { CalendarHeader } from "./CalendarHeader";
-import { CalendarTimeStrip } from "./CalendarTimeStrip";
-import { CalendarWeek } from "./CalendarWeek";
-import { CalendarMonth } from "./CalendarMonth";
-import { CalendarYear } from "./CalendarYear";
+import { CalendarHeader } from "./header/Header";
+import { TimeStrip } from "./misc/TimeStrip";
+import { Week } from "./week/Week";
+import { Month } from "./month/Month";
+import { Year } from "./year/Year";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -54,14 +54,14 @@ function CalendarContent({ userId, extras }) {
           isDuration={isDuration}
         />
         <div className={classes.calendar}>
-          <CalendarTimeStrip duration={duration} isDuration={isDuration} />
-          <CalendarWeek
+          <TimeStrip duration={duration} isDuration={isDuration} />
+          <Week
             show={isDuration.day || isDuration.week || isDuration.fourdays}
             numSlots={numSlots}
             selectedDate={selectedDate}
           />
-          <CalendarMonth selectedDate={selectedDate} show={isDuration.month} />
-          <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
+          <Month selectedDate={selectedDate} show={isDuration.month} />
+          <Year selectedDate={selectedDate} show={isDuration.year} />
         </div>
       </main>
     </CalendarUIProvider>

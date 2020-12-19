@@ -2,7 +2,7 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemText, Typography } from "@material-ui/core";
-import { CalendarUIContext } from "./CalendarUIContext";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = makeStyles((theme) => ({
   eventListItem: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventListItem({ event, key }) {
+function EventListItem({ event, key }) {
   const classes = useStyles();
   const { eventPopover } = useContext(CalendarUIContext);
 
@@ -42,9 +42,9 @@ function CalendarEventListItem({ event, key }) {
   );
 }
 
-CalendarEventListItem.propTypes = {
+EventListItem.propTypes = {
   event: PropTypes.object.isRequired,
   key: PropTypes.number.isRequired,
 };
 
-export { CalendarEventListItem };
+export { EventListItem };

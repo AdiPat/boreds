@@ -2,9 +2,9 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Paper } from "@material-ui/core";
-import CONSTANTS from "../utils/constants";
-import { hashEventId } from "../utils/util";
-import { CalendarUIContext } from "./CalendarUIContext";
+import CONSTANTS from "../../utils/constants";
+import { hashEventId } from "../../utils/util";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = ({ chipColor }) =>
   makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyles = ({ chipColor }) =>
     },
   }));
 
-function CalendarEventChip({ style, chipColor, event }) {
+function EventChip({ style, chipColor, event }) {
   const classes = useStyles({ chipColor })();
   const btnId = hashEventId(event.id);
   const { eventPopover } = useContext(CalendarUIContext);
@@ -44,13 +44,13 @@ function CalendarEventChip({ style, chipColor, event }) {
   );
 }
 
-CalendarEventChip.propTypes = {
+EventChip.propTypes = {
   event: PropTypes.object.isRequired,
   chipColor: PropTypes.object,
 };
 
-CalendarEventChip.defaultProps = {
+EventChip.defaultProps = {
   chipColor: CONSTANTS.CALENDAR.EVENT.colors.teal,
 };
 
-export { CalendarEventChip };
+export { EventChip };

@@ -3,8 +3,8 @@ import moment from "moment";
 import { grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider } from "@material-ui/core";
-import { SlotDateSelectButton } from "./buttons/SlotDateSelectButton";
-import { CalendarEventList } from "./CalendarEventList";
+import { SlotDateSelectButton } from "../buttons/SlotDateSelectButton";
+import { EventList } from "../misc/EventList";
 
 const useStyles = makeStyles((theme) => ({
   monthSlot: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthSlot({ date }) {
+function MonthSlot({ date }) {
   const classes = useStyles();
 
   return (
@@ -45,14 +45,14 @@ function CalendarMonthSlot({ date }) {
       </div>
       <Divider />
       <div className={classes.monthSlotBody}>
-        <CalendarEventList date={date} />
+        <EventList date={date} />
       </div>
     </div>
   );
 }
 
-CalendarMonthSlot.propTypes = {
+MonthSlot.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
 };
 
-export { CalendarMonthSlot };
+export { MonthSlot };
