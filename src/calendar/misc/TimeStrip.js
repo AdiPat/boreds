@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import CONSTANTS from "../utils/constants";
-import { getTimeSlots } from "../services/calendar";
-import { CalendarTimeStripDiv } from "./CalendarTimeStripDiv";
+import { CONSTANTS } from "../../utils/constants";
+import { getTimeSlots } from "../../services/calendar";
+import { TimeStripDiv } from "./TimeStripDiv";
 
 const useStyles = makeStyles((theme) => ({
   hideStrip: {
@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarTimeStrip({ duration }) {
+function TimeStrip({ duration }) {
   const classes = useStyles();
   const isYear = duration === CONSTANTS.CALENDAR.DURATIONS.year;
   const isMonth = duration === CONSTANTS.CALENDAR.DURATIONS.month;
 
   const renderSlots = () => {
     const slots = getTimeSlots();
-    const slotsJsx = slots.map((slot) => <CalendarTimeStripDiv slot={slot} />);
+    const slotsJsx = slots.map((slot) => <TimeStripDiv slot={slot} />);
     return slotsJsx;
   };
 
@@ -40,9 +40,9 @@ function CalendarTimeStrip({ duration }) {
   );
 }
 
-CalendarTimeStrip.propTypes = {
+TimeStrip.propTypes = {
   duration: PropTypes.oneOfType(Object.values(CONSTANTS.CALENDAR.DURATIONS))
     .isRequired,
 };
 
-export { CalendarTimeStrip };
+export { TimeStrip };

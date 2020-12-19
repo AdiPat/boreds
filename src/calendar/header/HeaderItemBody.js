@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { SlotDateSelectButton } from "./buttons/SlotDateSelectButton";
+import { SlotDateSelectButton } from "../buttons/SlotDateSelectButton";
 
 const useStyles = makeStyles((theme) => ({
   hide: {

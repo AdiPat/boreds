@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
-import { CalendarMonthSlot } from "./CalendarMonthSlot";
+import { MonthSlot } from "./MonthSlot";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {
@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthWeek({ week, eventPopover }) {
+function MonthWeek({ week }) {
   const classes = useStyles();
 
   const renderWeek = () => {
     const slotsJsx = week.map((date) => {
-      return <CalendarMonthSlot date={date} eventPopover={eventPopover} />;
+      return <MonthSlot date={date} />;
     });
     return slotsJsx;
   };
@@ -24,9 +24,8 @@ function CalendarMonthWeek({ week, eventPopover }) {
   return <div className={classes.weekSlotContainer}>{renderWeek()}</div>;
 }
 
-CalendarMonthWeek.propTypes = {
+MonthWeek.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
-export { CalendarMonthWeek };
+export { MonthWeek };

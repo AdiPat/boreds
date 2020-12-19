@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemText, Typography } from "@material-ui/core";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = makeStyles((theme) => ({
   eventListItem: {
@@ -16,15 +18,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarEventListItem({ event, key, eventPopover }) {
+function EventListItem({ event, key }) {
   const classes = useStyles();
+  const { eventPopover } = useContext(CalendarUIContext);
 
   return (
     <ListItem
       key={key}
       button
       className={classes.eventListItem}
-      onClick={(e) => eventPopover.handleOpen(e, event)}
+      onClick={(e) => eventPopover.show(e, event)}
       disableTouchRipple
     >
       <ListItemText
@@ -39,10 +42,9 @@ function CalendarEventListItem({ event, key, eventPopover }) {
   );
 }
 
-CalendarEventListItem.propTypes = {
+EventListItem.propTypes = {
   event: PropTypes.object.isRequired,
   key: PropTypes.number.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
-export { CalendarEventListItem };
+export { EventListItem };

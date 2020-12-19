@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import CONSTANTS from "../utils/constants";
-import { CalendarHeaderItem } from "./CalendarHeaderItem";
-import { getWeek, getNextFourDays } from "../services/calendar";
+import { CONSTANTS } from "../../utils/constants";
+import { CalendarHeaderItem } from "./HeaderItem";
+import { getWeek, getNextFourDays } from "../../services/calendar";
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {

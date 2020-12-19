@@ -4,7 +4,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { TimeDurationMenu } from "../menus/TimeDurationMenu";
-import CONSTANTS from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 import CalendarContext from "../../providers/CalendarContext";
 
 function TimeDurationButton(props) {

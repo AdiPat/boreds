@@ -1,6 +1,10 @@
 import moment from "moment";
-import { validateMonth, validateYear, validateWeekday } from "../utils/util";
-import CONSTANTS from "../utils/constants";
+import {
+  validateMonth,
+  validateYear,
+  validateWeekday,
+} from "../utils/calendar-utils";
+import { CONSTANTS } from "../utils/constants";
 
 // gets no. of days in a month, uses 0 indexing
 const getDaysInMonth = (month, year) => {
@@ -57,7 +61,7 @@ const getWeekCalendar = (month, year) => {
   // pad start of the month
   let firstDay = weekCalendar[0].clone();
   let weekStart = firstDay.clone().startOf("week");
-  while (firstDay.day() != weekStart.day()) {
+  while (firstDay.day() !== weekStart.day()) {
     const _dayBefore = firstDay.clone().subtract(1, "days");
     weekCalendar.unshift(_dayBefore);
     firstDay = _dayBefore;
@@ -66,7 +70,7 @@ const getWeekCalendar = (month, year) => {
   // pad end of the month
   let lastDay = weekCalendar[weekCalendar.length - 1].clone();
   let weekEnd = lastDay.clone().endOf("week");
-  while (lastDay.day() != weekEnd.day()) {
+  while (lastDay.day() !== weekEnd.day()) {
     const _nextDay = lastDay.clone().add(1, "days");
     weekCalendar.push(_nextDay);
     lastDay = _nextDay;
@@ -85,8 +89,8 @@ const getDateButtonText = (date) => {
   const curMonth = curDate.month();
   const endMonth = weekEndDate.month();
 
-  if (startMonth != curMonth) {
-    if (weekStartDate.year() != curDate.year()) {
+  if (startMonth !== curMonth) {
+    if (weekStartDate.year() !== curDate.year()) {
       btnDisplay =
         weekStartDate.format("MMM YYYY") + " - " + curDate.format("MMM YYYY");
     } else {
@@ -95,8 +99,8 @@ const getDateButtonText = (date) => {
     }
   }
 
-  if (endMonth != curMonth) {
-    if (weekEndDate.year() != curDate.year()) {
+  if (endMonth !== curMonth) {
+    if (weekEndDate.year() !== curDate.year()) {
       btnDisplay =
         curDate.format("MMM YYYY") + " - " + weekEndDate.format("MMM YYYY");
     } else {
@@ -119,7 +123,7 @@ const getWeek = (date) => {
   const weekEnd = curDate.clone().endOf("week");
   const week = [];
   let _day = weekStart.clone();
-  while (_day.day() != weekEnd.day()) {
+  while (_day.day() !== weekEnd.day()) {
     week.push(_day);
     _day = _day.clone().add(1, "days");
   }

@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import moment from "moment";
-import { CalendarWeekTimeSlot } from "./CalendarWeekTimeSlot";
+import { WeekTimeSlot } from "./WeekTimeSlot";
 import { makeStyles } from "@material-ui/core/styles";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -18,28 +18,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeek({
-  show,
-  numSlots,
-  selectedDate,
-  openCreateEventModal,
-  setModalPreset,
-  eventPopover,
-}) {
+function Week({ show, numSlots, selectedDate }) {
   const classes = useStyles();
 
   const renderTimeSlots = () => {
     const weekSlotsJsx = [];
     for (let i = 0; i < CONSTANTS.CALENDAR.HOURS_IN_DAY - 1; i++) {
       const jsx = (
-        <CalendarWeekTimeSlot
+        <WeekTimeSlot
           numSlots={numSlots}
           selectedDate={selectedDate}
           key={i}
           startHour={i}
-          openCreateEventModal={openCreateEventModal}
-          setModalPreset={setModalPreset}
-          eventPopover={eventPopover}
         />
       );
       weekSlotsJsx.push(jsx);
@@ -54,13 +44,10 @@ function CalendarWeek({
   );
 }
 
-CalendarWeek.propTypes = {
+Week.propTypes = {
   show: PropTypes.bool.isRequired,
   numSlots: PropTypes.number.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
-  openCreateEventModal: PropTypes.func.isRequired,
-  setModalPreset: PropTypes.func.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
-export { CalendarWeek };
+export { Week };

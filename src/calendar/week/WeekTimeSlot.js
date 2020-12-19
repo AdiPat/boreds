@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   getFourDaySlotMoment,
   getWeekDaySlotMoment,
-} from "../services/calendar";
-import { CalendarWeekDaySlot } from "./CalendarWeekDaySlot";
-import CONSTANTS from "../utils/constants";
+} from "../../services/calendar";
+import { WeekDaySlot } from "./WeekDaySlot";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   weekSlotContainer: {
@@ -16,14 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekTimeSlot({
-  selectedDate,
-  numSlots,
-  startHour,
-  openCreateEventModal,
-  setModalPreset,
-  eventPopover,
-}) {
+function WeekTimeSlot({ selectedDate, numSlots, startHour }) {
   const classes = useStyles();
 
   const getSlotMoment = (day) => {
@@ -32,7 +25,7 @@ function CalendarWeekTimeSlot({
       slotMoment = selectedDate.clone().hour(startHour).startOf("hour");
     } else if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.week) {
       slotMoment = getWeekDaySlotMoment(selectedDate, startHour, day);
-    } else if (numSlots == CONSTANTS.CALENDAR.NUM_DAYS.fourdays) {
+    } else if (numSlots === CONSTANTS.CALENDAR.NUM_DAYS.fourdays) {
       slotMoment = getFourDaySlotMoment(selectedDate, startHour, day);
     }
     return slotMoment;
@@ -46,13 +39,10 @@ function CalendarWeekTimeSlot({
       let slotMoment = getSlotMoment(day);
 
       const jsx = (
-        <CalendarWeekDaySlot
+        <WeekDaySlot
           selectedDate={selectedDate}
           slotMoment={slotMoment}
           key={i}
-          openCreateEventModal={openCreateEventModal}
-          setModalPreset={setModalPreset}
-          eventPopover={eventPopover}
         />
       );
       slotsJsx.push(jsx);
@@ -63,13 +53,10 @@ function CalendarWeekTimeSlot({
   return <div className={classes.weekSlotContainer}>{renderSlots()}</div>;
 }
 
-CalendarWeekTimeSlot.propTypes = {
+WeekTimeSlot.propTypes = {
   numSlots: PropTypes.number.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   startHour: PropTypes.number.isRequired,
-  openCreateEventModal: PropTypes.func.isRequired,
-  setModalPreset: PropTypes.func.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
-export { CalendarWeekTimeSlot };
+export { WeekTimeSlot };

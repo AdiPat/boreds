@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { AppDrawer } from "../components/drawer/AppDrawer";
 import { CalendarContent } from "./CalendarContent";
-import { CalendarTopBar } from "./CalendarTopBar";
+import { TopBar } from "./misc/TopBar";
 import CalendarProvider from "../providers/CalendarProvider";
 
 function CalendarContainer({ user, extras }) {
   const userId = user.uid;
   const history = useHistory();
-  // console.log("CalendarContainer: ", extras);
 
   return (
     <CalendarProvider userId={userId} extras={extras} history={history}>
@@ -17,7 +16,7 @@ function CalendarContainer({ user, extras }) {
         <AppDrawer
           dashTitle="Calendar"
           userId={userId}
-          topButtons={<CalendarTopBar userId={userId} />}
+          topButtons={<TopBar userId={userId} />}
         />
         <CalendarContent userId={userId} extras={{}} />
       </React.Fragment>

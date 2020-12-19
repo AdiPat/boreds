@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import { grey } from "@material-ui/core/colors";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import moment from "moment";
-import CONSTANTS from "../utils/constants";
-import { CalendarSlotTimeIndicator } from "./CalendarSlotTimeIndicator";
+import { CONSTANTS } from "../../utils/constants";
+import { SlotTimeIndicator } from "../misc/SlotTimeIndicator";
 import {
   getSlotDividerFlags,
   isSelectedDateInSlot,
-} from "../services/calendar";
-import CalendarContext from "../providers/CalendarContext";
-import { CalendarEventChip } from "./CalendarEventChip";
+} from "../../services/calendar";
+import { CalendarUIContext } from "../CalendarUIContext";
+import CalendarContext from "../../providers/CalendarContext";
+import { EventChip } from "../misc/EventChip";
 
 const useStyles = makeStyles((theme) => ({
   daySlot: {
@@ -41,15 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekDaySlot({
-  selectedDate,
-  slotMoment,
-  openCreateEventModal,
-  setModalPreset,
-  eventPopover,
-}) {
+function WeekDaySlot({ selectedDate, slotMoment }) {
   const theme = useTheme();
   const classes = useStyles();
+
   const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
   let dividerFlags = CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS;
 
@@ -62,6 +58,7 @@ function CalendarWeekDaySlot({
   const { getTimeDividedCalendarEvents, eventsLastUpdated } = useContext(
     CalendarContext
   );
+  const { createEventModal } = useContext(CalendarUIContext);
 
   useEffect(() => {
     let _slotEvents = getTimeDividedCalendarEvents(slotMoment);
@@ -71,9 +68,9 @@ function CalendarWeekDaySlot({
   const renderEventChips = () => {
     const _chipsJsx = slotEvents.map((row, topIdx) => {
       return row.map((_event, i, arr) => {
-        const endOffset = i == arr.length - 1 ? theme.spacing(2) : 0;
+        const endOffset = i === arr.length - 1 ? theme.spacing(2) : 0;
         const jsx = (
-          <CalendarEventChip
+          <EventChip
             style={{
               position: "absolute",
               top: `calc(${topIdx} * 100%/3)`,
@@ -82,7 +79,6 @@ function CalendarWeekDaySlot({
             }}
             key={i}
             event={_event}
-            eventPopover={eventPopover}
           />
         );
         return jsx;
@@ -102,26 +98,20 @@ function CalendarWeekDaySlot({
       _modalPreset = slotMoment.clone().add(30, "minutes");
     }
 
-    setModalPreset(_modalPreset);
-    openCreateEventModal();
+    createEventModal.show(_modalPreset);
   };
 
   return (
     <div className={clsx(classes.daySlot)} onClick={handleClick}>
       {renderEventChips()}
-      {isCurrent ? (
-        <CalendarSlotTimeIndicator dividerFlags={dividerFlags} />
-      ) : null}
+      {isCurrent ? <SlotTimeIndicator dividerFlags={dividerFlags} /> : null}
     </div>
   );
 }
 
-CalendarWeekDaySlot.propTypes = {
+WeekDaySlot.propTypes = {
   slotMoment: PropTypes.instanceOf(moment).isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
-  openCreateEventModal: PropTypes.func.isRequired,
-  setModalPreset: PropTypes.func.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
-export { CalendarWeekDaySlot };
+export { WeekDaySlot };

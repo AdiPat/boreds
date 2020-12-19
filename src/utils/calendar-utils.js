@@ -1,5 +1,5 @@
 import moment from "moment";
-import CONSTANTS from "./constants";
+import { CONSTANTS } from "./constants";
 import hash from "object-hash";
 
 const validateMonth = (month) => {

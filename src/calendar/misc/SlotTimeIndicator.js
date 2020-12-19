@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import CONSTANTS from "../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarSlotTimeIndicator({ dividerFlags }) {
+function SlotTimeIndicator({ dividerFlags }) {
   const classes = useStyles();
 
   return (
@@ -57,12 +57,12 @@ function CalendarSlotTimeIndicator({ dividerFlags }) {
   );
 }
 
-CalendarSlotTimeIndicator.propTypes = {
+SlotTimeIndicator.propTypes = {
   dividerFlags: PropTypes.object.isRequired,
 };
 
-CalendarSlotTimeIndicator.defaultProps = {
+SlotTimeIndicator.defaultProps = {
   dividerFlags: CONSTANTS.CALENDAR.DAY_TIME_SLOT_FLAGS,
 };
 
-export { CalendarSlotTimeIndicator };
+export { SlotTimeIndicator };
