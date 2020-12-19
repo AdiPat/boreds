@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import moment from "moment";
 import CONSTANTS from "../utils/constants";
 import { getDurationFlags } from "../utils/util";
 import { CalendarUIProvider } from "./CalendarUIProvider";
@@ -11,9 +10,6 @@ import { CalendarTimeStrip } from "./CalendarTimeStrip";
 import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
 import { CalendarYear } from "./CalendarYear";
-import { EditEventModal } from "../components/modals/EditEventModal";
-import { CreateEventModal } from "../components/modals/CreateEventModal";
-import { CalendarEventPopover } from "./menus/CalendarEventPopover";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -38,59 +34,16 @@ const useStyles = makeStyles((theme) => ({
 
 function CalendarContent({ userId, extras }) {
   const classes = useStyles();
-  // event popover
-  const [eventAnchorEl, setEventAnchorEl] = useState(null);
-  const [curEvent, setCurEvent] = useState({});
-  // edit event modal
-  const [openEditEventModal, setOpenEditEventModal] = useState(false);
-  // create event modal
-  const [openCreateEventModal, setOpenCreateEventModal] = useState(false);
-  const [modalPreset, setModalPreset] = useState(moment());
   // header and days rendering
   const [numSlots, setNumSlots] = useState(0);
   const { duration, selectedDate } = useContext(CalendarContext);
 
   const isDuration = getDurationFlags(duration);
 
-  const handleOpenEventPopover = (e, calendarEvent) => {
-    console.log("handleOpenEventPopover(): ");
-    e.stopPropagation();
-    setCurEvent(calendarEvent);
-    setEventAnchorEl(e.currentTarget);
-  };
-
-  const handleCloseEventPopover = () => {
-    setEventAnchorEl(null);
-  };
-
-  const handleOpenCreateEventModal = () => {
-    setOpenCreateEventModal(true);
-  };
-
-  const handleCloseCreateEventModal = () => {
-    setOpenCreateEventModal(false);
-  };
-
-  const handleOpenEditEventModal = () => {
-    setOpenEditEventModal(true);
-  };
-
-  const handleCloseEditEventModal = () => {
-    setOpenEditEventModal(false);
-  };
-
   useEffect(() => {
     const _numSlots = CONSTANTS.CALENDAR.NUM_DAYS[duration];
     setNumSlots(_numSlots);
   }, [duration]);
-
-  console.log("CalendarContent.render(): ");
-
-  const eventPopover = {
-    anchorEl: eventAnchorEl,
-    handleOpen: handleOpenEventPopover,
-    handleClose: handleCloseEventPopover,
-  };
 
   return (
     <CalendarUIProvider>
@@ -106,35 +59,10 @@ function CalendarContent({ userId, extras }) {
             show={isDuration.day || isDuration.week || isDuration.fourdays}
             numSlots={numSlots}
             selectedDate={selectedDate}
-            openCreateEventModal={handleOpenCreateEventModal}
-            setModalPreset={setModalPreset}
-            eventPopover={eventPopover}
           />
-          <CalendarMonth
-            selectedDate={selectedDate}
-            show={isDuration.month}
-            eventPopover={eventPopover}
-          />
+          <CalendarMonth selectedDate={selectedDate} show={isDuration.month} />
           <CalendarYear selectedDate={selectedDate} show={isDuration.year} />
         </div>
-        <CreateEventModal
-          open={openCreateEventModal}
-          handleCloseModal={handleCloseCreateEventModal}
-          datePreset={modalPreset}
-          timePreset={modalPreset}
-        />
-        <EditEventModal
-          open={openEditEventModal}
-          handleCloseModal={handleCloseEditEventModal}
-          curEvent={curEvent}
-          openEventPopover={handleOpenEventPopover}
-        />
-        <CalendarEventPopover
-          anchorEl={eventAnchorEl}
-          handleClose={handleCloseEventPopover}
-          event={curEvent}
-          openEditEventModal={handleOpenEditEventModal}
-        />
       </main>
     </CalendarUIProvider>
   );

@@ -10,6 +10,7 @@ import {
   getSlotDividerFlags,
   isSelectedDateInSlot,
 } from "../services/calendar";
+import { CalendarUIContext } from "./CalendarUIContext";
 import CalendarContext from "../providers/CalendarContext";
 import { CalendarEventChip } from "./CalendarEventChip";
 
@@ -41,13 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekDaySlot({
-  selectedDate,
-  slotMoment,
-  openCreateEventModal,
-  setModalPreset,
-  eventPopover,
-}) {
+function CalendarWeekDaySlot({ selectedDate, slotMoment }) {
   const theme = useTheme();
   const classes = useStyles();
   const isCurrent = isSelectedDateInSlot(selectedDate, slotMoment);
@@ -62,6 +57,7 @@ function CalendarWeekDaySlot({
   const { getTimeDividedCalendarEvents, eventsLastUpdated } = useContext(
     CalendarContext
   );
+  const { createEventModal } = useContext(CalendarUIContext);
 
   useEffect(() => {
     let _slotEvents = getTimeDividedCalendarEvents(slotMoment);
@@ -82,7 +78,6 @@ function CalendarWeekDaySlot({
             }}
             key={i}
             event={_event}
-            eventPopover={eventPopover}
           />
         );
         return jsx;
@@ -102,8 +97,7 @@ function CalendarWeekDaySlot({
       _modalPreset = slotMoment.clone().add(30, "minutes");
     }
 
-    setModalPreset(_modalPreset);
-    openCreateEventModal();
+    createEventModal.show(_modalPreset);
   };
 
   return (
@@ -119,9 +113,6 @@ function CalendarWeekDaySlot({
 CalendarWeekDaySlot.propTypes = {
   slotMoment: PropTypes.instanceOf(moment).isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
-  openCreateEventModal: PropTypes.func.isRequired,
-  setModalPreset: PropTypes.func.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarWeekDaySlot };

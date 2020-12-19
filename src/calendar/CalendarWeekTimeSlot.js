@@ -16,14 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarWeekTimeSlot({
-  selectedDate,
-  numSlots,
-  startHour,
-  openCreateEventModal,
-  setModalPreset,
-  eventPopover,
-}) {
+function CalendarWeekTimeSlot({ selectedDate, numSlots, startHour }) {
   const classes = useStyles();
 
   const getSlotMoment = (day) => {
@@ -50,9 +43,6 @@ function CalendarWeekTimeSlot({
           selectedDate={selectedDate}
           slotMoment={slotMoment}
           key={i}
-          openCreateEventModal={openCreateEventModal}
-          setModalPreset={setModalPreset}
-          eventPopover={eventPopover}
         />
       );
       slotsJsx.push(jsx);
@@ -67,9 +57,6 @@ CalendarWeekTimeSlot.propTypes = {
   numSlots: PropTypes.number.isRequired,
   selectedDate: PropTypes.instanceOf(moment).isRequired,
   startHour: PropTypes.number.isRequired,
-  openCreateEventModal: PropTypes.func.isRequired,
-  setModalPreset: PropTypes.func.isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarWeekTimeSlot };

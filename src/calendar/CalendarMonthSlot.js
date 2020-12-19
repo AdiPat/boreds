@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthSlot({ date, eventPopover }) {
+function CalendarMonthSlot({ date }) {
   const classes = useStyles();
 
   return (
@@ -45,7 +45,7 @@ function CalendarMonthSlot({ date, eventPopover }) {
       </div>
       <Divider />
       <div className={classes.monthSlotBody}>
-        <CalendarEventList date={date} eventPopover={eventPopover} />
+        <CalendarEventList date={date} />
       </div>
     </div>
   );
@@ -53,7 +53,6 @@ function CalendarMonthSlot({ date, eventPopover }) {
 
 CalendarMonthSlot.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarMonthSlot };

@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonthWeek({ week, eventPopover }) {
+function CalendarMonthWeek({ week }) {
   const classes = useStyles();
 
   const renderWeek = () => {
     const slotsJsx = week.map((date) => {
-      return <CalendarMonthSlot date={date} eventPopover={eventPopover} />;
+      return <CalendarMonthSlot date={date} />;
     });
     return slotsJsx;
   };
@@ -26,7 +26,6 @@ function CalendarMonthWeek({ week, eventPopover }) {
 
 CalendarMonthWeek.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
-  eventPopover: PropTypes.object.isRequired,
 };
 
 export { CalendarMonthWeek };

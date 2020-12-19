@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CalendarMonth({ selectedDate, show, eventPopover }) {
+function CalendarMonth({ selectedDate, show }) {
   const classes = useStyles();
 
   const renderWeeks = () => {
     const calendar = getWeekCalendar(selectedDate.month(), selectedDate.year());
     const weeks = splitMonthToWeeks(calendar);
     const weeksJsx = weeks.map((week) => {
-      return <CalendarMonthWeek week={week} eventPopover={eventPopover} />;
+      return <CalendarMonthWeek week={week} />;
     });
     return weeksJsx;
   };
@@ -41,7 +41,6 @@ function CalendarMonth({ selectedDate, show, eventPopover }) {
 
 CalendarMonth.propTypes = {
   selectedDate: PropTypes.instanceOf(moment).isRequired,
-  eventPopover: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
 };
 
