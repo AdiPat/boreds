@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { Popover, Divider, Typography } from "@material-ui/core";
-import { CONSTANTS } from "../../utils/constants";
+import { getPopoverAlignment } from "../../utils/utils";
 import { EventList } from "../misc/EventList";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 function EventListPopover({ anchorEl, handleClose, date }) {
   const classes = useStyles();
-  let popoverAlignment = CONSTANTS.POPOVER.ALIGN_CENTER_RIGHT;
+  let popoverAlignment = getPopoverAlignment(anchorEl);
 
   return (
     <div>

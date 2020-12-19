@@ -5,6 +5,7 @@ import { CONSTANTS } from "../../utils/constants";
 import { EventPopoverEditButton } from "../buttons/EventPopoverEditButton";
 import { EventPopoverDeleteButton } from "../buttons/EventPopoverDeleteButton";
 import { EventPopoverAddDescriptionButton } from "../buttons/EventPopoverAddDescriptionButton";
+import { getPopoverAlignment } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   popoverContainer: {
@@ -38,7 +39,7 @@ function CalendarEventPopover({
   openEditEventModal,
 }) {
   const classes = useStyles();
-  let popoverAlignment = CONSTANTS.POPOVER.ALIGN_CENTER_RIGHT;
+  let popoverAlignment = getPopoverAlignment(anchorEl);
 
   let formattedDate = "";
   let formattedInterval = "";
