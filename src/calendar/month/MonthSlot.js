@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { grey } from "@material-ui/core/colors";
@@ -5,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Divider } from "@material-ui/core";
 import { SlotDateSelectButton } from "../buttons/SlotDateSelectButton";
 import { EventList } from "../misc/EventList";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = makeStyles((theme) => ({
   monthSlot: {
@@ -37,9 +39,14 @@ const useStyles = makeStyles((theme) => ({
 
 function MonthSlot({ date }) {
   const classes = useStyles();
+  const { createEventModal } = useContext(CalendarUIContext);
+
+  const handleClick = () => {
+    createEventModal.show(date);
+  };
 
   return (
-    <div className={classes.monthSlot}>
+    <div className={classes.monthSlot} onClick={handleClick}>
       <div className={classes.monthSlotHeader}>
         <SlotDateSelectButton date={date} size="small" />
       </div>
