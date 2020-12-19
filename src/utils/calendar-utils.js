@@ -123,6 +123,22 @@ const getUTCString = (momentDate) => {
   return moment.utc(momentDate).format();
 };
 
+const areDatesEqual = (d1, d2) => {
+  if (!(d1 instanceof moment) || !(d2 instanceof moment)) {
+    throw new TypeError("Dates supplied must be instance of moment.");
+  }
+
+  if (!d1.isValid()) {
+    throw new TypeError("First date is invalid. ");
+  }
+
+  if (!d2.isValid()) {
+    throw new TypeError("Second date is invalid. ");
+  }
+
+  return d1.format("DD-MM-YYYY") === d2.format("DD-MM-YYYY");
+};
+
 export {
   validateMonth,
   validateYear,
@@ -134,4 +150,5 @@ export {
   hashEventId,
   mapCalendarEventFields,
   getUTCString,
+  areDatesEqual,
 };
