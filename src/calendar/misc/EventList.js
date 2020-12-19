@@ -8,24 +8,27 @@ import { ListMoreEventsButton } from "../buttons/ListMoreEventsButton";
 
 const MAX_LIST_ITEMS = 3;
 
-function EventList({ date }) {
+function EventList({ date, maxItems, shouldLimit, wrapText }) {
   const { getCalendarEvents } = useContext(CalendarContext);
 
   const slotEvents = getCalendarEvents(date, "day");
 
   const renderEvents = () => {
     let slotsJsx = slotEvents.map((event, i) => {
-      return i < MAX_LIST_ITEMS ? (
-        <EventListItem event={event} key={i} />
-      ) : null;
+      let jsx = <EventListItem event={event} key={i} wrapText={wrapText} />;
+      if (shouldLimit && i >= maxItems) {
+        jsx = null;
+      }
+      return jsx;
     });
 
-    if (slotEvents.length > MAX_LIST_ITEMS) {
-      const numExtraEvents = slotEvents.length - MAX_LIST_ITEMS;
+    if (shouldLimit && slotEvents.length > maxItems) {
+      const numExtraEvents = slotEvents.length - maxItems;
       slotsJsx.push(
         <ListMoreEventsButton
+          date={date}
           extraEventsCount={numExtraEvents}
-          key={MAX_LIST_ITEMS}
+          key={maxItems}
         />
       );
     }
@@ -38,6 +41,15 @@ function EventList({ date }) {
 
 EventList.propTypes = {
   date: PropTypes.instanceOf(moment).isRequired,
+  maxItems: PropTypes.number,
+  wrapText: PropTypes.bool,
+  shouldLimit: PropTypes.bool,
+};
+
+EventList.defaultProps = {
+  maxItems: MAX_LIST_ITEMS,
+  shouldLimit: true,
+  wrapText: true,
 };
 
 export { EventList };

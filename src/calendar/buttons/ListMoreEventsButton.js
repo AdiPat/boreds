@@ -1,6 +1,9 @@
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemText, Typography } from "@material-ui/core";
+import { CalendarUIContext } from "../CalendarUIContext";
 
 const useStyles = makeStyles((theme) => ({
   eventListItem: {
@@ -18,11 +21,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ListMoreEventsButton({ extraEventsCount, key }) {
+function ListMoreEventsButton({ extraEventsCount, key, date }) {
   const classes = useStyles();
+  const { eventListPopover } = useContext(CalendarUIContext);
+
+  const handleClick = (e) => {
+    eventListPopover.show(e, date);
+  };
 
   return (
-    <ListItem key={key} button className={classes.eventListItem}>
+    <ListItem
+      key={key}
+      button
+      className={classes.eventListItem}
+      onClick={handleClick}
+    >
       <ListItemText
         disableTypography
         primary={
@@ -36,6 +49,7 @@ function ListMoreEventsButton({ extraEventsCount, key }) {
 }
 
 ListMoreEventsButton.propTypes = {
+  date: PropTypes.instanceOf(moment),
   extraEventsCount: PropTypes.number.isRequired,
   key: PropTypes.number.isRequired,
 };

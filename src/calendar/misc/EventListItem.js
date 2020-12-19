@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemText, Typography } from "@material-ui/core";
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EventListItem({ event, key }) {
+function EventListItem({ event, key, wrapText }) {
   const classes = useStyles();
   const { eventPopover } = useContext(CalendarUIContext);
 
@@ -33,7 +34,10 @@ function EventListItem({ event, key }) {
       <ListItemText
         disableTypography
         primary={
-          <Typography variant="subtitle2" className={classes.eventListItemText}>
+          <Typography
+            variant="subtitle2"
+            className={clsx({ [classes.eventListItemText]: wrapText })}
+          >
             {event.startTime.format("h:mm A")}, {event.title}
           </Typography>
         }
@@ -45,6 +49,11 @@ function EventListItem({ event, key }) {
 EventListItem.propTypes = {
   event: PropTypes.object.isRequired,
   key: PropTypes.number.isRequired,
+  wrapText: PropTypes.bool,
+};
+
+EventListItem.defaultProps = {
+  wrapText: true,
 };
 
 export { EventListItem };

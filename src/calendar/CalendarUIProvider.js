@@ -5,6 +5,7 @@ import { Snackbar } from "@material-ui/core";
 import { CreateEventModal } from "../components/modals/CreateEventModal";
 import { EditEventModal } from "../components/modals/EditEventModal";
 import { CalendarEventPopover } from "./menus/EventPopover";
+import { EventListPopover } from "./menus/EventListPopover";
 import { CalendarUIContext } from "./CalendarUIContext";
 
 class CalendarUIProvider extends React.PureComponent {
@@ -17,6 +18,10 @@ class CalendarUIProvider extends React.PureComponent {
       },
       eventPopover: {
         anchorEl: null,
+      },
+      eventListPopover: {
+        anchorEl: null,
+        date: moment(),
       },
       editEventModal: {
         open: false,
@@ -36,6 +41,9 @@ class CalendarUIProvider extends React.PureComponent {
     // event popover
     this.showEventPopover = this.showEventPopover.bind(this);
     this.closeEventPopover = this.closeEventPopover.bind(this);
+    // event list popover
+    this.showEventListPopover = this.showEventListPopover.bind(this);
+    this.closeEventListPopover = this.closeEventListPopover.bind(this);
     // edit event modal
     this.showEditEventModal = this.showEditEventModal.bind(this);
     this.closeEditEventModal = this.closeEditEventModal.bind(this);
@@ -64,6 +72,23 @@ class CalendarUIProvider extends React.PureComponent {
 
   closeEventPopover() {
     this.setState({ eventPopover: { anchorEl: null } });
+  }
+
+  // event list popover
+  showEventListPopover(event, date) {
+    event.stopPropagation();
+    this.setState({
+      eventListPopover: { date: date, anchorEl: event.currentTarget },
+    });
+  }
+
+  closeEventListPopover() {
+    this.setState((prevState) => ({
+      eventListPopover: {
+        anchorEl: null,
+        date: prevState.eventListPopover.date,
+      },
+    }));
   }
 
   // edit event modal
@@ -97,6 +122,10 @@ class CalendarUIProvider extends React.PureComponent {
           eventPopover: {
             show: this.showEventPopover,
             close: this.closeEventPopover,
+          },
+          eventListPopover: {
+            show: this.showEventListPopover,
+            close: this.closeEventListPopover,
           },
           editEventModal: {
             show: this.showEditEventModal,
@@ -133,6 +162,11 @@ class CalendarUIProvider extends React.PureComponent {
           handleClose={this.closeEventPopover}
           event={this.state.shared.curEvent}
           openEditEventModal={this.showEditEventModal}
+        />
+        <EventListPopover
+          anchorEl={this.state.eventListPopover.anchorEl}
+          handleClose={this.closeEventListPopover}
+          date={this.state.eventListPopover.date}
         />
       </CalendarUIContext.Provider>
     );
