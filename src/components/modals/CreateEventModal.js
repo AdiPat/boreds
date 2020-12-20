@@ -76,6 +76,11 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
     setEventDescription(event.target.value);
   };
 
+  const resetModal = () => {
+    setEventTitle("");
+    setEventDescription("");
+  };
+
   const handleSaveEvent = () => {
     const calendarEvent = {
       eventTitle: eventTitle,
@@ -95,7 +100,13 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
         setSnackbarMessage(res.details);
         setOpenSnackbar(true);
       }
+      resetModal();
     });
+  };
+
+  const handleCancel = (e) => {
+    handleCloseModal();
+    resetModal();
   };
 
   return (
@@ -161,7 +172,7 @@ function CreateEventModal({ open, handleCloseModal, datePreset, timePreset }) {
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleCloseModal}
+              onClick={handleCancel}
             >
               Cancel
             </Button>
