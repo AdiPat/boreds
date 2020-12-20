@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const CONSTANTS = require("../constants").constants;
+const moment = require("moment");
 const utils = require("./utils");
 
 const validateCalendarEventTitle = (title) => {
@@ -63,6 +64,17 @@ const validateCalendarEventDescription = (description) => {
   }
 };
 
+const validateCalendarEventDuration = (startTime, endTime) => {
+  const endTimeFieldName = CONSTANTS.CALENDAR.EVENT.FIELDS.eventEndTime.field;
+  const startTimeFieldName =
+    CONSTANTS.CALENDAR.EVENT.FIELDS.eventStartTime.field;
+
+  if (endTime <= startTime) {
+    const errMsg = `${endTimeFieldName} should be greater than ${startTimeFieldName}`;
+    throw new functions.https.HttpsError("invalid-argument", errMsg, errMsg);
+  }
+};
+
 const mapCalendarEventFields = (calendarEvent) => {
   let _calendarEvent = {};
   Object.keys(calendarEvent).forEach((field) => {
@@ -86,6 +98,7 @@ const validateCalendarEvent = (calendarEvent) => {
   validateCalendarEventDate(eventDate);
   validateCalendarEventStartTime(eventStartTime);
   validateCalendarEventEndTime(eventEndTime);
+  validateCalendarEventDuration(eventStartTime, eventEndTime);
 };
 
 exports.validateCalendarEvent = validateCalendarEvent;
@@ -94,4 +107,5 @@ exports.validateCalendarEventDescription = validateCalendarEventDescription;
 exports.validateCalendarEventDate = validateCalendarEventDate;
 exports.validateCalendarEventStartTime = validateCalendarEventStartTime;
 exports.validateCalendarEventEndTime = validateCalendarEventEndTime;
+exports.validateCalendarEventDuration = validateCalendarEventDescription;
 exports.mapCalendarEventFields = mapCalendarEventFields;
