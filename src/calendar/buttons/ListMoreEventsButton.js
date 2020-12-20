@@ -35,6 +35,7 @@ function ListMoreEventsButton({ extraEventsCount, key, date }) {
       button
       className={classes.eventListItem}
       onClick={handleClick}
+      disableTouchRipple
     >
       <ListItemText
         disableTypography
