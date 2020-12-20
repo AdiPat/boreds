@@ -62,7 +62,7 @@ function SlotDateSelectButton({ date, size }) {
           [classes.avatarWhite]: !isDateSelected,
         })}
       >
-        {date.format("DD")}
+        {date.format("D")}
       </Avatar>
     </Button>
   );
