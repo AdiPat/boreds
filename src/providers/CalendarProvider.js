@@ -13,7 +13,10 @@ class CalendarProvider extends React.Component {
     const now = moment(new Date());
     super(props);
     this.state = {
-      selectedDate: !extras.invalidDate ? extras.selectedDate : now,
+      selectedDate:
+        extras.invalidDate == undefined || extras.invalidDate
+          ? now
+          : extras.selectedDate,
       events: {},
       eventsCount: 0,
       eventsObserver: null,
