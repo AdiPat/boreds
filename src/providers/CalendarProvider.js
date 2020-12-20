@@ -9,15 +9,18 @@ import {
 
 class CalendarProvider extends React.Component {
   constructor(props) {
+    const extras = props.extras;
     const now = moment(new Date());
     super(props);
     this.state = {
-      selectedDate: now,
+      selectedDate: !extras.invalidDate ? extras.selectedDate : now,
       events: {},
       eventsCount: 0,
       eventsObserver: null,
       eventsLastUpdated: -1,
-      duration: CONSTANTS.CALENDAR.DURATIONS.week,
+      duration: extras.duration
+        ? extras.duration
+        : CONSTANTS.CALENDAR.DURATIONS.week,
     };
 
     this.setSelectedDate = this.setSelectedDate.bind(this);
