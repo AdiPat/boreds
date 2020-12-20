@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 import moment from "moment";
 import { MonthWeek } from "./MonthWeek";
 import { getWeekCalendar } from "../../services/calendar";
@@ -16,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     marginLeft: "auto",
     marginRight: theme.spacing(2),
-    paddingBottom: theme.spacing(4),
+    paddingBottom: theme.spacing(0),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -33,9 +35,12 @@ function Month({ selectedDate, show }) {
   };
 
   return (
-    <div className={clsx(classes.monthContainer, { [classes.hide]: !show })}>
+    <Paper
+      className={clsx(classes.monthContainer, { [classes.hide]: !show })}
+      elevation={3}
+    >
       {renderWeeks()}
-    </div>
+    </Paper>
   );
 }
 

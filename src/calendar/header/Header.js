@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 import { CONSTANTS } from "../../utils/constants";
 import { CalendarHeaderItem } from "./HeaderItem";
 import { getWeek, getNextFourDays } from "../../services/calendar";
@@ -44,12 +45,13 @@ function CalendarHeader({ selectedDate, duration, isDuration }) {
   };
 
   return (
-    <div
+    <Paper
       id={CONSTANTS.CALENDAR.IDS.calendarHeader}
       className={classes.headerContainer}
+      elevation={3}
     >
       {renderDates(dates)}
-    </div>
+    </Paper>
   );
 }
 

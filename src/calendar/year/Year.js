@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
+import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Grid } from "@material-ui/core";
@@ -10,6 +11,15 @@ import { YearMonth } from "./YearMonth";
 const useStyles = makeStyles((theme) => ({
   hide: {
     display: "none !important",
+  },
+  yearContainer: {
+    display: "flex",
+    width: "calc(100% - 80px)",
+    flexDirection: "column",
+    marginLeft: "auto",
+    paddingBottom: 0,
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -23,9 +33,14 @@ function Year({ selectedDate, show }) {
   };
 
   return (
-    <Grid className={clsx({ [classes.hide]: !show })} container>
-      {renderMonths()}
-    </Grid>
+    <Paper
+      elevation={3}
+      className={clsx(classes.yearContainer, { [classes.hide]: !show })}
+    >
+      <Grid className={clsx({ [classes.hide]: !show })} container>
+        {renderMonths()}
+      </Grid>
+    </Paper>
   );
 }
 

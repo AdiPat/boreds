@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import moment from "moment";
+import { Paper } from "@material-ui/core";
 import { WeekTimeSlot } from "./WeekTimeSlot";
 import { makeStyles } from "@material-ui/core/styles";
 import { CONSTANTS } from "../../utils/constants";
@@ -14,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
     width: "calc(100% - 80px)",
     flexDirection: "column",
     marginLeft: "auto",
+    paddingBottom: 0,
     marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -38,9 +41,12 @@ function Week({ show, numSlots, selectedDate }) {
   };
 
   return (
-    <div className={clsx(classes.weekContainer, { [classes.hide]: !show })}>
+    <Paper
+      className={clsx(classes.weekContainer, { [classes.hide]: !show })}
+      elevation={3}
+    >
       {renderTimeSlots()}
-    </div>
+    </Paper>
   );
 }
 
