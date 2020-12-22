@@ -5,7 +5,7 @@ import { CircularLoader } from "../components/CircularLoader";
 import { AppDrawer } from "../components/drawer/AppDrawer";
 import { ProfileContent } from "../profile/ProfileContent";
 
-function Profile(props) {
+function ProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const { user } = useContext(AppContext);
@@ -26,4 +26,4 @@ function Profile(props) {
   );
 }
 
-export default Profile;
+export { ProfilePage };
