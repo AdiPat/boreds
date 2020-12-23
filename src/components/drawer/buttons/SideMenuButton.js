@@ -1,17 +1,24 @@
 import PropTypes from "prop-types";
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+} from "@material-ui/core";
 
 function SideMenuButton(props) {
   return (
-    <ListItem
-      ref={props.btnRef}
-      button
-      key={props.btnKey}
-      onClick={props.clickHandler}
-    >
-      <ListItemIcon>{props.icon}</ListItemIcon>
-      <ListItemText primary={props.text} />
-    </ListItem>
+    <Tooltip title={props.text} placement="right">
+      <ListItem
+        ref={props.btnRef}
+        button
+        key={props.btnKey}
+        onClick={props.clickHandler}
+      >
+        <ListItemIcon>{props.icon}</ListItemIcon>
+        <ListItemText primary={props.text} />
+      </ListItem>
+    </Tooltip>
   );
 }
 
