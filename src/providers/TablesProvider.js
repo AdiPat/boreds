@@ -6,14 +6,26 @@ class TablesProvider extends React.PureComponent {
     super(props);
     this.state = {
       selectedTable: null,
+      curTable: {
+        headers: [],
+        data: [],
+      },
     };
+
+    this.setCurTable = this.setCurTable.bind(this);
+  }
+
+  setCurTable(headers, data) {
+    this.setState({ curTable: { headers, data } });
   }
 
   render() {
     return (
       <TablesContext.Provider
-        values={{
+        value={{
           selectedTable: this.state.selectedTable,
+          curTable: this.state.curTable,
+          setCurTable: this.setCurTable,
         }}
       >
         {this.props.children}

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TablesContext } from "../../providers/TablesContext";
 import { csvToJson } from "../../utils/utils";
 
 function UploadCSVButton() {
+  const { setCurTable } = useContext(TablesContext);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     let reader = new FileReader();
 
     reader.onload = (evt) => {
       const csvText = evt.target.result;
-      const jsonText = csvToJson(csvText);
-      console.log("readFile(): ", jsonText);
+      const { headers, data } = csvToJson(csvText);
+      setCurTable(headers, data);
     };
 
     reader.readAsText(file);

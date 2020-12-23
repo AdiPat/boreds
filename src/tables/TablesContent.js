@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { TableGrid } from "./TableGrid";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -24,7 +25,7 @@ function TablesContent() {
 
   return (
     <main className={classes.content}>
-      <h1>Welcome to Tables</h1>
+      <TableGrid />
     </main>
   );
 }
