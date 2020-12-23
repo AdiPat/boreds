@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { SideMenuButton } from "./SideMenuButton";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
-function DashButton() {
+function DashButton({ openDrawer }) {
   const history = useHistory();
 
   const handleShowBoards = () => {
@@ -15,6 +15,7 @@ function DashButton() {
       text="All Boards"
       icon={<LibraryBooksIcon />}
       clickHandler={handleShowBoards}
+      openDrawer={openDrawer}
     />
   );
 }

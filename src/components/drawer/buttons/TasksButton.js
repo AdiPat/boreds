@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { SideMenuButton } from "./SideMenuButton";
 import ListIcon from "@material-ui/icons/List";
 
-function TasksButton() {
+function TasksButton({ openDrawer }) {
   const history = useHistory();
 
   const handleTasksRedirect = () => {
@@ -15,6 +15,7 @@ function TasksButton() {
       text="Tasks"
       icon={<ListIcon />}
       clickHandler={handleTasksRedirect}
+      openDrawer={openDrawer}
     />
   );
 }

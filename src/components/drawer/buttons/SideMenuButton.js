@@ -8,7 +8,7 @@ import {
 
 function SideMenuButton(props) {
   return (
-    <Tooltip title={props.text} placement="right">
+    <Tooltip title={props.openDrawer ? "" : props.text} placement="right">
       <ListItem
         ref={props.btnRef}
         button
@@ -28,6 +28,11 @@ SideMenuButton.propTypes = {
   icon: PropTypes.node.isRequired,
   text: PropTypes.string.isRequired,
   btnRef: PropTypes.object,
+  openDrawer: PropTypes.bool,
+};
+
+SideMenuButton.defaultProps = {
+  openDrawer: false,
 };
 
 export { SideMenuButton };

@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase/app";
 
-function LogoutButton() {
+function LogoutButton({ openDrawer }) {
   const history = useHistory();
 
   const handleLogout = () => {
@@ -17,6 +17,7 @@ function LogoutButton() {
       text="Logout"
       icon={<ExitToAppIcon />}
       clickHandler={handleLogout}
+      openDrawer={openDrawer}
     />
   );
 }

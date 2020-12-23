@@ -2,7 +2,7 @@ import { SideMenuButton } from "./SideMenuButton";
 import { useHistory } from "react-router";
 import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded";
 
-function ProfileButton() {
+function ProfileButton({ openDrawer }) {
   const history = useHistory();
 
   const handleProfileClick = () => {
@@ -15,6 +15,7 @@ function ProfileButton() {
       text="Profile"
       icon={<AccountBoxRounded />}
       clickHandler={handleProfileClick}
+      openDrawer={openDrawer}
     />
   );
 }

@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { SideMenuButton } from "./SideMenuButton";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
-function CalendarButton() {
+function CalendarButton({ openDrawer }) {
   const history = useHistory();
 
   const handleCalendarRedirect = () => {
@@ -15,6 +15,7 @@ function CalendarButton() {
       text="Calendar"
       icon={<EventAvailableIcon />}
       clickHandler={handleCalendarRedirect}
+      openDrawer={openDrawer}
     />
   );
 }

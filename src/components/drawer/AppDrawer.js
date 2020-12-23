@@ -50,13 +50,13 @@ function AppDrawer(props) {
           <CloseDrawerButton handleDrawerClose={handleDrawerClose} />
         }
       >
-        <GeneralAddButton />
-        <DashButton />
-        <TasksButton />
-        <CalendarButton />
-        <TablesButton />
-        <ProfileButton />
-        <LogoutButton />
+        <GeneralAddButton openDrawer={openDrawer} />
+        <DashButton openDrawer={openDrawer} />
+        <TasksButton openDrawer={openDrawer} />
+        <CalendarButton openDrawer={openDrawer} />
+        <TablesButton openDrawer={openDrawer} />
+        <ProfileButton openDrawer={openDrawer} />
+        <LogoutButton openDrawer={openDrawer} />
       </SideMenu>
     </div>
   );

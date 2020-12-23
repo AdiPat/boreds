@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import TableChartIcon from "@material-ui/icons/TableChart";
 import { SideMenuButton } from "./SideMenuButton";
 
-function TablesButton() {
+function TablesButton({ openDrawer }) {
   const history = useHistory();
 
   const tablesRedirect = () => {
@@ -15,6 +15,7 @@ function TablesButton() {
       text="Tables"
       icon={<TableChartIcon />}
       clickHandler={tablesRedirect}
+      openDrawer={openDrawer}
     />
   );
 }
