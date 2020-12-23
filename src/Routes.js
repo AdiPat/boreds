@@ -8,6 +8,7 @@ import { BoardPage } from "./pages/BoardPage";
 import { TasksPage } from "./pages/TasksPage";
 import { CalendarPage } from "./pages/CalendarPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { TablesPage } from "./pages/TablesPage";
 
 function Routes() {
   return (
@@ -37,6 +38,9 @@ function Routes() {
         </Route>
         <Route path="/tasks/:taskId" component={TasksPage} />
         <Route path="/calendar" component={CalendarPage} />
+        <Route exact path="/tables">
+          <TablesPage />
+        </Route>
       </Switch>
     </Router>
   );
