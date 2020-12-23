@@ -4,6 +4,7 @@ import { StyledMenu } from "./StyledMenu";
 import { AddBoardButton } from "../drawer/buttons/AddBoardButton";
 import { AddTaskButton } from "../drawer/buttons/AddTaskButton";
 import { AddEventButton } from "../drawer/buttons/AddEventButton";
+import { AddTableButton } from "../drawer/buttons/AddTableButton";
 
 function GeneralAddMenu(props) {
   const theme = useTheme();
@@ -29,6 +30,7 @@ function GeneralAddMenu(props) {
         <AddBoardButton />
         <AddTaskButton handleCloseMenu={props.handleClose} />
         <AddEventButton handleCloseMenu={props.handleClose} />
+        <AddTableButton handleCloseMenu={props.handleCloseMenu} />
       </StyledMenu>
     </div>
   );
