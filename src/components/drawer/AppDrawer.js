@@ -4,7 +4,6 @@ import { DrawerAppBar } from "./DrawerAppBar";
 import { DrawerAppBarTitle } from "./DrawerAppBarTitle";
 import { SideMenu } from "./SideMenu";
 import { CloseDrawerButton } from "./buttons/CloseDrawerButton";
-import { AddBoardButton } from "./buttons/AddBoardButton";
 import { DashButton } from "./buttons/DashButton";
 import { ProfileButton } from "./buttons/ProfileButton";
 import { LogoutButton } from "./buttons/LogoutButton";
@@ -12,6 +11,7 @@ import { OpenDrawerButton } from "./buttons/OpenDrawerButton";
 import { CalendarButton } from "./buttons/CalendarButton";
 import { DrawerNotificationsButton } from "./buttons/DrawerNotificationButton";
 import { TasksButton } from "./buttons/TasksButton";
+import { TablesButton } from "./buttons/TablesButton";
 import { GeneralAddButton } from "./buttons/GeneralAddButton";
 
 function AppDrawer(props) {
@@ -54,6 +54,7 @@ function AppDrawer(props) {
         <DashButton />
         <TasksButton />
         <CalendarButton />
+        <TablesButton />
         <ProfileButton />
         <LogoutButton />
       </SideMenu>
