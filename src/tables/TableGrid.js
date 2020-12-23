@@ -37,6 +37,30 @@ function TableGrid() {
     console.log("cellValueChanged(): ", params);
   };
 
+  const renderColumns = () => {
+    let colJsx = curTable.headers.map((header) => (
+      <AgGridColumn
+        field={header}
+        resizable
+        editable
+        onCellValueChanged={handleCellValueChanged}
+        sortable
+      ></AgGridColumn>
+    ));
+
+    if (curTable.headers.length) {
+      colJsx.unshift(
+        <AgGridColumn
+          headerName="#"
+          valueGetter={(params) => params.node.rowIndex}
+          checkboxSelection
+        ></AgGridColumn>
+      );
+    }
+
+    return colJsx;
+  };
+
   return (
     <div
       className={clsx("ag-theme-alpine", classes.agGridContainer)}
@@ -50,16 +74,9 @@ function TableGrid() {
         rowData={curTable.data}
         undoRedoCellEditing
         undoRedoCellEditingLimit={50}
+        rowSelection="multiple"
       >
-        {curTable.headers.map((header) => (
-          <AgGridColumn
-            field={header}
-            resizable
-            editable
-            onCellValueChanged={handleCellValueChanged}
-            sortable
-          ></AgGridColumn>
-        ))}
+        {renderColumns()}
       </AgGridReact>
     </div>
   );
