@@ -29,6 +29,7 @@ function AddEventButton(props) {
         text="Create Event"
         icon={<TodayIcon />}
         clickHandler={handleClick}
+        openDrawer
       />
       <CreateEventModal handleCloseModal={handleCloseModal} open={openModal} />
     </div>

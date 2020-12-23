@@ -21,6 +21,7 @@ function AddBoardButton() {
         text="Create Board"
         icon={<NoteAddIcon />}
         clickHandler={handleOpenModal}
+        openDrawer
       />
       <CreateBoardModal
         handleOpenModal={handleOpenModal}

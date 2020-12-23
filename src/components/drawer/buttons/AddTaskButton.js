@@ -29,6 +29,7 @@ function AddTaskButton(props) {
         text="Create Task"
         icon={<PlaylistAddIcon />}
         clickHandler={handleClick}
+        openDrawer
       />
       <CreateTaskModal
         handleOpenModal={handleOpenModal}
