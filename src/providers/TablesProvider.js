@@ -16,6 +16,7 @@ class TablesProvider extends React.PureComponent {
   }
 
   setCurTable(headers, data) {
+    console.log(headers);
     this.setState({ curTable: { headers, data } });
   }
 

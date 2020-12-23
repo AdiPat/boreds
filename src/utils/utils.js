@@ -14,6 +14,12 @@ const getPopoverAlignment = (anchorEl) => {
   return alignment;
 };
 
+function trimString(s, c) {
+  if (c === "]") c = "\\]";
+  if (c === "\\") c = "\\\\";
+  return s.replace(new RegExp("^[" + c + "]+|[" + c + "]+$", "g"), "");
+}
+
 const csvToJson = (str, headerList, quotechar = '"', delimiter = ",") => {
   const cutlast = (_, i, a) => i < a.length - 1;
   // const regex = /(?:[\t ]?)+("+)?(.*?)\1(?:[\t ]?)+(?:,|$)/gm; // no variable chars
@@ -22,8 +28,10 @@ const csvToJson = (str, headerList, quotechar = '"', delimiter = ",") => {
     "gm"
   );
   const lines = str.split("\n");
-  const headers =
+  let headers =
     headerList || lines.splice(0, 1)[0].match(regex).filter(cutlast);
+
+  headers = headers.map((header) => trimString(header, ","));
 
   const list = [];
 
