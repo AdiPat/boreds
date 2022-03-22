@@ -9,3 +9,8 @@ Project Management SaaS.
 - Collaboration on boards
 - Star your favorite boards
 - Make your board publicly readable
+
+## Instructions
+
+- Start app with `npm run start`
+- Start firebase emulator with `npm run start:emulators`
