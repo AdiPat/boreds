@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import clsx from "clsx";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { TablesContext } from "../providers/TablesContext";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
@@ -54,6 +55,7 @@ function TableGrid() {
           headerName="#"
           valueGetter={(params) => params.node.rowIndex}
           checkboxSelection
+          rowDrag
         ></AgGridColumn>
       );
     }
@@ -75,6 +77,7 @@ function TableGrid() {
         undoRedoCellEditing
         undoRedoCellEditingLimit={50}
         rowSelection="multiple"
+        rowDragManaged
       >
         {renderColumns()}
 
