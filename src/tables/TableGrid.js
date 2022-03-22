@@ -77,6 +77,16 @@ function TableGrid() {
         rowSelection="multiple"
       >
         {renderColumns()}
+
+        {curTable.headers.map((header) => (
+          <AgGridColumn
+            field={header}
+            resizable
+            editable
+            onCellValueChanged={handleCellValueChanged}
+            sortable
+          ></AgGridColumn>
+        ))}
       </AgGridReact>
     </div>
   );
